@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -1794,3 +1794,178 @@ Container 2는 너비 1360, Vertical gap 32, 위·아래 padding 12, 좌우 0, r
 3. 준비물 체크 3행·Divider·별표 안내, 배너 1360 × 102와 96px 이미지의 실제 배치를 확인한다.
 4. 본문에서 누락 폰트는 0이었다. 실제 생성에서도 KBFG Text, 잘림·겹침과 필요 시 문장 증가에 따른 높이 변경을 한 번 검수한다.
 5. dummy·임시 자산 제거, 실제 준비물·가입 요건·버튼 목적·QR, 지정 Footer 인스턴스를 기획과 대조한다. 검수 통과 후 불필요한 재검수는 생략한다.
+
+## 41. 패턴 U — 금융거래 목적 질문·확인과 오른쪽 단계 표시
+
+### 41.1. 출처와 2열 골격
+
+- [원본 화면](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-30709): 프레임 이름 `화면ID`, 1920 × 2718.
+- 파일 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`. 원본은 금융거래 목적 질문과 안내 확인, 상품가입 단계 표시를 함께 담은 화면이다.
+- 루트는 흰색 Vertical, gap 0이다. HEADER는 40장과 같은 GNB 108 → Breadcrumbs 49의 **157px** 셸이다. GNB는 channel=biz, login=false, expand=false, container=1440이다. 원본의 “기업용헤더 X” 표시는 최종 기업용 셸 승인으로 해석하지 않는다.
+- BODY: (240,157), 1440 × 2209, padding 48 40. 유효 콘텐츠 너비는 1360이다.
+- BODY의 바깥 Container는 (280,205), 1360 × 2113, Horizontal gap **32**다. Main 1012 + gap 32 + Right 316 = 1360이다.
+- Main: (280,205), 1012 × 2113, Vertical gap 48. Right: (1324,205), 316 × 394. 두 열의 상단을 맞춘다.
+- 오른쪽은 LNB가 아니라 **가입 진행 단계 표시**다. 일반 LNB 메뉴로 치환하지 않는다. 스크롤 고정·sticky·클릭 이동 동작은 정적 화면에서 확정되지 않았다.
+- Footer: (0,2366), 1920 × 352. 신규 생성은 13장의 지정 Footer 컴포넌트 인스턴스를 사용한다.
+
+| Main 영역 | y | 크기 |
+| --- | --- | --- |
+| 페이지 제목 | 205 | 1012 × 36 |
+| Infobox / FullWidth | 289 | 1012 × 86 |
+| 질문·확인 혼합 래퍼 | 423 | 1012 × 1587 |
+| Button Area | 2058 | 1012 × 56 |
+| 유의사항 Accordion | 2162 | 1012 × 156 |
+
+Main 높이 검산은 36 + 86 + 1587 + 56 + 156 + gap 48 × 4 = 2113, BODY는 48 + 2113 + 48 = 2209다. 제목은 자리표시자 “타이틀입니다”, KBFG Text Bold 26/36 #1C1C1C이며 실제 텍스트 너비 141, Title / Page 인스턴스 너비 233이다. 제목 행 전체 1012를 텍스트 너비로 오인하지 않는다.
+
+### 41.2. 안내 박스와 기존 계층 보존
+
+- Infobox / FullWidth는 1012 × 86, padding 20 24, radius 12, fill #FAFAFA다.
+- Contents/Slot은 964 × 46이며 Slot 자체에 **1px padding**이 있다. 실제 Container는 (305,310), 962 × 44, Vertical gap 4다.
+- 불릿 2행은 각각 높이 20, KBFG Text Light 14/20 #1C1C1C다. 본문은 x=317, 너비 950이며 마커는 x=305에 있다. 높이는 20 × 2 + gap 4 + Slot padding 2 + 바깥 padding 40 = 86이다.
+- 첫 문장은 입출금통장 개설 시 금융거래 목적을 확인한다는 안내다. 두 번째는 “콘텐츠의 목적과 정보 위계에 따라 적절한 마커 타입을 선택하여 사용합니다.”라는 컴포넌트 설명 샘플이다. 실제 고객 안내로 복사하지 않는다.
+- 원본 BODY에는 바깥 `Container 1` 하나가 있고 그 안에 Main/Right가 있다. Main의 Infobox 래퍼에는 잔여 이름 `Container 3`이 붙어 있다. 이 번호를 근거로 Container 2를 새로 만들거나 다른 영역을 이동하지 않는다.
+- 12장에 따라 사용자 정의 이름은 현재 역할·반복 구성을 재판정하되 원본의 Container 개수·부모·순서·역할 분할은 보존한다. DS 인스턴스의 내부 Container·Slot은 원형 계층을 유지한다.
+- 원본 `Question Group`에는 Question 3개와 Consent 4개가 섞여 있다. 단일 종류의 반복 그룹으로 일반화하지 않으며, 제작 시 혼합 콘텐츠에 맞는 래퍼 이름을 적용한다. 명명 정리를 이유로 7개 카드의 부모나 순서를 바꾸지 않는다.
+
+## 42. 질문·확인 카드의 치수와 상태
+
+### 42.1. 7개 카드의 순서
+
+혼합 래퍼는 너비 1012, Vertical gap **12**다. 카드 높이 합계 1515 + gap 12 × 6 = 1587이다. 각 카드는 일반 FRAME이며 자체가 검증된 라이브러리 카드 인스턴스인 것은 아니다. 제목·선택·동의 등 내부에는 실제 DS 인스턴스를 사용한다.
+
+| 순서 | 종류·내용 | y | 높이 |
+| --- | --- | --- | --- |
+| 1 | Question — 공급망금융 대출 신청 여부 | 423 | 177 |
+| 2 | Question — 통장대여 요청 여부 | 612 | 177 |
+| 3 | Question — 타인의 금융거래 요청 여부 | 801 | 177 |
+| 4 | Consent — 통장양도 금지 확인 | 990 | 194 |
+| 5 | Consent — 불법·탈법 차명거래 금지 설명 | 1196 | 214 |
+| 6 | Consent — 예금자 보호제도, 확인 2개 | 1422 | 246 |
+| 7 | Consent — 중요 사항 설명, 확인·하위 목록 2묶음 | 1680 | 330 |
+
+모두 #FFFFFF, radius 12, 1px stroke다. Question 1·2와 Consent는 #E5E5E5이며 **Question 3만 #D4D4D4**다. 이 차이를 오류·focus 상태라고 추정하지 않는다.
+
+### 42.2. Question 3개
+
+- padding 32, Vertical gap 20, 내부 너비 **948**이다. 1012 − 32 × 2 = 948이며 40장의 카드에서 관측한 33px 인셋을 이번 카드에 일괄 적용하지 않는다.
+- Title / Section: 948 × 53. 제목 KBFG Text Bold 18/25 #1C1C1C, 제목과 설명 gap 8, 설명 Light 14/20 #444444다.
+- 제목 시작 y는 455 / 644 / 833, 설명은 488 / 677 / 866이다.
+- SelectButton: type=word, variant=single, 948 × 40, y=528 / 717 / 906. 내부 slot은 Horizontal gap **6**다.
+- 왼쪽 “네”: 45 × 40, selected=false, 흰색, 1px #D4D4D4 테두리, radius 6, 라벨 Bold 14/20 #444444.
+- 오른쪽 “아니요”: 90 × 40, selected=true, 흰색, **2px #1C1C1C** 테두리, radius 6, 라벨 Bold 14/20 #1C1C1C와 체크 아이콘을 표시한다.
+- 두 항목의 x좌표는 312 / 363이다. 45 + 6 + 90 = 141이며, 바깥 948px 전체를 양분한 버튼이 아니다.
+- 카드 높이는 padding 64 + 제목·설명 53 + gap 20 + 선택 40 = 177이다.
+- 원본에서 세 질문 모두 “아니요”가 선택되어 있지만, 새 화면의 기본 응답이나 정상 진행 조건으로 고정하지 않는다. “네” 선택 시 차단·팝업·추가 입력 등의 분기는 기획을 따른다.
+- 세 번째 질문의 “신용등급 상환” 등 표현은 원본 문구로만 보존한다. 업무 문구를 확정하는 근거로 삼지 않는다.
+
+### 42.3. Consent 공통 구성
+
+- 제목·설명 → gap 16 → Divider 1 → gap 16 → ConsentFinal/확인 묶음 순서다.
+- 제목은 Bold 18/25 #1C1C1C, 설명은 Light 14/20 #444444다. Divider는 secondary/1px, 너비 948이다.
+- ConsentFinal은 **variant=plain**, 내부 Item / Consent는 variant=1d다. 체크박스는 large, checked=false, indeterminate=false, invalid=false, disabled=false다. 화면 전체에서 확인 체크는 **6개 모두 미선택**이다.
+- 한 줄 확인 ConsentFinal은 948 × 56, 내부 Container 위·아래 padding 4, Item / Consent 위·아래 padding 12, 아이콘과 라벨 gap 8이다.
+- 확인 문구는 KBFG Text Bold 16/24 #1C1C1C, x=344, 너비 916이다. 체크 영역을 일반 불릿이나 장식 아이콘으로 대체하지 않는다.
+
+### 42.4. 카드별 높이와 내부 배치
+
+**통장양도 금지 확인 — 194px**
+
+- padding 32 32 20 32, 제목·설명 53, Divider y=1091, ConsentFinal y=1108 높이 56.
+- 52 + 53 + 16 + 1 + 16 + 56 = 194.
+- 원본 설명에 이체 50건·타행 10억 관련 샘플이 들어 있다. 통장양도 금지 안내 문구로 사용하지 않는다.
+
+**차명거래 금지 설명 — 214px**
+
+- padding 32 32 20 32, 제목·설명 73. 설명이 **40px, 두 줄**이어서 이전 카드보다 20px 높다.
+- Divider y=1317, ConsentFinal y=1334 높이 56. 52 + 73 + 16 + 1 + 16 + 56 = 214.
+- 원본의 법률·벌칙 문장은 출처의 예시 문구다. 실제 생성에는 승인된 최신 업무 문구를 사용한다.
+
+**예금자 보호제도 — 246px**
+
+- padding 32 32 20 32, 제목만 25, Divider y=1495.
+- ConsentFinal Group: (312,1512), 948 × 136, gap **0**. 첫 동의 80px(라벨 두 줄 48), 두 번째 56px(라벨 한 줄 24)다.
+- 52 + 25 + 16 + 1 + 16 + (80 + 56) = 246. 모든 동의 행을 56px로 고정해 문장을 자르지 않는다.
+- 원본에는 예금보호 한도가 “1인당 5천만원”으로 적혀 있다. **과거 화면의 표시값을 보존한 것이며 현재 한도나 새 화면의 기준으로 채택하지 않는다.** 실제 생성 시 승인된 최신 문구·금액을 적용한다.
+
+**중요 사항 설명과 하위 목록 — 330px**
+
+- 원본 제목은 앞선 카드와 같은 차명거래 금지 설명이지만, 설명은 금융상품 중요 사항에 관한 내용이다. 제목·본문의 불일치를 원본 샘플로 구분한다.
+- 이번 카드만 padding **32 전체**, 제목·설명 53, Divider y=1781, 확인 묶음 y=1798, 높이 180이다.
+- 첫 묶음: ConsentFinal “우선설명 필수 사항” 56 + dash 목록 1행 20 = 76.
+- 두 번째 묶음: ConsentFinal “부담정보 및 금융소비자의 권리 필수 사항” 56 + dash 목록 2행 48 = 104.
+- 두 묶음 사이 gap은 0이며 76 + 104 = 180이다. 전체는 64 + 53 + 16 + 1 + 16 + 180 = 330이다.
+- 하위 목록 래퍼는 왼쪽 padding **32**다. 마커 x=344, 본문 x=356, 본문 너비 904로 체크 문구 아래에 들여쓴다.
+- 목록은 dash/14/depth=1, KBFG Text Light 14/20 #1C1C1C다. 두 줄 목록은 gap 8로 총 48이다.
+- 이자율·산출근거, 중도해지 불이익, 금리변동형 상품 안내는 각 동의와 연결된 설명이다. 동의와 하위 목록을 분리하거나 카드 밖으로 이동하지 않는다.
+
+## 43. 오른쪽 단계 표시와 하단 액션
+
+### 43.1. 오른쪽 StepIndicator / Vertical
+
+- Right: 316 × 394, padding 20, radius 20, #FFFFFF. 내부는 (1344,225), 276 × 354, Vertical gap 20이다.
+- 아래 실제 높이 32 + 32 + 24 + 154 + 32와 gap 20 × 4 = 354를 유지한다.
+
+| 순서 | 표시 | y / 높이 | 원본 상태·구현 |
+| --- | --- | --- | --- |
+| 1 | 사업자 정보 확인 | 225 / 32 | StepIndicator 인스턴스, completed |
+| 2 | 정보입력 | 277 / 32 | StepIndicator 인스턴스, completed |
+| 3 | 본인인증 | 329 / 24 | **일반 FRAME**, 24px 번호 영역·회색 텍스트·chevron |
+| 4 | 상품가입 | 373 / 154 | StepIndicator 인스턴스, inProgress, 하위 2단계 |
+| 5 | 가입완료 | 547 / 32 | StepIndicator 인스턴스, notStarted |
+
+- 완료 단계 제목은 KBFG Text Bold 16/24 #1C1C1C, 체크와 편집 아이콘을 표시한다.
+- 본인인증은 원본에서 DS StepIndicator 인스턴스가 아니다. 제목 Bold 16/24 **#8D8D8D**, 번호 영역 24 × 24, fill #F2F2F2다. 보이는 표현만으로 완료·건너뜀·비활성 정책을 확정하지 않는다.
+- 현재 “상품가입”은 번호 4, Pretendard SemiBold 17/24 #FFFFFF와 파란 원형, 제목 KBFG Text Bold 16/24 **#1F6AFF**다.
+- 현재 하위 단계 “금융거래목적 확인”: 제목 (1386,417), Bold 14/20 #1C1C1C, 입력값 “-” (1386,443), Medium 12/17 #1C1C1C.
+- 다음 하위 “정보입력”: 제목 (1386,476), Medium 14/20 #6E6E6E, 입력값 “-” (1386,502), Light 12/17 #6E6E6E.
+- 가입완료는 제목 Medium 16/24 #6E6E6E, 번호 5는 Pretendard Light 17/24 #6E6E6E다.
+- 단계 표시를 전체 가입 절차의 공통 단계 개수·전이·수정 가능 정책으로 확대하지 않는다. 생성 화면의 실제 현재 단계·완료 여부·하위 내용을 적용한다.
+
+### 43.2. 하단 버튼과 유의사항
+
+- Button Area는 Main의 1012px 안에서 가운데 정렬한다. 전체 화면 1920px의 중앙으로 옮기지 않는다.
+- ButtonGroup: (626,2058), 320 × 56. tertiary → primary 순서, 각 154 × 56, 내부 gap **12**다.
+- 두 버튼 모두 disabled=false다. 왼쪽 #EDEDED를 비활성 버튼으로 오해하지 않는다. 오른쪽 fill #FFC517, 둘 다 radius 6, 라벨 Bold 18/25 #1C1C1C다.
+- “버튼명”은 자리표시자다. 이전·다음 등 목적, 확인 미완료 시 활성화 정책은 실제 기획을 적용한다.
+- Accordion: (280,2162), 1012 × 156, standard/basic/medium/expanded=true. Header 56 + 위 padding 8 + 불릿 76 + 아래 padding 16 = 156이다.
+- “유의사항” Bold 14/20 #444444, 양끝 아이콘 24px, 본문 Light 14/20 #1C1C1C 3행, 행간 gap 8이다.
+- 유의사항의 Star CMS·이체 한도·권한 안내는 40장의 샘플과 같다. 이번 목적 확인 화면의 실제 정책으로 복사하지 않는다.
+
+### 43.3. 원형 키와 보존 이미지
+
+아래는 사고신고 파일에서 관측한 원형 키다. 기준 디자인 시스템에서 변형·슬롯·실제 스타일을 확인한 뒤 재사용한다.
+
+| 컴포넌트 / 변형 | main component key |
+| --- | --- |
+| Title / Section — left | `3f4d2d1fdde69c122f754927d46b0b2aacb2948e` |
+| Infobox / FullWidth | `5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892` |
+| SelectButton — word/single | `7b6e4a769ba3ff3401fbc04068873ddcf5128dbd` |
+| Item / Word / Single — selected=false | `0aa745072fcb556409dd4d354a11afd582006a62` |
+| Item / Word / Single — selected=true | `403764ddf4f1684762dfba5f7ff303f6c811f3dc` |
+| ConsentFinal — plain | `ed8ff12cbe279b93e2e49c4dccce51472844bd1b` |
+| Item / Consent — 1d | `ebac2930b3bb7662d3b37ef88d01213c7785aa81` |
+| Item / CheckBox — large/unchecked/enabled | `19fa54efbf624c0e95e9873e12de59755ed73489` |
+| TextList — dash/14/depth=1 | `4cdd6bf4ad8ea8f9b7fecaf98d814f28214a1479` |
+| StepIndicator / Vertical | `6d64a53e165cf7f9d92e29637bba2a700ef84253` |
+| Item / Vertical — completed/depth=1 | `a987f53a4b28ffad5c754c7007263c2464f91c25` |
+| Item / Vertical — inProgress/depth=1 | `2232dc849bc42a252539f67b545d887f61a3b523` |
+| Item / Vertical — inProgress/depth=2 | `372b1d67bb72ac32649528121eab56461e3819e3` |
+| Item / Vertical — notStarted/depth=2 | `6eac8b67ca784693d8d105417dddd5bddff1bf07` |
+| Item / Vertical — notStarted/depth=1 | `50fca46a7172d923a82d0dba23c767a5313e7501` |
+| BoxButton — tertiary large | `44749aad1a2b8b103e2068161e6058a3ee80a0a6` |
+| BoxButton — primary large | `d206f834d8d80e5bd6ab306b8033f3c0e5214bc5` |
+
+Title / Page, ButtonGroup, Divider, Accordion 및 bullet TextList는 앞 장의 동일 키와 일치했다. 일반 프레임 Question·Consent·본인인증 step에는 존재하지 않는 component key를 임의로 부여하지 않는다.
+
+전달 시점 화면을 0.5배 PNG(960 × 1359)로 저장소에 보존했다. 원본의 임시 문구·과거 금액도 출처 확인을 위해 이미지에는 그대로 남아 있다.
+
+![금융거래 목적 확인 — 질문·동의 카드와 오른쪽 가입 단계](assets/design-rules/financial-purpose-question-consent.png)
+
+### 43.4. 재현 검수
+
+1. Main 1012 + gap 32 + Right 316, 상단 y=205와 Footer y=2366을 확인한다.
+2. 카드 7개·gap 12, 질문 3개 selected 상태, 확인 6개 unchecked 상태 및 원형 연결을 확인한다.
+3. 설명 1줄/2줄, 확인 문구 2줄 및 하위 들여쓰기 차이에 따른 카드 높이 177/194/214/246/330을 확인한다.
+4. 오른쪽 완료·현재·예정 상태와 본인인증 일반 프레임을 구분하고 하위 2단계·서체를 확인한다.
+5. 원본 BODY의 누락 폰트는 0이었다. 생성 화면에서도 필수 서체·잘림·겹침, 실제 안내·최신 승인 문구·액션, 지정 Footer 인스턴스를 한 번 검수한다. 통과한 검수는 반복하지 않는다.
