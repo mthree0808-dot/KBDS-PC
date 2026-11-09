@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -1969,3 +1969,251 @@ Title / Page, ButtonGroup, Divider, Accordion 및 bullet TextList는 앞 장의 
 3. 설명 1줄/2줄, 확인 문구 2줄 및 하위 들여쓰기 차이에 따른 카드 높이 177/194/214/246/330을 확인한다.
 4. 오른쪽 완료·현재·예정 상태와 본인인증 일반 프레임을 구분하고 하위 2단계·서체를 확인한다.
 5. 원본 BODY의 누락 폰트는 0이었다. 생성 화면에서도 필수 서체·잘림·겹침, 실제 안내·최신 승인 문구·액션, 지정 Footer 인스턴스를 한 번 검수한다. 통과한 검수는 반복하지 않는다.
+
+## 44. 패턴 V — 오른쪽 단계 표시 없는 전체 정보 입력
+
+### 44.1. 출처·셸·영역 배치
+
+- [원본 브랜치 화면](https://www.figma.com/design/ftIWLlgj5Ldgt1uyQu9Gb8/branch/GDnwWiuiGzIZA734GOm3Yr?node-id=16116-77573): `정보입력_우측 스텝인디게이터가 없는 경우`, 1920 × 2652.
+- 실제 조회한 브랜치 키는 `GDnwWiuiGzIZA734GOm3Yr`, 페이지 `Templates (작성중)`(`15115:110263`)다.
+- 흰색 Vertical 화면, gap 0. HEADER 157은 GNB 108 → Breadcrumbs 49 순서다. BODY는 (240,157), 1440 × 2143, padding 48 40, Vertical gap **48**이다.
+- 유효 콘텐츠 x=280, 너비 **1360**이며 오른쪽 StepIndicator나 LNB가 없다. 41장의 1012px Main과 빈 오른쪽 열을 남기는 구조로 만들지 않는다.
+- FOOTER는 (0,2300), 1920 × 352다. 신규 화면은 13장의 지정 Footer 인스턴스를 사용한다.
+- BODY 직접 자식은 Container 1~10이며, Container 2 안에 같은 이름의 래퍼가 한 번 더 있다. 중복 이름을 정리할 때도 기존 부모·개수·순서·역할을 임의로 바꾸지 않는다.
+
+| Container | 내용 | y / 높이 |
+| --- | --- | --- |
+| 1 | 페이지 제목 | 205 / 36 |
+| 2 | 상단 안내 | 289 / 86 |
+| 3 | 출금계좌·비밀번호 | 423 / 179 |
+| 4 | 가입기간 | 650 / 170 |
+| 5 | 안내 + 금액·쿠폰 사용 | 868 / 343 |
+| 6 | 등록 선택·텍스트 버튼 | 1259 / 153 |
+| 7 | 계약서류 수신 방법·이메일 | 1460 / 266 |
+| 8 | 권유직원 검색 | 1774 / 170 |
+| 9 | Button Area | 1992 / 56 |
+| 10 | 유의사항 Accordion | 2096 / 156 |
+
+제목 Container는 실제 141 × 36이며 다른 콘텐츠는 1360px다. 높이 검산: 콘텐츠 합계 1615 + 간격 48 × 9 + 상하 padding 96 = BODY 2143, 전체 157 + 2143 + 352 = 2652다.
+
+### 44.2. 제목·안내·표 공통 규격
+
+- 페이지 제목 “타이틀입니다”: KBFG Text Bold 26/36 #1C1C1C.
+- 각 입력 섹션은 Title / Headline 28px → gap **20** → 본문이다. 제목은 “타이틀입니다”, Bold **20/28** #1C1C1C다. 자리표시자를 실제 업무 제목으로 교체한다.
+- 상단 Infobox / FullWidth: 1360 × 86, padding 20 24, radius 12, #FAFAFA. Slot의 1px padding을 포함해 내부 본문은 x=305, 너비 1310, 불릿 20px 2행 + gap 4다.
+- 상단 문구의 “00:00 ~ 00:00”은 시간 자리표시자다. 휴일·인증·해지 관련 안내도 화면의 샘플이며 실제 상품 정책으로 일반화하지 않는다.
+- 표는 실제 GRID 2열, 열 너비 **180 + 1180 = 1360**, 행·열 gap 0이다. top stroke 1px #444444, 왼쪽 Header fill #F2F2F2·stroke #E5E5E5, 오른쪽 Cell fill #FFFFFF·stroke #EDEDED다.
+- Header/Cell padding은 12 16, Header 텍스트 Medium 14/20 #444444다. Cell의 실제 입력 시작 x는 **476**이며 입력을 전체 1180px로 늘리지 않는다.
+- 원형은 Table / Header default/onlyNumber=false, Table / Cell last/onlyNumber=false다.
+- 표 높이는 섹션별 **131 / 122 / 187 / 65 / 122 / 122**다. 네 번째 표는 프레임 높이 65인데 실제 행 y=1308, 높이 65로 프레임 아래 1px까지 이어진다. 다른 표의 top line 포함 계산을 일괄 적용해 원본 배치를 바꾸지 않는다.
+
+### 44.3. 표 안 입력 패턴
+
+**출금계좌·비밀번호**
+
+- 표 (280,471), 1360 × 131, 65px 2행이다. 계좌 InputField는 (476,484), **400 × 40**, select-default/entered=true로 은행 아이콘·은행명·계좌번호·chevron을 표시한다.
+- 비밀번호 InputField는 (476,549), 400 × 40, entered=false. 오른쪽 “확인” secondary small은 (884,549), **50 × 40**, gap **8**이다. 두 요소가 차지하는 너비는 458이다.
+- 계좌 값은 Bold 14/20 #1C1C1C, 은행명 Medium 14/20 #6E6E6E, 비밀번호 자리표시자는 Bold 14/20 #8D8D8D다.
+
+**가입기간**
+
+- 표 (280,698), 1360 × 122, 실제 행 121px. 위 preset은 y=711, 높이 40, “6개월/12개월/24개월/36개월” 너비 **58/67/67/67**, 간격 **4**다.
+- 아래 직접 입력은 (476,767), 400 × 40, 단위 “개월”을 오른쪽에 둔다. 위 버튼과 아래 입력 사이 gap **16**, 전체 콘텐츠 높이 96이다.
+- amount 타입의 바깥 InputField는 entered=true지만 내부 FilledStyle은 entered=false이며 화면에 자리표시자가 보인다. 원형의 entered 이름만으로 실제 숫자가 입력되었다고 판단하지 않는다.
+
+**금액·쿠폰/포인트리**
+
+- Title 28 → gap 20 → Infobox / Card **88** → gap 20 → Table **187** = 343이다.
+- Infobox / Card는 (280,916), padding 20, radius **20**, #FAFAFA, 불릿 20px 2행 + gap 8이다. FullWidth 안내 박스의 radius 12·padding 20 24와 구분한다.
+- 표 첫 행 (y=1025, h=121) 위 금액 버튼은 (476,1037), 높이 40, 표시 “1000만/500만/300만/100만원”, 너비 **71/63/63/75**, gap 4다.
+- 직접 입력은 (476,1093), 400 × 40, “매달 넣을 금액 직접 입력”과 단위 “원”이다. 원본 행 라벨은 **가입기간**이어서 내용과 맞지 않는다. 생성 시 금액이라는 실제 역할에 맞는 승인된 라벨을 사용한다.
+- 두 번째 행(y=1146, h=65)은 “KB금융쿠폰/포인트리 사용”. SelectButton은 (476,1158), 400 × 40, word/single이다. “사용” 58px, gap **6**, “사용안함” 103px이며 후자가 selected=true다.
+
+**등록 선택**
+
+- 표 프레임 (280,1307), 1360 × 65. SelectButton은 (476,1320), 400 × 40, “등록” 58px / gap 6 / “등록안함” 103px이며 후자가 selected=true다.
+- 아래 TextButton은 (280,1392), 1360 × 20. 실제 라벨 “텍스트버튼”은 Medium 14/20 #1C1C1C이며 16px chevron과 gap 2다. 인스턴스 전체 너비와 실제 라벨·아이콘 너비를 구분한다.
+- 단일 선택의 미선택 테두리는 #D4D4D4, 선택 테두리는 #1C1C1C와 체크 아이콘이다. 선택은 화면 샘플이며 모든 상품의 기본값으로 고정하지 않는다.
+
+**이메일 수신 방법**
+
+- 표 (280,1508), 1360 × 122. Slot은 (476,1521), **500 × 96**, Vertical gap **16**이다.
+- SegmentedControl medium/enabled: 192 × 40, “이메일/SMS” 각 96px, 이메일이 selected=true다.
+- 아래 email InputField: (476,1577), **500 × 40**, entered=false. 아이디·@·도메인 선택·직접입력 영역을 원형 내부 구성으로 유지한다.
+- 선택 항목은 Bold 14/20 #1C1C1C, 미선택은 Medium 14/20 #8D8D8D다. 회색을 disabled로 오인하지 않는다.
+- 아래 별표 안내는 (280,1650), 1360 × 76, 20px 3행 + gap 8, Light 14/20 #1C1C1C다. 계약서류 발송·메뉴 경로는 출처 문구이며 실제 기획을 적용한다.
+
+**권유직원 검색**
+
+- 표 (280,1822), 1360 × 122. Slot은 (476,1835), 400 × 96, gap 16이다.
+- SegmentedControl 384 × 40, “지점명/직원이름/직원번호/없음” 각 96px, 지점명 selected=true다.
+- 검색 InputField는 (476,1891), 400 × 40, search/entered=false, 오른쪽 검색 아이콘과 “검색어를 입력하세요”를 표시한다.
+
+### 44.4. 하단 액션
+
+- ButtonGroup은 (800,1992), **320 × 56**, 각 154 × 56, gap 12, tertiary → primary 순서다. fill #EDEDED / #FFC517, 라벨 Bold 18/25 #1C1C1C, 두 버튼 모두 enabled다.
+- 유의사항 Accordion은 1360 × 156, medium/basic/standard/expanded=true. 제목 Bold 14/20 #444444, Header 56, 본문 20px 3행 + gap 8, Expand Area padding 8 0 16이다.
+- 원본 버튼명·표 라벨·상품값·유의문은 예시이며 실제 동작·검증·계좌·상품 정책으로 고정하지 않는다.
+
+## 45. 패턴 W·X·Y — 오른쪽 요약을 둔 개별 정보 입력
+
+### 45.1. 출처와 공통 배치
+
+- [W — 출금계좌 입력](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-33112): 1920 × 1417.
+- [X — 가입기간 입력](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-33272): 1920 × 1341.
+- [Y — 금액·쿠폰 사용 입력](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-33435): 1920 × 1559.
+- 세 원본 모두 프레임 이름은 `화면ID`, 파일 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`다. 실제 본문을 기준으로 위 패턴명을 붙였다.
+- HEADER 157, BODY (240,157), 너비 1440, padding 48 40, Horizontal gap **32**다. BODY 직접 자식은 **Container 1(Main), Container 2(오른쪽 요약)** 두 개다. 41장의 바깥 Container 내부 Main/Right 구조와 혼동하지 않는다.
+- 왼쪽 (280,205), 너비 **1012**, Vertical gap 48. 오른쪽 (1324,205), **316 × 704**, padding 20, radius 20, 내부 276 × 664다. 오른쪽은 LNB가 아닌 StepIndicator다.
+- 페이지 제목 “가입에 필요한 정보들을 입력해주세요”: 398 × 36, KBFG Text Bold 26/36 #1C1C1C.
+- 공통 상단 Infobox는 (280,289), 1012 × **106**, padding 20 24, radius 12, #FAFAFA다. 44장의 86px와 같은 안내가 **좁은 너비에서 두 번째 문장 2줄**이 되어 20px 높아진다.
+- Slot 964 × 66, padding 1, 내부 962 × 64 = 불릿 20 + gap 4 + 불릿 40이다. 첫 본문 시작 (317,310), 다음 (317,334), Light 14/20 #1C1C1C다.
+
+| 영역 | W | X | Y |
+| --- | --- | --- | --- |
+| Main 높이 | 812 | 736 | 954 |
+| BODY 높이 | 908 | 832 | 1050 |
+| 입력 섹션 y / 높이 | 443 / 266 | 443 / 190 | 443 / 408 |
+| 하단 버튼 y | 757 | 681 | 899 |
+| Accordion y / 높이 | 861 / 156 | 785 / 156 | 1003 / 156 |
+| Footer y / 높이 | 1065 / 352 | 989 / 352 | 1207 / 352 |
+
+Main 높이는 제목 36 + 상단 안내 106 + 입력 섹션 + 버튼 56 + Accordion 156 + gap 48 × 4다. BODY는 Main 높이 + padding 96이다. 각 Footer는 신규 생성 시 13장의 지정 인스턴스로 넣는다.
+
+### 45.2. W — 계좌·비밀번호를 세로로 배치
+
+- Title / Headline (280,443), 1012 × 28, “타이틀입니다”, Bold 20/28 #1C1C1C.
+- gap 20 아래 입력 박스는 (280,491), **1012 × 218**, padding 32, radius 12, stroke #E5E5E5. 실제 내부 시작은 **(313,524)**, 너비 946이다. 테두리 포함 실제 인셋 33을 보존한다.
+- InputField Group 946 × 152, Vertical gap **16**. 계좌 필드 400 × **68** + gap 16 + 비밀번호·버튼 행 높이 68 = 152다.
+- 각 필드 68은 라벨 20 + gap 8 + 실제 입력 40이다. 라벨은 Bold 14/20 #1C1C1C다. V의 표 라벨 Medium 14/20 #444444를 그대로 적용하지 않는다.
+- 계좌 라벨 (313,524), 입력 y=552, 400 × 40, select-default/entered=true다. 비밀번호 라벨 y=608, 입력 y=636, 400 × 40, entered=false다.
+- 비밀번호 옆 “확인”은 (721,636), 50 × 40, gap 8이다. 라벨 높이를 포함한 필드 상단에 맞추지 않고 실제 입력칸과 정렬한다.
+- 박스 높이는 padding 64 + 테두리 2 + 내부 152 = 218이다.
+- 하단은 primary large “다음” **1개**, (709,757), 154 × 56, Main의 중앙이다. count=multi라는 ButtonGroup 원형 이름만 보고 버튼을 추가하지 않는다.
+
+### 45.3. X — 기간 입력과 preset을 한 행에 배치
+
+- Title / Headline은 (280,443), 1012 × **64**다. 제목 Bold 20/28 아래 gap 12, “가입기간은 가입 후 변경할 수 없어요.” 설명 Light **16/24** #444444가 있다.
+- 입력 박스는 (280,527), **1012 × 106**, padding 32, radius 12, stroke #E5E5E5다. 내부 한 행은 (313,560), **679 × 40**이다.
+- 직접 입력 **400 × 40**을 먼저 놓고 gap **8** 뒤에 기간 버튼을 놓는다. preset은 “6개월/12개월/24개월/36개월”, 너비 58/67/67/67, 서로 gap **4**다.
+- 전체 400 + 8 + (58 + 67 × 3 + 4 × 3) = 679다. V처럼 preset 위·입력 아래의 두 줄 구성으로 바꾸지 않는다.
+- 오른쪽 단위 “개월”을 포함한 amount 입력이며 바깥 entered=true/내부 FilledStyle entered=false가 공존한다. 실제 표시된 자리표시자와 원형 내부 상태를 함께 확인한다.
+- 한 줄 40 + padding 64 + 테두리 2 = 박스 106이다. 하단 primary “다음”은 (709,681), 154 × 56이다.
+- 변경 불가 문장은 출처의 문구이며 모든 상품의 기간 변경 정책으로 확대하지 않는다.
+
+### 45.4. Y — 안내·금액·쿠폰·보조 액션
+
+- 입력 섹션 (280,443), 1012 × **408**, Vertical gap 20이다. 제목 28 + gap 20 + 보조 Infobox 86 + gap 20 + 입력/텍스트버튼 묶음 254 = 408이다.
+- 보조 Infobox (280,491), 1012 × 86는 FullWidth다. V의 Infobox / Card 88·radius 20과 구분한다. 이 안의 컴포넌트 설명 샘플은 실제 안내로 교체한다.
+- 입력 박스 (280,597), **1012 × 218**, padding 32, radius 12, stroke #E5E5E5, Vertical gap **16**이다.
+- 첫 행 (313,630), **692 × 68**. 라벨 20 + gap 8 + 금액 입력 40이다. 원본 라벨은 “가입기간”이지만 단위는 원·금액 preset이므로 업무 라벨 불일치를 실제 기획에 맞게 정리한다.
+- InputField 400px 뒤 gap 8, “1000만/500만/300만/100만원” 너비 71/63/63/75·gap 4를 가로로 놓는다. 400 + 8 + (71 + 63 + 63 + 75 + 4 × 3) = 692다.
+- 금액 입력과 preset은 y=658로 정렬한다. 다음 쿠폰 SelectButton은 (313,714), **167 × 68**, 라벨 Bold 14/20 + gap 8 + 선택 행 40이다.
+- 선택 행 y=742: “사용” 58 + gap **6** + “사용안함” 103 = 167. 사용안함 selected=true, 테두리 #1C1C1C와 체크 표시다. 미선택은 #D4D4D4다.
+- 박스 아래 gap **16** 뒤 TextButton은 (280,831), 1012 × 20, “텍스트버튼” Medium 14/20 #1C1C1C와 chevron 16이다. `Text Button`이라는 원본 래퍼 안에는 입력 박스도 있으므로 현재 구성에 맞게 이름을 재판정한다.
+- 하단 ButtonGroup은 (626,899), **320 × 56**, tertiary/primary 각각 154, gap 12다. 둘 다 enabled이며 “버튼명”은 자리표시자다.
+- 3가지 입력 섹션은 일반 프레임 박스와 실제 DS 필드·버튼을 조합한 것이다. 박스 이름만으로 Card 컴포넌트 인스턴스라고 기록하지 않는다.
+
+### 45.5. 오른쪽 요약의 공통 구조와 원본 상태 차이
+
+- 첫 StepIndicator는 (1344,225), 276 × **508**, 상위 “사업자 정보 확인” inProgress다. 번호는 Pretendard SemiBold 17/24 #FFFFFF, 제목은 KBFG Text Bold 16/24 #1F6AFF다.
+- 내부 상위 행 32 + gap 4 + 하위 8개 × 59 = 508이다. 하위 항목은 x=1360, 너비 212, y=261부터 **59px 간격**이다.
+- 하위 순서는 **출금계좌 → 가입기간 → 가입금액 → 자동이체 → 비과세종합저축 → 계약서류 받을방법 → 만기알림 설정 → 권유직원 선택**이다.
+- 현재 하위 항목은 Bold 14/20 #1C1C1C, 요약값 Medium 12/17 #1C1C1C다. 예정 항목은 Medium 14/20 및 Light 12/17 #6E6E6E다.
+- 첫 화면의 계좌 요약은 “국민은행 000000-00-000000”, 기간 요약은 “12개월”, 나머지는 “-”인 샘플이다. 본문 실제 계좌 예시와 다르므로 연결된 동기화가 구현되어 있다고 단정하지 않는다.
+- 다음 상위 단계는 정보확인(y=753), 약관동의(805), 가입완료(857), 각각 276 × 32, notStarted다. 상위 인스턴스 사이 gap 20이며 내부 전체 높이는 508 + 32 × 3 + 20 × 3 = 664다.
+
+| 출처 | 실제 하위 상태 |
+| --- | --- |
+| W — 출금계좌 | 출금계좌 inProgress, 나머지 7개 notStarted |
+| X — 가입기간 | **W와 동일**: 출금계좌 inProgress, 가입기간 notStarted |
+| Y — 금액 | **출금계좌·가입기간·가입금액 completed**, 나머지 5개 notStarted |
+
+X의 본문과 현재 하위 단계가 다르고, Y는 금액 입력 화면인데 가입금액까지 completed다. 원본 상태를 출처별로 보존하되 신규 화면에서는 실제 업무 진행 상태에 맞게 적용한다. 이를 자동 전이 규칙으로 학습하거나 원본에 없는 inProgress 단계를 추정해 기록하지 않는다.
+
+세 화면의 Accordion은 동일한 standard/basic/medium/expanded=true, 1012 × 156이며 Header 56, Expand Area 100, 실제 불릿 슬롯 76이다. 세 출처의 Star CMS·이체·권한 유의문은 샘플로 구분하고 필요한 업무 문구로 교체한다.
+
+## 46. 전체형·개별 입력형의 원형 키·이미지·검수
+
+### 46.1. 원형을 구분하는 기준
+
+브랜치 V와 사고신고 사본 W·X·Y는 이름·크기가 같아도 component key가 다르다. 아래는 이번 조회에서 확인한 원형이며, 기준 라이브러리에서 변형·슬롯·토큰을 대조해 가져오고 detach하지 않는다. 사용자 정의 래퍼·Container 명명은 12장을 따른다.
+
+#### V — 브랜치 원형
+
+| 컴포넌트 | 관측 변형 | main component key |
+| --- | --- | --- |
+| Title / Page | align=left | `fea4cdb5f41c8b7b949ab39623587a8646bdc860` |
+| Infobox / FullWidth | Infobox / FullWidth | `14346e87099b727159e6e8d7cfb168e4abffb498` |
+| Title / Headline | align=left | `cd6a27c70df81353de0a000dd9666a8de67326cd` |
+| Table / Header | variant=default, onlyNumber=false | `d6f6aa68c8312a786fa075924789390b57f50f20` |
+| Table / Cell | variant=last, onlyNumber=false | `e626ba01a8daa7459cc037df4e92dd501961cd5b` |
+| InputField | hover=false, focused=false, disabled=false, entered=true, error=false | `a093b7a53adbf43b22d53daf0b76f7c424513330` |
+| Item / Input | variant=select-default, _hover=false, _focused=false, _disabled=false, _entered=true, _error=false | `125ae17bdbfff31b50366a0d46a9df37d017cc1f` |
+| InputField | hover=false, focused=false, disabled=false, entered=false, error=false | `6eb7815286692dc574ebe162983fcb9afe06fc05` |
+| Item / Input | variant=default, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `2da0a30103387cdead791d10a275160ca57d047e` |
+| BoxButton | variant=secondary, size=small, hover=false, disabled=false, pressed=false | `6189993d8226c13a73fc1fb3a3bb64b06956ed09` |
+| Item / Input | variant=amount, _hover=false, _focused=false, _disabled=false, _entered=true, _error=false | `b692809c9923ce36aa58befd494dca33bd1c6b8b` |
+| Infobox / Card | status=info | `9b7a87a64520a9ad8b7554e5cc97c1bd55ef5de0` |
+| SelectButton | type=word, variant=single | `ff0eef934cbb6cca7abebb8823083a19c3786a34` |
+| TextButton | variant=primary, size=small, hover=false, disabled=false, pressed=false | `fc4c6a2aaa487f6f6a3dcd4c7ea7a1602f7c0b5b` |
+| SegmentedControl | size=medium, disabled=false | `1213543158dc74382389e4f350960e6e742d94fa` |
+| Item / Input | variant=email, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `9a9c642d9f1dd8463adbcb7dada3f76bfb12d76b` |
+| Item / Input | variant=search, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `9ce41eaee5a714ad605017e2c49da482ddd3e179` |
+| ButtonGroup | count=multi, size=large | `d6fa72df43fd699544dbad352e3b60caecb2e139` |
+| BoxButton | variant=tertiary, size=large, hover=false, disabled=false, pressed=false | `16865b7cf50ee59e3475a8886ef45eaf7411ffb1` |
+| BoxButton | variant=primary, size=large, hover=false, disabled=false, pressed=false | `b0139d7de8a2b88746eb885cc88afb141b1fc954` |
+| Accordion | variant=standard, type=basic, size=medium, expanded=true | `18f649bcb9d04acbd270bb44877e5ca42d1c6af9` |
+
+#### W·X·Y — 사고신고 사본 원형
+
+| 컴포넌트 | 관측 변형 | main component key |
+| --- | --- | --- |
+| Title / Headline | align=left | `bf50f457ca5583c356608499f2a479e58248073a` |
+| InputField | hover=false, focused=false, disabled=false, entered=true, error=false | `f689ed1a91c3666eab721996119a0b3540668190` |
+| Item / Input | variant=select-default, _hover=false, _focused=false, _disabled=false, _entered=true, _error=false | `f8bed42a8ed0d1e4e4f0634209a7babd6f3e5cf4` |
+| InputField | hover=false, focused=false, disabled=false, entered=false, error=false | `6a180f941f7bc12168489ec44f9203d0f3a4e7cc` |
+| Item / Input | variant=default, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `1a21da059bc9d4f0221961b447fec3e41c87a5f9` |
+| BoxButton | variant=secondary, size=small, hover=false, disabled=false, pressed=false | `b20b82eee273f930c668788109e73de668023c03` |
+| BoxButton | variant=primary, size=large, hover=false, disabled=false, pressed=false | `d206f834d8d80e5bd6ab306b8033f3c0e5214bc5` |
+| Item / Vertical | state=inProgress, depth=1, hover=false | `2232dc849bc42a252539f67b545d887f61a3b523` |
+| Item / Vertical | state=inProgress, depth=2, hover=false | `372b1d67bb72ac32649528121eab56461e3819e3` |
+| Item / Vertical | state=notStarted, depth=2, hover=false | `6eac8b67ca784693d8d105417dddd5bddff1bf07` |
+| Item / Vertical | state=notStarted, depth=1, hover=false | `50fca46a7172d923a82d0dba23c767a5313e7501` |
+| Item / Input | variant=amount, _hover=false, _focused=false, _disabled=false, _entered=true, _error=false | `37f87b24570c9f551aabdd03fafd56df1fac43ad` |
+| SelectButton | type=word, variant=single | `7b6e4a769ba3ff3401fbc04068873ddcf5128dbd` |
+| TextButton | variant=primary, size=small, hover=false, disabled=false, pressed=false | `95687195c8b0873f0e13393cf059964ecfde2604` |
+| BoxButton | variant=tertiary, size=large, hover=false, disabled=false, pressed=false | `44749aad1a2b8b103e2068161e6058a3ee80a0a6` |
+| Item / Vertical | state=completed, depth=2, hover=false | `a45c78a3d618cfadbef50a7a27e509f0af3f3169` |
+
+
+StepIndicator / Vertical은 `6d64a53e165cf7f9d92e29637bba2a700ef84253`, Title / Page는 `366007b354df25708d9dce4a7788c2b44e30dba3`, Infobox / FullWidth는 `5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892`로 앞 장의 사본과 같다. 표에는 원형 이름을 그대로 기록했으며 입력값·자리표시자·실제 내부 상태를 이름만으로 판단하지 않는다.
+
+### 46.2. 원본 삭제 대비 이미지
+
+원본 그대로 0.5배 PNG, 너비 960px로 저장소에 보존했다. 제작 시 치수는 위 논리 px를 따른다. 임시 제목·계좌·요약값·시간·안내문은 이미지에 남겨 출처를 확인할 수 있게 했다.
+
+#### V — 오른쪽 단계 표시 없는 전체형
+
+![전체 정보 입력 — 오른쪽 단계 표시 없음](assets/design-rules/full-width-information-form.png)
+
+#### W — 출금계좌 개별 입력
+
+![출금계좌 개별 입력과 오른쪽 요약](assets/design-rules/focused-withdrawal-account.png)
+
+#### X — 가입기간 개별 입력
+
+![가입기간 직접 입력과 가로 preset](assets/design-rules/focused-subscription-term.png)
+
+#### Y — 금액·쿠폰 개별 입력
+
+![금액·쿠폰 입력과 오른쪽 요약](assets/design-rules/focused-monthly-amount.png)
+
+### 46.3. 재현 검수
+
+1. V는 1360px 전체형·Container 10개, W~Y는 1012 + 32 + 316의 2열·BODY 직접 Container 2개임을 확인한다.
+2. V의 GRID 표 180/1180, 400px 입력과 500px 이메일 입력, preset 4px·확인 버튼 8px·선택 6px·Segment 후속 입력 16px 간격을 확인한다.
+3. W의 라벨 포함 68px 필드·확인 버튼 하단 정렬, X의 679px 한 행·64px 제목, Y의 692px 행·선택 라벨·보조 TextButton을 확인한다.
+4. 긴 안내 문장의 86→106px 줄바꿈, 입력 박스 106/218px, ButtonGroup 개수와 Main 중앙 정렬을 확인한다.
+5. 우측 508px 상세 + 32px 상위 3개, 출처별 상태 불일치를 실제 기획과 대조한다. V에 오른쪽 요약을 자동 추가하지 않는다.
+6. 4개 원본 BODY의 누락 폰트는 모두 0이었다. 생성 시 필수 서체·잘림·겹침·한 줄 표의 1px 경계, 실제 업무 문구·선택 상태·입력 검증 및 지정 Footer 인스턴스를 한 번 검수한다.
