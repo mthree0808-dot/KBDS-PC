@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장, 이체 완료·중요 사항·적합성 AB~AD는 50~53장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 각 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장, 이체 완료·중요 사항·적합성 AB~AD는 50~53장, 정보 확인·거래내역·투자성향 AE~AG는 54~57장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 각 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -2618,3 +2618,202 @@ Main: 제목 36 + Info 260 + 124 + 280 + top gap 48 × 3 = 844, bottom 428 + 48 
 4. AD의 149/237/279px 카드·gap 12, 단일/복수 선택, 이메일 500px·전화 400px, phone의 실제 입력 상태와 제목 래퍼 넘침을 확인한다.
 5. 세 원본 BODY의 누락 폰트는 모두 0이었다. 실제 생성에서도 필수 서체·문장 줄바꿈·잘림·겹침·계층·상태를 한 번 검수한다.
 6. 예시 집계·응답·법률/상품 문구를 승인된 기획과 대조하고 지정 Footer 인스턴스를 확인한다. 통과한 검수는 반복하지 않는다.
+
+## 54. 패턴 AE — 등록 정보 확인과 추가 인증
+
+### 54.1. 출처·배치
+
+- [원본 — 정보확인](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-41193): **1920 × 1889**.
+- 파일 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`. HEADER 157이며 화면 이미지에서 GNB → Breadcrumbs 순서를 확인했다.
+- BODY: (240,157), **1440 × 1380**, padding 48 40, Horizontal gap **32**. Main은 (280,205), **1012 × 1284**, 오른쪽 단계 영역은 (1324,205), **316 × 228**이다.
+- Main 내부 영역 간격은 **48**이다. Footer는 **(0,1537), 1920 × 352**, 신규 생성은 13장의 지정 Footer 인스턴스를 사용한다.
+- 이번 장부터도 원본 BODY의 미정리 이름·중간 래퍼·번호를 제작 규칙으로 복제하지 않는다. 아래는 UI 역할과 실측 배치이며 생성 레이어는 **12.0~12.11**을 적용한다.
+
+| 역할 | y / 높이 |
+| --- | --- |
+| 페이지 제목 | 205 / 36 |
+| 안내 Infobox | 289 / 110 |
+| 계좌·받는분 확인 | 447 / 184 |
+| 자동이체 설정 확인 | 679 / 364 |
+| 추가 인증·하단 액션 | 1091 / 398 |
+
+Main 높이: 36 + 110 + 184 + 364 + 398 + 48 × 4 = 1284. BODY는 상하 padding 96을 더한 1380이다.
+
+### 54.2. 안내·확인 표와 DataList
+
+- 제목 “이대로 등록하시겠습니까?”는 **KBFG Text Bold 26/36 #1C1C1C**, 280 × 36이다.
+- 상단 Infobox / FullWidth는 **1012 × 110**, padding 20 24, radius 12, #FAFAFA다. Slot은 964 × 70, padding 1, 실제 20px 불릿 3행 + gap 4 × 2 = 68px다. Slot의 2px와 바깥 padding 40을 포함해 110이다.
+- 보안카드/OTP·KB국민인증서 안내는 Light 14/20 #1C1C1C다. 실제 보안매체·인증·등록 정책은 업무 기획을 따른다.
+- 각 표 섹션은 Title / Headline **Bold 20/28 #1C1C1C** → gap **20** → Table GRID 순서다. “타이틀입니다”는 실제 업무 제목으로 교체한다.
+- 표 열은 **180 + 832 = 1012**, gap 0, 행 높이 **45**, top line 1px #444444다.
+- 첫 표는 (280,495), **1012 × 136**, 3행: 출금계좌번호 / 입금계좌번호 / 받는분. 1 + 45 × 3 = 136이다.
+- 둘째 표는 (280,727), **1012 × 316**, 7행: KB 입출금 계좌 / 이체금액 / 이체주기 / 자동이체일 / 이체기간(시작·종료) / 내 통장 표시 / 받는 분 통장 표시. 1 + 45 × 7 = 316이다.
+- Header 라벨은 **Medium 14/20 #444444**, 값은 **Medium 14/20 #1C1C1C**이며 값 시작 x=476이다.
+- 값 영역에는 단순 Text가 아니라 **DataList — layout=inLine, size=14, accordion=false, expanded=false** 인스턴스를 사용한다. 텍스트 오른쪽의 16px chevron을 유지한다.
+- DataList 실제 너비는 문자열에 따라 계좌 178 / 받는분 55 / “0원” 39px 등으로 달라진다. 값 셀 832px 전체 너비를 각 DataList에 강제하지 않는다.
+- 원본 계좌번호·이체 0원·날짜 2026.08~2026.08은 샘플이다. chevron의 편집·조회·팝업 이동 동작도 정적 화면만으로 확정하지 않는다.
+
+### 54.3. 인증 UI 조합과 액션
+
+- 인증 제목 (280,1091), 높이 28 → gap 20 → 인증 박스 **(280,1139), 1012 × 246**다.
+- 박스는 padding 32, radius 12, 1px stroke #E5E5E5이며 실제 내부 시작 **(313,1172)**다.
+- 실제 UI 조합은 **SegmentedControl → gap 20 → TextList Group → gap 24 → 인증받기 Button Area**다. Segment와 후속 본문은 실제 Auto Layout으로 묶고 현재 구성에 맞게 명명한다.
+- Segment는 **192 × 40**, 각 항목 96px, 항목 사이 gap 0. ARS 인증 selected=true, 해외출국확인 selected=false, 둘 다 enabled다.
+- 선택 라벨은 Bold 14/20 #1C1C1C, 미선택은 Medium 14/20 #8D8D8D다.
+- 안내 목록은 (313,1232), **946 × 48**, 20px 2행 + gap 8, Light 14/20 **#6E6E6E**다.
+- “인증받기”는 **(313,1304), 400 × 48**, secondary medium, Bold 16/24 #1C1C1C다. 박스 높이는 padding 64 + 테두리 2 + (40 + 20 + 48) + gap 24 + 버튼 48 = 246이다.
+- 박스 아래 gap **48**, 하단 tertiary/primary 버튼은 **(626,1433), 320 × 56**, 각 154 × 56, gap 12다. “버튼명”과 인증 후 상태·진행 조건은 기획을 적용한다.
+- 오른쪽 단계는 내부 276 × **188**, 외곽 padding 20을 포함해 316 × 228이다. **약관동의 completed → 정보입력 completed → 정보확인 inProgress → 가입완료 notStarted**, 각 32px, 사이 gap 20이다. 긴 하위 요약을 자동 추가하지 않는다.
+
+## 55. 패턴 AF — 계좌 요약·조건 조회·거래내역 목록
+
+### 55.1. 출처와 전체형 배치
+
+- [원본 화면](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-41507): **1920 × 1970**.
+- 프레임 이름은 `자동이체등록-계좌정보 추가입력`, 페이지 제목은 “이대로 등록하시겠습니까?”이지만 실제 본문은 **계좌 요약 + 거래내역 조건 조회 + 목록**이다. 이름·제목을 최종 업무 성격으로 확정하지 않는다.
+- HEADER 157, BODY (240,157), **1440 × 1461**, Vertical gap 48, padding 48 40. 유효 콘텐츠는 x=280, 너비 **1360**이며 StepIndicator·LNB가 없다.
+- Footer는 **(0,1618), 1920 × 352**, 신규 생성은 지정 Footer 인스턴스를 사용한다.
+
+| 역할 | y / 높이 |
+| --- | --- |
+| 페이지 제목 | 205 / 36 |
+| 계좌 요약 카드 | 289 / 164 |
+| 조회 조건·조회 버튼 | 501 / 413 |
+| 조회 건수·정렬·목록·페이지 | 962 / 608 |
+
+36 + 164 + 413 + 608 + gap 48 × 3 + padding 96 = BODY 1461이다.
+
+### 55.2. 계좌 요약 카드
+
+- 일반 카드 프레임은 **1360 × 164**, padding **32 32 24 32**, radius 12, 흰색, stroke #8D8D8D다.
+- 내부 List 인스턴스는 **(312,321), 1296 × 60**, 은행 아이콘·상품명·한도계좌 라벨·은행/계좌번호·펼침·더보기 아이콘을 조합한다.
+- 상품명 “KB Star 저축예금 보통예금”: Bold 16/24 #1C1C1C. 한도계좌 라벨은 Bold 12/17, 은행명 Medium 12/17 #6E6E6E, 계좌번호 Pretendard Regular 13/17 #6E6E6E다.
+- 아래 gap **8**, 잔액·버튼 행은 y=389, 높이 40이며 왼쪽 들여쓰기 32다.
+- 잔액 설명은 Medium 14/20 #8D8D8D, 금액은 **Pretendard Regular 15/20**다. 출금 가능 금액만 #1F6AFF, 나머지는 #1C1C1C다.
+- 오른쪽 “이체/조회” secondary small은 **120 × 40**씩, gap 8, (1360,389)/(1488,389)다.
+- 높이는 60 + 8 + 40 + padding 56 = 164다. 계좌·잔액은 예시이며 제한·가용금액 산식·더보기 동작은 별도 기획을 따른다.
+
+### 55.3. 조건 조회 표
+
+- GRID는 **(280,501), 1360 × 341**, **160 + 1200**의 2열, 4행 높이 **161/49/65/65**, top line 1px, 실제 행·열 gap 0이다.
+- 라벨은 Medium 14/20 #444444, 입력 시작 x=**456**이다. 54장 180px 라벨 열의 시작점 476과 구분한다.
+- 첫 행은 조회 기간. 내부 (456,514), 높이 **136** = Radio 24 + gap 16 + 날짜 입력 40 + gap 16 + preset 40이다.
+- 기간조회/월별조회 Radio는 24px 아이콘을 사용하고 항목 간 gap **16**이다. **실제 내부 Item / Radio는 기간조회 checked=true**, 월별조회 false다. 바깥 Radio의 checked=false 원형 이름만 보고 둘 다 미선택으로 기록하지 않는다.
+- 기간 InputField는 **(456,554), 400 × 40**, period 타입이다. 달력 버튼 **40 × 40**은 (816,554)로 그 안에 포함된다. 날짜 필드 외부에 40px를 다시 더하지 않는다.
+- 아래 preset은 “오늘/1주일/1개월/3개월/6개월/12개월/24개월”, 너비 **50/58/58/58/58/67/67**, 높이 40, gap **4**다.
+- 둘째 행은 전체/입금 내역만/출금 내역만 Radio, 높이 24, gap **16**. 실제 내부 상태는 **전체만 checked=true**다.
+- 셋째 행은 최소금액~최대금액, **(456,724), 400 × 40**, amount-start-end 타입과 단위 원을 유지한다.
+- 넷째 행은 보낸 분/받는 분·내통장 표시, **(456,789), 400 × 40**, “글자 최대 20자까지 입력 가능해요” placeholder다. 샘플 문구를 구현된 검증 로직으로 간주하지 않는다.
+- 표 아래 gap **24**, “조회” secondary medium **(883,866), 154 × 48**를 가로 중앙에 둔다.
+
+### 55.4. 결과 도구·8열 목록·페이지
+
+- 결과 상단은 **(280,962), 1360 × 40**. 왼쪽 “조회 건 수 100건”, 오른쪽 정렬/표시 개수 InputField 각 **152 × 40**, gap **8**로 총 312px다.
+- 정렬 “최근 거래내역 순”, 표시 “10개씩 보기”는 실제 선택값이다. 바깥 InputField entered=false라도 내부 select-default는 entered=true이므로 표시값을 placeholder로 치환하지 않는다.
+- 결과 GRID: **(280,1022), 1360 × 496**, **8열 × 11행**, 각 열 **170**, Header·데이터 행 각각 **45**다. top line 1 + 45 × 11 = 496.
+- 실제 GRID gap은 **0**이다. 일반 itemSpacing=10 속성을 셀 사이 간격으로 적용하지 않는다.
+- 열 순서: 거래일시 / 통장 표시 / 보낸 분·받는 분 / 출금액(원) / 이체금액(원) / 잔액(원) / 받는 분 통장 표시 / 거래점.
+- Header는 Medium 14/20 #444444. 이번 데이터의 거래일시와 보낸 분/받는 분은 **Pretendard Light 15/20**, 나머지 일반/금액 값은 **KBFG Text Light 14/20 #1C1C1C**로 확인됐다. 모든 숫자를 단일 서체로 일괄 변경하지 않는다.
+- 목록 아래 gap **16**, Pagination / Basic은 **(692,1534), 536 × 36**, 중앙 정렬이다. 숫자 항목은 36 × 36, Pretendard Regular 17/24다.
+- 원본 페이지 **1은 active, 2는 hover, 3~10은 enabled**다. 2의 회색 배경을 현재 페이지로 오인하지 않는다. 처음/이전/다음/마지막 화살표를 원형과 함께 유지한다.
+- 건수 100·표시 10행·날짜·금액·계좌는 예시다. 정렬·페이지·검색·이체의 실제 동작과 데이터 정책은 기획에 따라 구현한다.
+
+## 56. 패턴 AG — 중앙 정렬 투자성향 설문
+
+### 56.1. 출처·중앙 본문·안내
+
+- [원본 — 투자성향분석](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-42021): **1920 × 2168**.
+- HEADER 157, BODY (240,157), **1440 × 1659**, padding 48 40. 유효 1360px 영역 안에 **1012px Main을 중앙 정렬**, 실제 x=**454**, y=205다.
+- Main 높이 **1563**, Vertical gap **48**. 오른쪽 빈 열을 둔 입력형이 아니며 LNB·StepIndicator도 없다.
+- 제목 “투자 성향 분석”: **157 × 36**, KBFG Text Bold **26/36 #1C1C1C**다.
+- Infobox / FullWidth: **(454,289), 1012 × 162**, padding 20 24, radius 12, #FAFAFA다.
+- info 아이콘이 있는 제목은 Bold 14/20 #1C1C1C. Header 20 → gap 12 → Slot 90, 위아래 padding 40으로 162px다.
+- Slot은 padding 1, 실제 불릿 높이 **20/20/40**, gap **4**, 합계 88 + padding 2 = 90이다. 문장 증가로 안내 높이를 확장하며 106px 등 과거 값으로 고정하지 않는다.
+- 일반 안내는 Light 14/20 #1C1C1C이며 **“온라인 또는 영업점 창구”와 “1일 1회”만 Medium 14/20 #1F6AFF**다. 전체 문장을 한 색·굵기로 덮어쓰지 않는다.
+- 일일 분석 횟수·상품 가입 제한·투자 정책은 원본 안내 예시이며 승인된 실제 정책을 적용한다. 이 문서는 투자 조언이나 설문 채점 기준을 정의하지 않는다.
+
+### 56.2. 단어형·문장형, 단일·복수 선택
+
+질문 카드 5개는 (454,499)부터 너비 1012, Vertical gap **12**로 반복된다. #FFFFFF, 1px stroke #E5E5E5, radius 12, padding **32**다. 내부는 x=486, 너비 **948**이며 Title / Section **Bold 18/25 #1C1C1C** → gap **20** → SelectButton 순서다.
+
+| 질문 | 역할·UI | y / 높이 | 원본 선택 |
+| --- | --- | --- | --- |
+| Q1 | 연령대, word/single 5항목 | 499 / 149 | 30대 |
+| Q2 | 연소득, word/single 5항목 | 660 / 149 | 5천만원 이하 |
+| Q3 | 수입원, **sentence/single** 4행 | 821 / 309 | 현재 수입 수준 유지 예상 |
+| Q4 | 금융자산 비중, word/single 5항목 | 1142 / 149 | 30% 이내 |
+| Q5 | 투자 경험, **sentence/multiple** 5행 | 1303 / 361 | 첫째·둘째 항목 |
+
+- 단어형은 높이 **40**, 항목 사이 gap **6**다. 문구 길이와 체크 표시를 반영한 실제 너비를 사용하며 균등 분할하지 않는다.
+- Q1 너비는 62/82/62/62/92, Q2는 108/128/96/96/96, Q4는 92/112/92/92/92px다. 선택된 항목은 체크 표시만큼 넓다.
+- 문장형 항목은 각각 **948 × 44**, padding **12 12 12 16**, 내부 gap 8, radius 6이다. 텍스트와 오른쪽 20px 체크 영역을 유지한다.
+- Q3는 44 × 4 + 행간 **8 × 3 = 200**, 카드 64 + 제목 25 + gap 20 + 목록 200 = **309**다.
+- Q5는 44 × 5 + 행간 **8 × 4 = 252**, 카드 64 + 25 + 20 + 252 = **361**이다.
+- 기본 word 카드는 64 + 25 + 20 + 40 = **149**다. 질문 전체는 149 × 3 + 309 + 361 + gap 12 × 4 = **1165**다.
+- 선택 문구는 **Bold 14/20 #1C1C1C**, 미선택은 **Bold 14/20 #444444**. 선택 stroke #1C1C1C, 미선택 stroke #D4D4D4다.
+- Q3는 하나만 선택하는 Sentence / Single, Q5는 여러 개를 선택하는 Sentence / Multiple이다. 긴 문장을 단어형 버튼으로 바꾸거나 복수 선택을 단일 선택으로 대체하지 않는다.
+- Q5의 첫째·둘째는 selected=true, 나머지는 false이며 모두 disabled=false다. 미선택의 연한 체크를 선택 완료나 비활성으로 오인하지 않는다.
+- 원본 응답과 금액 구간·상품 목록은 예시다. 신규 설문의 기본 답변·점수·등급 판정 기준으로 고정하지 않는다.
+
+### 56.3. 결과 액션과 제작 계층
+
+- 질문 그룹 아래 gap **48**, “결과보기” primary large는 **(883,1712), 154 × 56**, Main 중앙에 놓는다.
+- Main 높이는 제목 36 + 안내 162 + 질문 1165 + 버튼 56 + gap 48 × 3 = **1563**이다. BODY는 padding 96을 더한 1659다.
+- Footer: **(0,1816), 1920 × 352**, 신규 생성은 13장의 지정 인스턴스를 사용한다.
+- UI 조합은 제목 / 안내 / 반복 Question Group / Button Area로 정립한다. 각 Question은 제목과 실제 word 또는 sentence SelectButton을 조합하고 원형 내부 고유 계층을 유지한다.
+- 원본의 Main 중간 래퍼·Container 번호를 복제 조건으로 삼지 않는다. 실제 생성 명명·Auto Layout 그룹핑은 12장을 따른다.
+
+## 57. AE·AF·AG 원형 키·보존 이미지·검수
+
+### 57.1. 확인한 주요 main component key
+
+사고신고 파일에서 이번 UI 조합에 사용한 원형이다. 지정 디자인 시스템의 실제 원형·변형·슬롯·토큰과 대조하여 재사용한다.
+
+| 컴포넌트 | 관측 변형 | main component key |
+| --- | --- | --- |
+| DataList | layout=inLine, size=14, accordion=false, expanded=false | `7cf5e6aaa6810575694f82ff5db34068635c7f2e` |
+| List | List | `efc578a125431c008569ed3affe51759bb11531b` |
+| Radio | size=medium, fontWeight=bold, checked=false, disabled=false, invalid=false | `a74b3740e5e5e0c5f6a09bbb44fe88dee6248cdb` |
+| Item / Radio | checked=true, invalid=false, disabled=false | `ab9ce0577cb295003dfc8d4b13ab7de10b0deb80` |
+| Item / Radio | checked=false, invalid=false, disabled=false | `f37eb975057dc7840f53db65633a65c769cfa1a8` |
+| Item / Input | variant=period, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `a69bf9237990a9897dd7ab431a56ab62b592818f` |
+| Item / Input | variant=amount-start-end, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `cf639656a56928b009a21426c05cde657401f755` |
+| Pagination / Basic | variant=default | `13fdebbc05101067ac4c6cad5d74f38fd6c3af7f` |
+| Item / Pagination | state=active | `2cd1237baa5132e02aa1fcd57156a97b9f1c7114` |
+| Item / Pagination | state=hover | `56da6187ca9837d43304a4f1e259396d2ac4cdb7` |
+| Item / Pagination | state=enabled | `8e136e3edc6db2a3ed136fa6d8334971dd866ae5` |
+| SelectButton | type=word, variant=single | `7b6e4a769ba3ff3401fbc04068873ddcf5128dbd` |
+| SelectButton | type=sentence, variant=single | `d906bc780d318f3e84e15949dbd8c428e0d905b4` |
+| Item / Sentence / Single | selected=false, hover=false, pressed=false, disabled=false | `28c17e110f22a77046f2a09bb035405ed5ce8b2f` |
+| Item / Sentence / Single | selected=true, hover=false, pressed=false, disabled=false | `8704f7f139687dc0aec73e9ecee31dfcd1554a34` |
+| SelectButton | type=sentence, variant=multiple | `b1eb31fb3fe2eff386229bde06d83f205a9c12ff` |
+| Item / Sentence / Multiple | selected=true, hover=false, pressed=false, disabled=false | `449ca551c6456561bbda45a98f1851a3fef65a27` |
+| Item / Sentence / Multiple | selected=false, hover=false, pressed=false, disabled=false | `bb4f82d8380f1a9ed9499ad2081678f08a1e6527` |
+
+
+SegmentedControl `0913c191bc17e51c03c037c519dcc4149ac4ac23`, InputField 미입력 `6a180f941f7bc12168489ec44f9203d0f3a4e7cc`, FullWidth Infobox `5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892`, secondary medium BoxButton `5886824ec2647b1ba57dbf06a4f86605080586fe`와 primary large `d206f834d8d80e5bd6ab306b8033f3c0e5214bc5`는 앞선 사본과 같다. 제작 시 원형 연결을 유지하고 detach하지 않는다.
+
+### 57.2. 원본 삭제 대비 이미지
+
+이번 세 화면을 너비 960px의 0.5배 PNG로 보존했다. 이미지 속 임시 제목·데이터·선택 상태는 출처 확인용이며, 실제 생성은 기획과 위 규칙을 적용한다.
+
+#### AE — 등록 정보 확인·인증
+
+![등록 정보 확인과 ARS 추가 인증](assets/design-rules/registration-review-authentication.png)
+
+#### AF — 계좌 거래내역 조회
+
+![계좌 요약·조회 필터·거래내역·페이지](assets/design-rules/account-transaction-history.png)
+
+#### AG — 투자성향 설문
+
+![중앙 정렬 투자성향 분석과 문장형 선택](assets/design-rules/investor-profile-questionnaire.png)
+
+### 57.3. 재현 검수
+
+1. AE의 1012 + 32 + 316과 짧은 228px 단계 영역, AF의 1360px 전체형, AG의 x=454·1012px 중앙형을 구분한다.
+2. AE의 180/832 표·45px 행·inLine DataList, 246px 인증 박스와 ARS Segment·인증받기 400 × 48을 확인한다.
+3. AF의 160/1200 필터 표·24px Radio 실제 선택, 기간 필드 내부 달력·preset 간격 4, 8열/45px 결과 행, 1 active·2 hover 페이지 상태를 확인한다.
+4. AG의 40px word/44px sentence, 단일/복수 선택, 149/309/361px 카드, 안내의 구간별 굵기·파란 강조를 확인한다.
+5. 세 원본 BODY의 누락 폰트는 모두 0이었다. 생성 시 필수 서체·줄바꿈·잘림·겹침·UI 상태·기획 문구를 한 번 검수한다.
+6. BODY 명명·실제 Auto Layout은 12장을 우선 적용하고, 디자인 시스템 인스턴스의 원형 계층과 지정 Footer를 확인한다. 검수 통과 후 불필요하게 반복하지 않는다.
