@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -2217,3 +2217,147 @@ StepIndicator / Vertical은 `6d64a53e165cf7f9d92e29637bba2a700ef84253`, Title / 
 4. 긴 안내 문장의 86→106px 줄바꿈, 입력 박스 106/218px, ButtonGroup 개수와 Main 중앙 정렬을 확인한다.
 5. 우측 508px 상세 + 32px 상위 3개, 출처별 상태 불일치를 실제 기획과 대조한다. V에 오른쪽 요약을 자동 추가하지 않는다.
 6. 4개 원본 BODY의 누락 폰트는 모두 0이었다. 생성 시 필수 서체·잘림·겹침·한 줄 표의 1px 경계, 실제 업무 문구·선택 상태·입력 검증 및 지정 Footer 인스턴스를 한 번 검수한다.
+
+## 47. 패턴 Z — 왼쪽 단계 요약과 이메일 수신 입력
+
+### 47.1. 출처와 좌우 배치
+
+- [원본 화면](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-35245): 프레임 `화면ID`, **1920 × 1457**.
+- 파일 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`.
+- 이번 화면은 **왼쪽 StepIndicator → 오른쪽 Main** 배치다. 45장의 오른쪽 단계 요약을 모든 화면에 강제하는 규칙으로 해석하지 않는다. 단계 요약은 LNB가 아니다.
+- 흰색 Vertical 루트, gap 0. HEADER 높이는 157이며 화면 이미지에서 GNB → Breadcrumbs 순서를 확인했다.
+- BODY: (240,157), 1440 × **948**, Horizontal gap 32, padding 48 40.
+- 왼쪽 요약: (280,205), **316 × 704**, padding 20, radius 20, #FFFFFF. Main: (628,205), **1012 × 852**, Vertical gap 48.
+- BODY 자식 순서는 실제로 `Container 2`(왼쪽 요약) → `Container 1`(오른쪽 Main)이다. 출처의 역순 이름은 이름 정리 대상과 실제 배치 순서를 구분해 기록한다. 12장 기준으로 명명을 재판정하되 부모·역할·좌우 순서를 임의로 바꾸지 않는다.
+- Footer: (0,1105), 1920 × 352. 신규 생성은 13장의 지정 Footer 컴포넌트 인스턴스를 사용한다.
+
+| Main 영역 | 좌표 (x,y) | 크기 |
+| --- | --- | --- |
+| 페이지 제목 | (628,205) | 1012 × 36 |
+| 상단 Infobox / FullWidth | (628,289) | 1012 × 106 |
+| 수신 방법 입력 섹션 | (628,443) | 1012 × 306 |
+| Button Area | (628,797) | 1012 × 56 |
+| 유의사항 Accordion | (628,901) | 1012 × 156 |
+
+Main 높이는 36 + 106 + 306 + 56 + 156 + 48 × 4 = 852, BODY는 852 + 96 = 948, 전체 157 + 948 + 352 = 1457이다.
+
+### 47.2. 제목·상단 안내와 이메일 입력 박스
+
+- 페이지 제목 “가입에 필요한 정보들을 입력해주세요”: KBFG Text Bold 26/36 #1C1C1C, 실제 텍스트 398 × 36.
+- 상단 안내는 45장과 같은 106px FullWidth 형태다. padding 20 24, radius 12, fill #FAFAFA. Slot은 964 × 66, padding 1, 내부 962 × 64, gap 4다.
+- 안내 본문은 x=665, 너비 950, Light 14/20 #1C1C1C이며 두 번째 문장이 40px 두 줄이다. 시간 “00:00 ~ 00:00”과 휴일·해지·인증 문장은 샘플로 구분하고 실제 상품 기획을 적용한다.
+- 섹션 제목은 (628,443), 1012 × 28의 Title / Headline, “타이틀입니다”, Bold 20/28 #1C1C1C다.
+- gap 20 아래 입력 박스: **(628,491), 1012 × 162**, padding 32, radius 12, 1px stroke #E5E5E5, 별도 fill 없음.
+- 실제 내부 InputField Group은 **(661,524), 500 × 96**, Vertical gap **16**이다. 테두리 포함 인셋은 33이며 96 + padding 64 + 테두리 2 = 162다.
+- SegmentedControl: (661,524), **192 × 40**, medium/enabled. “이메일” 96px selected=true, “SMS” 96px selected=false이며 항목 사이 gap은 0이다. 바깥 원형의 gap=8을 두 항목 사이 여백으로 적용하지 않는다.
+- 선택 항목은 2px #1C1C1C 테두리·#FFFFFF, 라벨 Bold 14/20 #1C1C1C다. 미선택 SMS는 Medium 14/20 #8D8D8D이며 disabled=false다.
+- 이메일 InputField: **(661,580), 500 × 40**, entered=false/error=false/disabled=false, 내부 Item / Input은 variant=email이다. 아이디·@·도메인·직접입력 구성을 원형 내부 계층으로 유지한다.
+- 일반 placeholder “텍스트영역”, “직접입력”은 Bold 14/20 #8D8D8D, @는 Bold 16/24 #8D8D8D다. 유효성 검사·직접입력 전환 동작은 정적 화면만으로 확정하지 않는다.
+
+### 47.3. 박스 밖 별표 안내와 버튼
+
+- 입력 박스 아래 gap **20** 뒤 TextList Group은 **(628,673), 1012 × 76**이다.
+- star/14/depth=1 인스턴스 3행, 높이 20, gap 8. 마커 x=628, 본문 x=640, 본문 너비 1000이다.
+- **KBFG Text Light 14/20 #6E6E6E**다. 44장 전체형의 동일 문구 #1C1C1C와 다르므로 출처별 색상을 보존한다.
+- 안내 내용은 계약서류 발송·확인·고객정보 변경 경로다. 실제 메뉴·법률 적용·수신 정책을 화면 샘플만으로 확정하지 않는다.
+- 원본 `Text Button` 래퍼는 실제 TextButton이 아니라 **입력 박스 + TextList Group**을 담은 FRAME이다. 이름을 근거로 버튼을 생성하지 않으며 현재 자식 구성에 따라 이름을 다시 정한다.
+- 입력 섹션 높이는 제목 28 + gap 20 + 박스 162 + gap 20 + 목록 76 = 306이다.
+- ButtonGroup: **(974,797), 320 × 56**. tertiary (974,797) → primary (1140,797), 각각 154 × 56, gap 12다. **오른쪽 Main의 중앙**에 맞추며 전체 화면 중앙으로 이동하지 않는다.
+
+## 48. 패턴 AA — 직원 검색과 제목 옆 보조 버튼
+
+### 48.1. 출처와 영역 배치
+
+- [원본 화면](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-35414): 프레임 `화면ID`, **1920 × 1393**, Z와 같은 파일·페이지.
+- HEADER 157, BODY (240,157), **1440 × 884**, padding 48 40, Horizontal gap 32.
+- 이번에는 **왼쪽 Main (280,205), 1012 × 788 → 오른쪽 요약 (1324,205), 316 × 704** 순서다. BODY 직접 자식은 Container 1 → Container 2다.
+- Main은 Vertical gap 48이며 페이지 제목·상단 106px Infobox의 크기·서체는 Z와 같다. 좌표는 각각 (280,205)/(280,289)다.
+- Footer: (0,1041), 1920 × 352. 신규 화면은 13장의 지정 인스턴스를 사용한다.
+
+| Main 영역 | y / 높이 |
+| --- | --- |
+| 페이지 제목 | 205 / 36 |
+| 상단 안내 | 289 / 106 |
+| 직원 검색 섹션 | 443 / 242 |
+| Button Area | 733 / 56 |
+| 유의사항 Accordion | 837 / 156 |
+
+36 + 106 + 242 + 56 + 156 + 48 × 4 = Main 788, BODY 788 + 96 = 884, 전체 157 + 884 + 352 = 1393이다.
+
+### 48.2. 제목 행과 직원선택 액션
+
+- 제목 행은 **(280,443), 1012 × 28**, Horizontal이다. Title / Headline 인스턴스는 **951 × 28**, “직원선택” BoxButton은 **(1231,443), 61 × 28**이다.
+- 제목은 “타이틀입니다”, KBFG Text Bold 20/28 #1C1C1C. 보조 버튼은 secondary/**xsmall**, padding 2 6, radius 4, fill #FFFFFF, stroke 1px #A5A5A5다.
+- “직원선택” 라벨은 **Bold 12/17 #1C1C1C**다. small 40px 버튼으로 확대하거나 하단 액션으로 옮기지 않는다.
+- 원본 제목 행의 itemSpacing 속성은 **12**지만 실제 측정에서 Title 오른쪽과 버튼 왼쪽이 모두 x=1231이다. **실제 배치 951 + 61 = 1012**와 속성값을 구분한다. 12px를 다시 더해 1024px로 넘치게 만들지 않는다.
+- 직원선택 버튼의 팝업·검색 결과·선택 확정 동작은 이번 정적 화면에서 확인되지 않았다.
+
+### 48.3. 직원 검색 박스
+
+- 제목 아래 gap 20, 박스 **(280,491), 1012 × 194**, padding 32, radius 12, 1px stroke #E5E5E5, 별도 fill 없음.
+- 내부 InputField Group: **(313,524), 400 × 128**, Vertical gap **12**다.
+- Title / Element “직원 선택”은 (313,524), 높이 20, Bold 14/20 #1C1C1C다.
+- 아래 `Segmented / Input` 실제 Auto Layout은 **(313,556), 400 × 96**, Vertical gap **16**이다. Segment와 후속 입력을 함께 묶는 12장 규칙에 맞는 참조다.
+- SegmentedControl: (313,556), **384 × 40**, medium/enabled. “지점명 → 직원이름 → 직원번호 → 없음” 순서, 각 96px, 항목 간 gap 0이다.
+- 지점명 selected=true, Bold 14/20 #1C1C1C, 2px #1C1C1C 테두리다. 나머지는 selected=false/disabled=false, Medium 14/20 #8D8D8D다. 회색을 비활성 상태로 해석하지 않는다.
+- 검색 InputField: **(313,612), 400 × 40**, entered=false/error=false/disabled=false, 내부 variant=search다. “검색어를 입력하세요”는 Bold 14/20 #8D8D8D이며 오른쪽 검색 아이콘을 유지한다.
+- 높이 검산: 라벨 20 + gap 12 + Segment 40 + gap 16 + 검색 40 = 내부 128, padding 64 + 테두리 2 + 내부 128 = 박스 194다.
+- InputField Group에는 제목·Segment/입력 조합이 있으므로 사용자 정의 이름은 12장에 따라 현재 구성에 맞게 재판정한다. 원형 내부 이름과 인스턴스 연결은 보존한다.
+- ButtonGroup: **(626,733), 320 × 56**, tertiary → primary 각 154 × 56, gap 12다.
+
+## 49. Z·AA의 공통 상태·원형 키·보존 이미지
+
+### 49.1. 단계 요약과 공통 하단 규격
+
+- Z의 요약 내부는 **(300,225)**, AA는 **(1344,225)**, 모두 **276 × 664**다. 상세 StepIndicator 508 + gap 20 + 예정 단계 32 + gap 20 + 32 + gap 20 + 32 = 664다.
+- 상위 “사업자 정보 확인”은 inProgress, 하위 출금계좌·가입기간·가입금액은 **completed**, 나머지 5개는 notStarted다. 하위 순서는 45.5장을 따른다.
+- 완료 하위 항목은 제목 **Medium 14/20 #1C1C1C**, 요약값 **Light 12/17 #1C1C1C**다. 현재 하위 단계의 Bold/Medium 조합과 구분한다. 예정 항목은 같은 크기·굵기의 #6E6E6E다.
+- 두 화면의 본문은 수신 방법/직원 검색인데 해당 하위 단계는 아직 notStarted다. 출처의 실제 상태를 보존하되 신규 생성에서는 실제 업무 진행 상태와 일치시키며 자동 전이 정책으로 일반화하지 않는다.
+- 계좌 요약 “국민은행 000000-00-000000”, 가입기간 “12개월”, 나머지 “-”는 예시다.
+- 두 하단 버튼은 radius 6, tertiary #EDEDED / primary #FFC517, enabled, 라벨 Bold 18/25 #1C1C1C다. “버튼명”은 실제 액션 라벨로 교체한다.
+- Accordion은 standard/basic/medium/expanded=true, 1012 × 156이다. Header 56, Expand Area padding 8 0 16, 슬롯 불릿 20px 3행 + gap 8 = 76이다.
+- 제목 “유의사항”은 Bold 14/20 #444444, 본문 Light 14/20 #1C1C1C다. Star CMS·이체·권한 유의문은 앞선 참조와 같은 샘플이며 실제 기획을 적용한다.
+- 이번 화면의 왼쪽/오른쪽 배치는 각각 별도 참조다. 기존 화면의 구조 정리만 요청받았을 때 요약 열을 반대편으로 이동하지 않는다.
+
+### 49.2. 이번 사본에서 관측한 main component key
+
+같은 Segment·입력 이름도 44장의 브랜치와 키가 다르다. 기준 디자인 시스템에서 원형·변형·슬롯을 확인하고 연결을 유지한다.
+
+| 컴포넌트 | 관측 변형 | main component key |
+| --- | --- | --- |
+| TextList / Unordered | variant=bullet, size=14, depth=1 | `5e484496e22e7e84c91c23bddfe11d1b4a13f35b` |
+| SegmentedControl | size=medium, disabled=false | `0913c191bc17e51c03c037c519dcc4149ac4ac23` |
+| Item / Medium | position=left, selected=true, disabled=false | `218a71973ac5b1d4b695e4788e1497ef069b1918` |
+| Item / Medium | position=right, selected=false, disabled=false | `e30d31349bfb0fb6adbb2ef75b3105bd93fb8af1` |
+| InputField | hover=false, focused=false, disabled=false, entered=false, error=false | `6a180f941f7bc12168489ec44f9203d0f3a4e7cc` |
+| Item / Input | variant=email, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `c2325fc6a61d51fc09e3395d91a1f1db2a2845d5` |
+| TextList / Unordered | variant=star, size=14, depth=1 | `46dcbc74d52e84d05f8f79c5f152bb5d988efd45` |
+| BoxButton | variant=tertiary, size=large, hover=false, disabled=false, pressed=false | `44749aad1a2b8b103e2068161e6058a3ee80a0a6` |
+| BoxButton | variant=primary, size=large, hover=false, disabled=false, pressed=false | `d206f834d8d80e5bd6ab306b8033f3c0e5214bc5` |
+| BoxButton | variant=secondary, size=xsmall, hover=false, disabled=false, pressed=false | `9d292f00e41cb996e999ff0f9f25faa2994eedd6` |
+| Title / Element | Title / Element | `e4916a803defee8f227f104ea4dce8d6b4f28d74` |
+| Item / Medium | position=center, selected=false, disabled=false | `2493f29473b9ae446e8f76abe0fee21649a4b400` |
+| Item / Input | variant=search, _hover=false, _focused=false, _disabled=false, _entered=false, _error=false | `fe91b83a402643ef9acb651adde4329917215050` |
+
+
+Title / Page `366007b354df25708d9dce4a7788c2b44e30dba3`, Title / Headline `bf50f457ca5583c356608499f2a479e58248073a`, FullWidth Infobox `5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892`, StepIndicator / Vertical `6d64a53e165cf7f9d92e29637bba2a700ef84253`, ButtonGroup `f6fbbaad278bc5dc3e0568efdc16711894a01e47`, Accordion `d14342b496bd3aa5d2e707cf26a183daf5d401ce`는 앞선 사고신고 사본과 같다. 일반 프레임 입력 박스와 DS 인스턴스를 구분하며 detach하지 않는다.
+
+### 49.3. 원본 삭제 대비 이미지
+
+전달 시점 원본을 너비 960px의 0.5배 PNG로 보존했다. 논리 px 치수는 위 본문을 기준으로 재현한다.
+
+#### Z — 왼쪽 요약·이메일 수신
+
+![왼쪽 단계 요약과 이메일 수신 방법 입력](assets/design-rules/contract-delivery-left-step-summary.png)
+
+#### AA — 직원 검색·제목 옆 직원선택
+
+![오른쪽 단계 요약과 직원 검색 입력](assets/design-rules/referring-employee-search.png)
+
+### 49.4. 재현 검수
+
+1. Z는 316 + 32 + 1012의 왼쪽 요약, AA는 1012 + 32 + 316의 오른쪽 요약인지 확인한다.
+2. Z의 500 × 96 입력 묶음·162px 박스·박스 밖 3행 #6E6E6E 안내, AA의 400 × 128 묶음·194px 박스·제목 옆 61 × 28 액션을 확인한다.
+3. Segment 항목 96px·gap 0, 후속 입력 gap 16, 선택/미선택 서체와 enabled 상태를 확인한다.
+4. 제목 행의 실제 너비, Main 중앙의 하단 버튼 위치, 156px Accordion, Footer 시작 1105/1041과 지정 Footer 인스턴스를 확인한다.
+5. 두 원본 BODY의 누락 폰트는 모두 0이었다. 생성 시 필수 서체·잘림·겹침·계층과 실제 업무 문구·요약 상태·액션을 한 번 검수한다. 통과한 검수는 반복하지 않는다.
