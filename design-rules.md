@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장, 이체 완료·중요 사항·적합성 AB~AD는 50~53장, 정보 확인·거래내역·투자성향 AE~AG는 54~57장, 투자성향 결과 AH는 58~59장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 각 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장, 이체 완료·중요 사항·적합성 AB~AD는 50~53장, 정보 확인·거래내역·투자성향 AE~AG는 54~57장, 투자성향 결과 AH는 58~59장에 기록한다. Card / Surface·Data Block·Text Box의 역할 구분과 제작 기준은 60장에 정의한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 각 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -14,6 +14,7 @@
 - 모든 치수는 Figma 논리 px이며, 좌표는 화면 프레임 좌상단을 (0, 0)으로 한다.
 - 아래 수치는 두 화면에서 확인한 관리 화면 기준이다. 다른 해상도의 반응형 동작, 최소·최대 너비, 업무 로직, 미표시 상태는 아직 정의하지 않았다.
 - 새로운 지시가 있으면 해당 규칙을 이 파일에서 갱신한다. 기존 KBDS 컴포넌트·토큰·스타일을 우선 재사용한다.
+- 박스의 역할 분류·제작 방식·스타일은 60장을 우선 적용한다. 1~59장의 원본 카드 호칭·프레임 구조·실측 외형은 자동으로 제작 기준이 되지 않는다. 전용 선택 패턴·Infobox와 명시적으로 승인된 간격 예외는 해당 범위에서만 적용한다.
 - 학습 화면의 시각적 규격·컴포넌트·UI 조합을 정립하되, `## BODY` 내부의 원본 레이어 이름·정리 상태는 복제하지 않는다. 생성 시 12장의 명명·실제 Auto Layout 그룹핑 규칙을 우선 적용한다.
 
 ### 원본 해석 시 주의
@@ -417,6 +418,7 @@ InputField Group
 - DataList Group
 - Card Group
 - Data Block Group
+- Text Box Group
 - Accordion Group
 - Radio Group
 - Checkbox Group
@@ -424,6 +426,7 @@ InputField Group
 반복 자식은 원래 이름을 유지한다.
 `InputField 1`, `InputField 2`처럼 순번을 붙이지 않는다.
 페이지 Container의 순번 규칙은 예외다.
+Card Group·Data Block Group·Text Box Group의 역할별 자식 이름과 기본 간격은 60.5장을 따른다.
 
 ### 12.5. 단일 항목의 래퍼
 
@@ -1731,7 +1734,7 @@ Container 2는 너비 1360, Vertical gap 32, 위·아래 padding 12, 좌우 0, r
 - 원본 카드 `Box`는 FRAME이며 라이브러리 Card 인스턴스가 아니다. 이름만으로 원형 연결을 가정하지 않는다.
 - 각 카드는 #FFFFFF, radius 12, 안쪽 1px stroke #E5E5E5, padding 32다. 내부 `inner`는 실제 (313,358)/(1005,358), 602 × 325다. 테두리를 포함한 실제 인셋은 33이므로 단순히 668 − 64 = 604로 재현하지 않는다.
 - 내부는 Vertical gap 32다. 위 아이콘·가입 버튼 블록 99 + gap 32 + 아래 준비물 블록 194 = 325이며, 카드 전체는 32 × 2 + 테두리 2 + 325 = 391이다.
-- 원본 Grid와 카드 부모·순서를 보존한다. 사용자 정의 이름은 12장에 따라 `Card Group`, 반복 자식 `Card`처럼 역할을 표현할 수 있으나 실제 Grid를 이름만 Group으로 바꾸거나 평면 그룹으로 대체하지 않는다.
+- 원본 Grid와 카드 부모·순서는 정리 시 보존한다. 신규 제작에서는 가입 액션이 포함된 박스를 60장의 `Card / Surface` 실제 인스턴스로 구성하고, 반복 부모는 `Card Group`으로 명명한다. 원형의 패딩·라운드·공개 속성을 유지하며 원본 `Box`의 수동 외형을 복제하지 않는다. 실제 Grid를 이름만 Group으로 바꾸거나 평면 그룹으로 대체하지 않는다.
 
 ### 40.3. 카드 상단 아이콘과 가입 TextButton
 
@@ -2685,6 +2688,8 @@ Main 높이: 36 + 110 + 184 + 364 + 398 + 48 × 4 = 1284. BODY는 상하 padding
 
 ### 55.2. 계좌 요약 카드
 
+아래는 원본 실측 기록이다. 신규 제작에서는 내부 이체/조회 액션에 따라 60장의 Card / Surface 기준을 적용하되, List 등 전용 패턴이 해당하면 그 규칙을 우선한다.
+
 - 일반 카드 프레임은 **1360 × 164**, padding **32 32 24 32**, radius 12, 흰색, stroke #8D8D8D다.
 - 내부 List 인스턴스는 **(312,321), 1296 × 60**, 은행 아이콘·상품명·한도계좌 라벨·은행/계좌번호·펼침·더보기 아이콘을 조합한다.
 - 상품명 “KB Star 저축예금 보통예금”: Bold 16/24 #1C1C1C. 한도계좌 라벨은 Bold 12/17, 은행명 Medium 12/17 #6E6E6E, 계좌번호 Pretendard Regular 13/17 #6E6E6E다.
@@ -2853,6 +2858,8 @@ Main은 72 + 844 + 156 + 56 + gap 48 × 3 = **1272**, BODY는 padding 96을 더�
 
 ### 58.3. 결과 설명·가입가능 상품 카드
 
+아래의 카드 호칭·외형·치수는 원본 기록이다. 신규 제작 시 설명·상태 전달이 주목적인 박스는 60장의 Text Box 기준으로 구성하고, 사실 데이터 조회가 주목적인 하위 박스는 Data Block으로 분류한다. 박스 바깥의 형제 Button Area만으로 Card / Surface로 분류하지 않는다.
+
 - 상세 카드: **(280,471), 1360 × 698**, padding 32, radius 12, fill #FFFFFF, stroke 1px #E5E5E5. 실제 내부 시작은 **(313,504)**, 너비 **1294**다.
 - 설명 묶음은 1294 × **85**: “공격투자형” **Medium 22/31 #1C1C1C** → gap **12** → 설명 20px 2행, 행 사이 gap **2**다.
 - 설명은 **Medium 14/20 #6E6E6E**다. 원본의 “원금 소실” 표현은 출처 문구이며 실제 기획의 승인된 문장을 사용한다.
@@ -2932,3 +2939,213 @@ Main은 72 + 844 + 156 + 56 + gap 48 × 3 = **1272**, BODY는 padding 96을 더�
 3. 그래프 실제 배경 1294 × 449, 다섯 원의 크기·색·순서와 라벨·축을 확인한다. 원본 946px 래퍼의 넘침을 재현 규칙으로 삼지 않는다.
 4. Accordion 156과 버튼 154/176/154·gap 12, 실제 업무 결과·분석일·상품 등급·문구·액션을 대조한다.
 5. 원본 BODY의 누락 폰트는 0이었다. 생성 시 필수 서체·잘림·겹침, 12장의 명명·실제 Auto Layout, 인스턴스 연결과 13장의 지정 Footer를 한 번 검수한다.
+
+## 60. Card / Surface · Data Block · Text Box 정의
+
+이 장은 사용자 지정 제작 기준이다. 1~59장의 원본 실측 기록에 나오는 일반 프레임·카드 호칭·외형을 그대로 제작 방식으로 적용하지 않고, 이 장의 역할 분류·제작 방식·기본 스타일을 우선한다. 전용 선택 패턴·Infobox와 별도로 승인된 패턴의 간격 예외는 명시된 범위에서만 유지한다.
+
+### 60.1. 역할 구분
+
+박스의 외형보다 콘텐츠의 주된 목적과 사용자 동작을 먼저 판단한다.
+
+| 구분 | Card / Surface | Data Block | Text Box |
+| --- | --- | --- | --- |
+| 목적 | 정보와 사용자 동작의 결합 | 사실 데이터 조회·대조 | 설명·안내·주의·상태 전달 |
+| 예시 | 계좌 선택, 상품 선택, 상세 이동, 이체 | 이름, 계좌정보, 거래내역, 금액 | 유의사항, 상담센터 안내, 설명 문구 |
+| 사용자 동작 | 박스 전체 또는 내부 요소에 동작 있음 | 박스 자체에 동작 없음 | 정보 전달이 주목적 |
+| 제작 방식 | 실제 Card / Surface 인스턴스 사용 | Auto Layout 프레임으로 직접 구성 | Auto Layout 프레임으로 직접 구성 |
+| 주요 내부 요소 | 원형 Slot과 Card 하위 컴포넌트 | Title, DataList | Title, Text, TextList, Divider |
+| 패딩·라운드 | 해당 원형·variant 기준 | 패딩20px·라운드20px | 패딩20px·라운드14px |
+| 외형 | 원형의 공개 variant로 설정 | 항상 아웃라인형 | 아웃라인형 또는 회색 배경·무테형 |
+
+- 먼저 역할을 결정하고 해당 역할의 스타일을 적용한다.
+- 배경이나 테두리를 바꾸어도 역할과 레이어 이름은 바뀌지 않는다.
+- 별도로 정의된 SelectButton·GridButton·List 등 전용 선택 패턴은 해당 규칙을 우선한다.
+
+### 60.2. Card / Surface
+
+#### 적용 조건
+
+다음과 같이 사용자 동작이 결합된 박스에 사용한다.
+
+- 박스 전체가 상세 화면으로 이동하는 대상인 경우
+- 박스 전체가 선택 대상인 경우
+- 내부에 이체·상세 이동 등의 액션이 포함된 경우
+- 라디오·체크박스와 설명이 결합된 복합 선택 카드인 경우
+
+상태 Label이나 Badge가 있다는 이유만으로 Card로 분류하지 않는다.
+
+#### 제작 방식
+
+- 최신 디자인 시스템의 실제 `Card / Surface` 인스턴스를 사용한다.
+- 필요한 콘텐츠는 원형이 제공하는 Slot과 하위 컴포넌트로 구성한다.
+- 원형의 패딩·라운드·스타일·공개 속성을 유지한다.
+- Data Block이나 Text Box의 스타일을 일괄 적용하지 않는다.
+- detach하거나 수동 프레임으로 Card 외형을 흉내 내지 않는다.
+- Header·Footer는 해당 variant와 기획에서 필요한 경우에만 사용한다.
+
+#### 제목·설명 조합 예시
+
+```text
+Card / Surface
+└─ Slot
+   └─ Body
+      └─ Groups
+         ├─ Group
+         │  └─ Card / Body / Group-A
+         └─ Group
+            ├─ Card / Body / Group-C
+            └─ Card / Body / Group-C
+```
+
+- 제목은 해당 원형의 `Card / Body / Group-A` variant로 매핑한다.
+- 설명·목록은 해당 원형의 `Card / Body / Group-C` variant로 매핑한다.
+- Groups의 대표 조합 간격은16px, 설명 목록용 Group 내부 간격은12px이다.
+- Footer 버튼형은 원형의 `Card / Footer / Button` 등을 사용한다.
+- 실제 Slot 구조와 공개 옵션은 사용하는 최신 variant를 확인한다.
+- 기획에 없는 Header·Footer·버튼을 임의로 추가하지 않는다.
+
+#### 라디오 선택형 Card
+
+```text
+Card / Surface
+└─ Slot
+   └─ Body
+      ├─ Groups
+      │  └─ 실제 제목·설명 콘텐츠
+      └─ Card / Header / Affix
+         └─ Item / Radio
+```
+
+- 실제 `Card / Header / Affix (variant: radio)`를 사용한다.
+- Affix를 Body 안에 넣고 일반 Auto Layout 흐름(AUTO)으로 배치한다.
+- Body는 Horizontal / 가로 Fill·세로 Hug / gap12px로 구성한다.
+- Groups는 남은 폭을 Fill로 사용한다.
+- Affix는 원형24×24px을 유지한다.
+- 기본으로 숨겨진 Affix와 Body 안 Affix를 동시에 노출하지 않는다.
+- 카드당 실제 노출되는 Affix는 하나만 둔다.
+- Card의 선택·비활성 상태와 Item / Radio의 상태를 일치시킨다.
+- 라디오 도형을 직접 그리거나 별도 일반 Radio로 임의 대체하지 않는다.
+
+### 60.3. Data Block
+
+#### 적용 조건
+
+- 내부 동작 없이 사실 데이터를 보여주는 박스에 사용한다.
+- 이름·전화번호·거래내역·계좌정보·금액 등이 해당한다.
+- Card / Surface를 사용하거나 detach하지 않고 Auto Layout으로 직접 구성한다.
+
+#### 기본 구조
+
+```text
+Data Block
+├─ Title
+└─ DataList Group
+   ├─ DataList
+   └─ DataList
+```
+
+- 제목은 기획에 필요한 경우에만 배치한다.
+- 복수 DataList는 `DataList Group`으로 묶고 내부 간격은12px로 설정한다.
+- DataList는 `layout: split`, `size: 14`, `hasDivider: false`를 기본으로 사용한다.
+- 라벨·값 쌍이 하나뿐이면 불필요한 Group 없이 직접 배치한다.
+
+```text
+Data Block
+└─ DataList
+```
+
+#### 기본 스타일
+
+- Layout: Vertical Auto Layout
+- Resizing: 가로 Fill·세로 Hug
+- 내부 gap:16px (`spacing/xl`)
+- Padding:20px (`spacing/2xl`)
+- Radius:20px (`radius/2xl`)
+- Fill: `surface/neutral/quaternary-muted`
+- Border: `stroke/md` + `border/neutral/secondary-muted`
+- 회색 배경·무테형으로 임의 변경하지 않는다.
+- 별도로 승인된 패턴의 간격 예외는 해당 범위에만 적용한다.
+
+### 60.4. Text Box
+
+#### 적용 조건
+
+- 설명·이용 안내·주의·상태 전달이 주목적인 박스에 사용한다.
+- 전화번호·이메일이 포함되어도 안내 문맥이 주목적이면 Text Box로 분류한다.
+- 단순 연락처 텍스트의 존재를 버튼이나 선택 동작으로 간주하지 않는다.
+- 기존 Infobox의 용도에 해당하면 해당 Infobox 컴포넌트와 전용 규칙을 우선한다.
+- Card / Surface를 사용하거나 detach하지 않고 Auto Layout으로 직접 구성한다.
+
+#### 구성 예시
+
+```text
+Text Box
+├─ Title / Section
+└─ TextList Group
+   ├─ TextList / Unordered
+   └─ TextList / Unordered
+```
+
+- 기획에 따라 Title·Text·TextList·Divider 등을 조합한다.
+- 일반 본문은 `Text > Content` 구조를 사용한다.
+- 제목·불릿·구분선 등 기획에 없는 요소를 임의로 추가하지 않는다.
+- Data Block의 DataList 구조를 일괄 적용하지 않는다.
+
+#### 기본 스타일
+
+- Layout: Vertical Auto Layout
+- 내부 gap:16px (`spacing/xl`)
+- Padding:20px (`spacing/2xl`)
+- Radius:14px (`radius/lg`)
+
+아웃라인형:
+
+- Fill: `surface/neutral/quaternary-muted`
+- Border: `stroke/md` + `border/neutral/secondary-muted`
+
+회색 배경·무테형:
+
+- Fill: `surface/neutral/tertiary-muted`
+- 외곽 Border 없음 (`strokes: []`)
+- 내부 콘텐츠 구분용 Divider는 필요에 따라 유지한다.
+
+독립 영역의 경계가 필요하면 아웃라인형을 사용한다.
+테두리가 반복·중첩되거나 보조 안내를 부드럽게 구분할 때는 회색 배경·무테형을 고려한다.
+스타일을 바꾸어도 역할과 레이어 이름은 Text Box로 유지한다.
+
+### 60.5. 반복 그룹 명명
+
+복수의 박스는 실제 Auto Layout으로 묶는다.
+
+```text
+Card Group
+├─ Card / Surface
+└─ Card / Surface
+```
+
+```text
+Data Block Group
+├─ Data Block
+└─ Data Block
+```
+
+```text
+Text Box Group
+├─ Text Box
+└─ Text Box
+```
+
+- 반복 자식에 숫자 순번을 붙이지 않는다.
+- Card Group과 Data Block Group의 기본 내부 간격은12px이다.
+- 페이지 배치용 Container와 콘텐츠 박스의 역할을 구분한다.
+- Container 규칙을 이유로 콘텐츠 박스 이름을 Container로 변경하지 않는다.
+
+### 60.6. 분류 시 주의사항
+
+- Data Block 바깥의 형제 Button Area에 수정 버튼 등이 있어도 박스 자체가 동작하지 않으면 Data Block을 유지한다.
+- 상태 Label이나 Badge만 있는 사실 데이터 박스는 Data Block이다.
+- 상태를 설명하는 안내 메시지가 주목적이면 Text Box다.
+- 선택·이동 등 실제 동작이 결합된 박스는 Card / Surface 또는 해당 전용 컴포넌트 규칙을 적용한다.
+- 지정된 Infobox 패턴을 Text Box로 일괄 대체하지 않는다.
+- 최신 디자인 시스템의 컴포넌트·서체·색상·간격 토큰을 사용한다.
