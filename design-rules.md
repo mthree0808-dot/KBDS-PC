@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장, 비대면 가입 카드형 T는 40장, 금융거래 목적 질문·확인 U는 41~43장, 전체·개별 정보 입력 V~Y는 44~46장, 수신 방법·직원 검색 Z·AA는 47~49장, 이체 완료·중요 사항·적합성 AB~AD는 50~53장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -2361,3 +2361,249 @@ Title / Page `366007b354df25708d9dce4a7788c2b44e30dba3`, Title / Headline `bf50f
 3. Segment 항목 96px·gap 0, 후속 입력 gap 16, 선택/미선택 서체와 enabled 상태를 확인한다.
 4. 제목 행의 실제 너비, Main 중앙의 하단 버튼 위치, 156px Accordion, Footer 시작 1105/1041과 지정 Footer 인스턴스를 확인한다.
 5. 두 원본 BODY의 누락 폰트는 모두 0이었다. 생성 시 필수 서체·잘림·겹침·계층과 실제 업무 문구·요약 상태·액션을 한 번 검수한다. 통과한 검수는 반복하지 않는다.
+
+## 50. 패턴 AB — 즉시이체 완료·계좌별 결과
+
+### 50.1. 출처와 전체 배치
+
+- [원본 — 이체완료](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-37578): **1920 × 2335**.
+- 파일 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`. HEADER는 157, 화면 이미지에서 GNB → Breadcrumbs 순서를 확인했다.
+- BODY: (240,157), **1440 × 1826**, Vertical gap 48, padding **48 40 80 40**. 이번 완료형은 아래 padding이 80이다. 이전 입력형의 48을 일괄 적용하지 않는다.
+- 실제 본문 Container는 5개이며 유효 너비는 1360, x=280이다. LNB·StepIndicator가 없는 전체형이다.
+- FOOTER: (0,1983), 1920 × 352. 신규 생성은 13장의 지정 Footer 인스턴스를 사용한다.
+
+| Container | 내용 | y / 높이 |
+| --- | --- | --- |
+| 1 | 완료 Feedback | 205 / 168 |
+| 2 | 이체 요약 SummaryBox | 421 / 96 |
+| 3 | 계좌별 결과 Accordion | 565 / 750 |
+| 4 | 결과조회 이동 버튼 | 1363 / 56 |
+| 5 | 알려드립니다 Accordion | 1467 / 436 |
+
+168 + 96 + 750 + 56 + 436 + gap 48 × 4 + padding 128 = BODY 1826이다.
+
+### 50.2. 완료 피드백과 요약
+
+- Container 1은 padding 20 0, 실제 Feedback은 (280,225), 1360 × 128, Vertical gap **20**이다.
+- status-circleCheck 인스턴스 **80 × 80**를 x=920에 중앙 배치하며 원본은 노란 체크 표시다. “Feedback”, “Item / Feedback” 래퍼는 일반 FRAME이며 이름만으로 별도 Feedback 컴포넌트 인스턴스로 가정하지 않는다.
+- 완료 제목 “즉시이체를 마쳤어요”: (280,325), 1360 × 28, KBFG Text Bold **20/28** #1C1C1C, 가운데 정렬이다.
+- SummaryBox는 (280,421), 1360 × 96, Item / Surface solid, fill #FAFAFA, radius 12, padding **20 32**다.
+- 내부 1296 × 56에 Item / Content 5개(각 너비 **207.2**)와 세로 Divider 1px 4개를 둔다. 인접 자식 사이 gap 32로 207.2 × 5 + 1 × 4 + 32 × 8 = 1296이다.
+- 각 항목은 제목 20 + gap 8 + 값 25 = 53px이며 56px 영역 안에서 세로 중앙에 놓인다.
+- 요약 제목은 KBFG Text Medium 14/20 #6E6E6E, 숫자는 **Pretendard SemiBold 20/25 #1C1C1C**, 단위는 KBFG Text Medium **16/24**다.
+- 표시 예: 총 이체 금액 180,540,000원 / 총 이체 계좌 4개 / 총 수수료 0원 / 총 성공 이체건수 197건 / 총 실패 이체건수 1건. **실패 숫자와 단위는 #E53838**다.
+- 요약 수치·계좌 그룹 3개·실제 표 5행 사이에 일관된 집계 관계가 구현되어 있지는 않다. 예시 숫자를 연산 규칙·정상 결과 조건으로 확정하지 않는다.
+
+### 50.3. 계좌별 boxData Accordion
+
+- 섹션 제목은 1360 × **56**이며 파란 “서브타이틀” Bold 14/20 #1F6AFF → gap 8 → “타이틀입니다” Bold 20/28 #1C1C1C다.
+- 제목 아래 gap **20**, Accordion Group은 (280,641), 1360 × **674**, Vertical gap **12**다.
+- 첫 계좌는 boxData/basic/large/**expanded=true**, **1360 × 494**. 두 번째·세 번째는 expanded=false, 각 **1360 × 78**, y=1147/1237이다.
+- 494 + 78 × 2 + gap 12 × 2 = 674. 첫 계좌만 펼친 원본 상태를 보존하며 모든 계좌를 일괄 펼치거나 접지 않는다.
+- 외곽은 radius 12, fill #FFFFFF, stroke #D4D4D4. Header는 테두리 안 (281,642), **1358 × 76**, padding **24 32**, gap 12, fill #FAFAFA다.
+- Header 왼쪽은 은행 아이콘·은행명·계좌번호·예금주/별명, 오른쪽은 이체건수·이체금액·28px 펼침 아이콘이다.
+- 은행명은 KBFG Text Bold 18/25 #1C1C1C, 계좌번호는 Pretendard SemiBold **20/25**, 예금주·별명은 Light 14/20 #444444다.
+- 오른쪽 설명은 Light 16/24 #444444, 숫자는 Pretendard SemiBold 20/25 #1C1C1C, 단위는 Medium 16/24 #444444다. 문자열 길이에 따라 왼쪽 시작점이 달라지며 오른쪽 끝 정렬을 유지한다.
+- 펼친 Expand Area는 내부 y=718, 높이 **416**, 그 안의 1px 구분선 뒤 Slot-contents는 y=719, 높이 **415**다. 실제 콘텐츠 시작은 (313,751)이다.
+- 내부 표·액션 묶음은 **1294 × 351**로 테두리 안에서 좌우 32px 인셋이다. 위아래 32 + 콘텐츠 351 = 슬롯 415다.
+- 계좌·건수·금액·별명은 예시다. 펼침·접힘의 상호 배타 여부나 서버 조회·페이지 처리·행 선택 동작은 정적 화면만으로 확정하지 않는다.
+
+### 50.4. 결과 표와 보조 액션
+
+- 결과 GRID는 **(313,751), 약 1292 × 295**, **9열 × 6행**, 실제 행·열 gap **0**이다. 일반 itemSpacing=10 속성만 보고 GRID 셀 사이 10px를 넣지 않는다.
+- 열 너비는 **57 / 52 / 169 / 169 / 169 / 169 / 169 / 169 / 169**다. 바깥 1294px 래퍼보다 GRID가 2px 좁은 실제값을 구분한다.
+- 열 순서: 선택 / No / 입금기관 / 계좌번호 / 예금주 / 이체금액(원) / 수수료(원) / 받는분 통장표기 / 내통장 표시.
+- Header y=752, 이후 데이터 y=801/850/899/948/997, 각 **49px**다. top line 포함 1 + 49 × 6 = 295다.
+- Header는 KBFG Text Medium 14/20 #444444. 일반 데이터는 Light 14/20 #1C1C1C, No·계좌번호·금액·수수료는 **Pretendard Light 15/20** #1C1C1C다. 금액·수수료는 오른쪽 정렬, 다른 셀은 원형의 실제 정렬을 따른다.
+- 체크 항목은 헤더 1개 + 데이터 5개, 실제 Item / CheckBox **24 × 24**, checked=false, enabled다. 바깥 CheckBox의 size=large와 내부 size=medium 이름이 공존하므로 이름만으로 32px로 확대하지 않는다.
+- 표 아래 gap **16**, y=1062에 secondary small 버튼 **6개**, 높이 40, 서로 gap 8을 두고 오른쪽 정렬한다.
+
+| 원본 버튼 라벨 | 너비 |
+| --- | --- |
+| 확인증일괄 출력 | 133 |
+| 확인증건별 출력 | 133 |
+| 수수료확인증 출력 | 146 |
+| 메세지 전송 | 108 |
+| 엑셀로 저장 | 108 |
+| 인쇄 | 66 |
+
+보조 버튼은 Bold 14/20 #1C1C1C다. 실제 출력·전송·다운로드·선택 행 적용 범위는 업무 기획을 따른다.
+
+### 50.5. 주요 액션과 긴 안내
+
+- 주요 “이체결과조회로 이동”은 **(864,1363), 192 × 56**, primary large, fill #FFC517, radius 6, Bold 18/25 #1C1C1C다.
+- 바깥 ButtonGroup은 **count=multi, size=medium**이지만 실제 보이는 버튼은 large 1개다. 원형 이름만으로 버튼 개수·크기를 변경하지 않는다.
+- “알려드립니다” Accordion은 standard/basic/medium/expanded=true, **1360 × 436**다. Header 56, Expand Area 380, padding 8 0 16, 실제 본문 슬롯 **356**이다.
+- 원본 불릿은 **20px 13행 + gap 8 × 12 = 356**이다. 기존의 3행 156px Accordion 높이를 고정 적용하지 않는다.
+- 제목 Bold 14/20 #444444, 본문 Light 14/20 #1C1C1C다. 일부 문장 안 링크·강조색을 원형의 텍스트 구간 단위로 유지한다.
+- 수수료·이체 한도·오류 처리·기관 시간 등의 안내는 출처의 샘플이다. 실제 거래 서비스의 최신 승인 문구를 적용하며 이 정적 자료를 거래·법률 정책으로 확정하지 않는다.
+
+## 51. 패턴 AC — 중요 사항 설명과 필수 이해 확인
+
+### 51.1. 출처·실제 구조
+
+- [원본 화면](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-37319): **1920 × 2029**.
+- 프레임 이름은 `정보입력_우측 스텝인디게이터가 없는 경우`이지만 **실제로 오른쪽 StepIndicator가 있다**. 이름보다 현재 구성·화면을 기준으로 재현한다.
+- HEADER 157, BODY (240,157), **1440 × 1520**, Horizontal gap 32, padding 48 40.
+- BODY 자식은 Main Container 1 **(280,205), 1012 × 1424** → 요약 Container 2 **(1324,205), 316 × 704**다.
+- Main은 top 844 → gap 48 → bottom 532, top은 Vertical gap 48이다. Footer는 **y=1677, 1920 × 352**, 신규 생성은 13장 지정 인스턴스를 사용한다.
+- 페이지 제목 “중요 사항 및 필수 확인 사항을 확인해주세요”: (280,205), **469 × 36**, KBFG Text Bold 26/36 #1C1C1C.
+
+| 영역 | y / 높이 | 구성 |
+| --- | --- | --- |
+| 첫 Info | 289 / 260 | 제목 28 + gap 20 + Infobox/목록 212 |
+| 둘째 Info | 597 / 124 | 제목 28 + gap 20 + 목록 76 |
+| 셋째 Info | 769 / 280 | 제목 28 + gap 20 + 복합 본문 232 |
+| 필수 이해 확인 박스 | 1097 / 428 | 안내·Divider·질문 3개 |
+| Button Area | 1573 / 56 | tertiary/primary |
+
+Main: 제목 36 + Info 260 + 124 + 280 + top gap 48 × 3 = 844, bottom 428 + 48 + 56 = 532, 전체 844 + 48 + 532 = 1424다.
+
+### 51.2. 설명·목록·본문 구분
+
+- 각 Info 제목은 Title / Headline, “타이틀입니다”, Bold 20/28 #1C1C1C다.
+- 첫 Infobox / Solid는 **(280,337), 1012 × 44**, medium/info, padding **12 16**, radius 12, #FAFAFA. 문구는 Medium 14/20 #1C1C1C다.
+- 아래 gap **16**, 불릿 목록 (280,397), 1012 × **152**, gap 8이다. 실제 5행 높이 20/20/20/40/20으로 문장 줄바꿈을 반영한다.
+- “3개월 변동금리” 구간만 **#1F6AFF**, 나머지는 #1C1C1C다. 혼합 fill인 전체 텍스트를 단색으로 덮어쓰지 않는다. 전체 서체는 Light 14/20이다.
+- 둘째 Info는 불릿 20px 3행 + gap 8로 높이 76, Light 14/20 #1C1C1C다.
+- 셋째 복합 본문은 (280,817), 1012 × **232**, 두 내용 묶음 사이 gap **16**이다.
+- “위법계약해지권” 제목 Bold 16/24 #1C1C1C → gap 8 → 일반 본문 Light 14/20 #444444 3줄, 높이 60. 첫 묶음 92px다.
+- “자료 열람 요구권”은 제목 24 + gap 8 + 일반 본문 40 + gap 12 + dash 목록 40 = 두 번째 묶음 **124px**다.
+- 일반 Text·Title과 TextList가 섞인 원본 `Text Group`은 순수 Text 반복 그룹으로 일반화하지 않는다. 12장에 따라 `Title / Contents` 등 실제 자식 구성에 맞는 이름을 적용하고 본문과 목록의 의미·계층을 보존한다.
+- 금리·인지세·연체 기준·권리 행사 기간 등 금융·법률 수치는 원본 표시 예시다. 실제 생성에서 승인된 최신 문구를 적용한다.
+
+### 51.3. 필수 이해 확인 3개
+
+- 외곽 박스 **(280,1097), 1012 × 428**, padding 32, radius 12, stroke 1px #E5E5E5다.
+- 실제 내부는 **(313,1130), 946 × 362**, Vertical gap **20**. 테두리 포함 인셋 33을 보존한다.
+- 상단 안내 65 = 아이콘/“꼭 확인해주세요” 25 + gap 20 + 설명 20. 제목 Bold 18/25 #1C1C1C, 설명 Medium 14/20 #6E6E6E다. 원본 아이콘은 status-circleAlertGray이며 불릿으로 치환하지 않는다.
+- Divider는 (313,1215), 946 × 1, secondary/1px. 다음 질문 묶음은 (313,1236), 946 × **256**, 각 질문 72, 질문 사이 gap 20이다.
+- 질문 제목은 **Medium 14/20 #1C1C1C**, 제목과 선택 행 gap **12**, 선택 행 높이 40이다. 앞 장 카드 질문의 Bold 18/25와 구분한다.
+- 세 SelectButton은 모두 word/single이며 원본 선택은 **네 / 네 / 아니요**다. 세 번째를 자동으로 네로 바꾸거나 모든 질문의 초기값으로 저장하지 않는다.
+- 첫째·둘째: 네 selected=true **65px**, gap 6, 아니요 selected=false **70px**. 셋째: 네 selected=false **45px**, gap 6, 아니요 selected=true **90px**. 선택 체크 유무 때문에 같은 라벨도 너비가 달라진다.
+- 각 SelectButton 전체 너비는 141이다. 선택 라벨 Bold 14/20 #1C1C1C, 미선택 #444444다.
+- 내부 높이는 65 + gap 20 + Divider 1 + gap 20 + 256 = 362, 외곽 362 + padding 64 + 테두리 2 = 428이다.
+- 하단 버튼은 (626,1573), 320 × 56, tertiary → primary, 각 154 × 56, gap 12다. 원본 “버튼명”의 실제 액션·동의에 따른 진행 조건은 별도 기획을 따른다.
+
+### 51.4. 오른쪽 단계
+
+- 45장의 276 × 664 상세 요약과 같은 골격이며 첫 상위 단계 508px, 다음 3개는 32px, 사이 gap 20이다.
+- 이번 원본은 **사업자 정보 확인과 하위 8개 completed → 정보확인 inProgress → 약관동의·가입완료 notStarted**다.
+- 프레임 이름의 “없는 경우”를 근거로 이 영역을 삭제하지 않는다. 스크롤 고정·편집 동작은 별도 업무 기획을 적용한다.
+
+## 52. 패턴 AD — 적합성·적정성 질문과 결과 수신
+
+### 52.1. 출처·배치·제목 예외
+
+- [원본 — 적정성확인](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-37974): **1920 × 2609**.
+- HEADER 157, BODY (240,157), **1440 × 2100**, Horizontal gap 32, padding 48 40.
+- Main Container 1: **(280,205), 1012 × 2004**, Vertical gap 48. 오른쪽 Container 2: **(1324,205), 316 × 394**다.
+- 페이지 제목은 “적합성ㆍ적정성 확인을 위해 아래 내용을 입력해주세요”, **KBFG Text Bold 26/36 #1C1C1C**다.
+- 원본 Title / Page 인스턴스는 **233 × 36**인데 실제 텍스트는 **578 × 36**으로 래퍼 밖에 표시된다. 이를 제목의 정상 고정 너비로 학습하지 않는다. 신규 생성은 Main 1012px 안에서 실제 문장이 잘리지 않도록 래퍼·슬롯의 크기를 맞춘다.
+- 상단 별도 Infobox와 하단 유의사항 Accordion은 없다. 기존 입력형의 안내/Accordion을 자동 추가하지 않는다.
+- FOOTER는 **(0,2257), 1920 × 352**, 신규 화면은 13장의 지정 인스턴스다.
+
+### 52.2. 질문 9개 + 확인 1개
+
+- 원본 `Question Group`: **(280,289), 1012 × 1816**, Vertical gap **12**다. Question 9개와 Consent 1개가 섞인 래퍼임을 명시하며 순수 반복 Question 그룹으로 일반화하지 않는다.
+- 각 카드: #FFFFFF, 1px stroke #E5E5E5, radius 12, padding 32. 실제 내부 x=312, 너비 **948**이며 51장의 33px 인셋과 구분한다.
+- 질문 제목은 Title / Section **Bold 18/25 #1C1C1C**, 제목과 입력 사이 gap **20**다.
+- 기본 질문 높이 **149** = padding 64 + 제목 25 + gap 20 + 입력 40이다. 1~8번이 이 높이다.
+
+| 순서 | 질문 역할 | y / 높이 | 원본 입력 상태 |
+| --- | --- | --- | --- |
+| 1 | 후견인 도움 여부 | 289 / 149 | 단일: 아니요 |
+| 2 | 대출 목적 | 450 / 149 | 단일: 시설자금 |
+| 3 | 총 보유 자산 | 611 / 149 | 단일: 1억원 초과 10억원 이하 |
+| 4 | 연소득 | 772 / 149 | 단일: 1억원 초과 10억원 이하 |
+| 5 | 고정지출 규모 | 933 / 149 | 단일: 연소득 30% 초과 70% 이하 |
+| 6 | 신용관리대상 정보 조회 동의 | 1094 / 149 | 단일: 아니요 |
+| 7 | 상환 재원 | 1255 / 149 | **복수: 사업소득·근로소득** |
+| 8 | 결과 수신 이메일 | 1416 / 149 | 500px 이메일 입력, 비어 있음 |
+| 9 | 결과 문자 수신·휴대폰 | 1577 / 237 | 네 + 예시 전화번호 |
+| 10 | 적합성 정보 관련 확인 | 1826 / 279 | 단일: 동의 |
+
+149 × 8 + 237 + 279 + gap 12 × 9 = 1816, Main은 제목 36 + 48 + 질문 1816 + 48 + 버튼 56 = 2004다.
+
+### 52.3. 단일 선택과 복수 선택의 차이
+
+- 단일 선택은 word/single, 실제 항목 사이 gap **6**, 높이 40이다. 라벨 Bold 14/20, 선택 #1C1C1C·체크 표시, 미선택 #444444다.
+- 선택 예시의 너비: 네/아니요 45/90, 운전자금/시설자금 83/103, 자산·소득 구간 96/192/104, 고정지출 구간 146/230/146px다. 문자열과 체크 표시의 실제 크기를 반영하며 균등 분할하지 않는다.
+- 상환 재원은 **word/multiple**이다. “사업소득/근로소득/임대소득/연금소득/기타” 순서, 너비 103/103/103/103/78, gap 6, 전체 표시 514px다.
+- 복수 선택에서 사업소득·근로소득만 selected=true이며 나머지는 false다. 미선택 항목에도 연한 체크 모양이 보이지만 disabled=false다. 체크 모양만 보고 모두 선택되었거나 비활성이라고 판단하지 않는다.
+- 단일 선택 컴포넌트로 복수 선택을 대체하지 않는다. 예시 응답을 신규 설문의 기본 응답·심사 정답으로 고정하지 않는다.
+
+### 52.4. 이메일·문자 수신과 마지막 확인
+
+- 이메일 InputField: **(312,1493), 500 × 40**, entered=false, 내부 email 타입. placeholder Bold 14/20 #8D8D8D, @ Bold 16/24 #8D8D8D다.
+- 문자 수신 카드: 제목 (312,1609), 높이 25 → gap 20 → SegmentedControl **(312,1654), 192 × 40** → gap **20** → 전화번호 필드 **(312,1714), 400 × 68**.
+- Segment는 네/아니요 각 96px, 네 selected=true, medium/enabled다. 이 카드에서는 Segment와 후속 필드 간격이 **20**이며 앞선 직원 검색의 16을 적용하지 않는다.
+- 휴대폰 필드는 라벨 20 + gap 8 + 입력 40이다. 라벨 Bold 14/20 #1C1C1C, 표시값 “010-1234-5678”도 Bold 14/20 #1C1C1C다.
+- 바깥 InputField entered=false와 내부 Item / Input entered=true가 함께 존재한다. 원형 이름 하나만 보고 전화번호를 placeholder로 바꾸지 않는다. 예시 번호는 실제 고객 정보로 재사용하지 않는다.
+- 12장의 Segment 그룹핑 규칙에 따라 제작 시 후속 필드와 실제 Auto Layout으로 묶고 현재 구성에 맞게 명명한다. 기존 Container 개수·부모·역할 분할을 바꾸지는 않는다.
+- 마지막 Consent 카드: **1012 × 279**, padding 32, Vertical gap **16**이다. 제목 25 + gap 16 + Infobox 118 + gap 16 + 선택 40 + padding 64 = 279.
+- Infobox / FullWidth: **(312,1899), 948 × 118**, padding 20 24, radius 12, #FAFAFA. info 아이콘과 Bold 14/20 제목이 있는 20px Header → gap 12 → 46px Slot(1px padding, 불릿 20px 2행·gap 4)이다.
+- 그 아래 (312,2033), 높이 40의 단일 선택은 동의 **78px selected=true** → gap 6 → 동의 안 함 **91px selected=false**다. 체크박스형 ConsentFinal로 바꾸지 않는다.
+
+### 52.5. 단계 표시와 하단 버튼
+
+- 오른쪽 요약 내부는 **276 × 354**, padding 20을 포함한 외곽 316 × 394다. 704px 상세 요약으로 임의 확대하지 않는다.
+- 단계 순서는 사업자 정보 확인 completed → 정보입력 completed → **본인인증 일반 FRAME(24px)** → 상품가입 inProgress(하위 2개 포함 154px) → 가입완료 notStarted다.
+- 상위 y는 225/277/329/373/547, 높이는 32/32/24/154/32이며 사이 gap 20이다. 기본 골격·현재 상품가입의 하위 “금융거래목적 확인/정보입력”은 43장 참조와 같다.
+- 적합성 질문 본문과 금융거래목적 확인이라는 단계 문구가 완전히 일치하는 것은 아니다. 출처의 실제 상태로 보존하며 신규 화면은 기획의 현재 단계·하위 명칭에 맞춘다.
+- 하단 버튼: **(626,2153), 320 × 56**, “이전” tertiary / “다음” primary 각 154 × 56, gap 12다.
+- 응답·수신·동의에 따른 진행·차단·오류 처리와 적합성 판단 기준은 이 정적 화면에서 확정하지 않는다.
+
+## 53. AB·AC·AD 원형 키와 원본 삭제 대비 자료
+
+### 53.1. 주요 원형 키
+
+다음은 이번 사고신고 파일에서 확인한 원형이다. 기준 디자인 시스템의 실제 컴포넌트·변형·슬롯·토큰과 대조해 사용한다.
+
+| 컴포넌트 | 관측 변형 | main component key |
+| --- | --- | --- |
+| SummaryBox | SummaryBox | `ac8b7b22c4ce82ef89da0d169d5e1cb4bb62fe19` |
+| Item / Surface | variant=solid | `f5a63d3d0715c038047d7617618f3a634029c74c` |
+| Accordion | variant=boxData, type=basic, size=large, expanded=true | `15a36367e1935a1a4ace29356ec692971d820bdf` |
+| Table / Header | variant=default, onlyNumber=false | `ba105a8f29acb712e5c5aa6a3cb2015de330f392` |
+| CheckBox | size=large, fontWeight=bold, checked=false, disabled=false, indeterminate=false, invalid=false | `50a2ddb9717f6061eaae8aecea2b2e6ea9f48201` |
+| Item / CheckBox | size=medium, checked=false, indeterminate=false, invalid=false, disabled=false | `883706bd3f353bcf32024b0dc282b51f1bcb2913` |
+| Table / Cell | variant=default, onlyNumber=false | `99ea32176b75cd8c61852334027aea5149d926a5` |
+| Table / Cell | variant=default, onlyNumber=true | `344a92f1499d52f34343a05da003acb2ef07ac87` |
+| Table / Cell | variant=last, onlyNumber=false | `1b5a0ae0fefd157325271672a78224db2575f047` |
+| Accordion | variant=boxData, type=basic, size=large, expanded=false | `c471cbf555989a4fab5e31de5919f5166ea5d392` |
+| Accordion | variant=standard, type=basic, size=medium, expanded=true | `d14342b496bd3aa5d2e707cf26a183daf5d401ce` |
+| Infobox / Solid | size=medium, status=info | `18356a16cb958afdf54f8fe4da07401b6412640d` |
+| status-circleAlertGray | status-circleAlertGray | `6103f2735acff9e9b8542d7da313e72ae562cc33` |
+| SelectButton | type=word, variant=single | `7b6e4a769ba3ff3401fbc04068873ddcf5128dbd` |
+| SelectButton | type=word, variant=multiple | `b31fcefc4208613d97eddb3e1bdb20f649a5f493` |
+| Item / Word / Multiple | selected=true, hover=false, pressed=false, disabled=false | `935ebc20e5bbdebd04fae7cf3d1631503f0a1317` |
+| Item / Word / Multiple | selected=false, hover=false, pressed=false, disabled=false | `cd15a331e38f32f7070236b1104a7b0c203f7de6` |
+
+
+단일 선택 Item / Word / Single의 선택/미선택은 `403764ddf4f1684762dfba5f7ff303f6c811f3dc` / `0aa745072fcb556409dd4d354a11afd582006a62`, SegmentedControl은 `0913c191bc17e51c03c037c519dcc4149ac4ac23`, InputField 미입력은 `6a180f941f7bc12168489ec44f9203d0f3a4e7cc`로 앞선 사본과 같다. 일반 Feedback·질문·안내 래퍼는 FRAME임을 구분하고 인스턴스를 detach하지 않는다.
+
+### 53.2. 보존 이미지
+
+원본을 수정하지 않고 너비 960px의 0.5배 PNG로 저장소에 보존했다. 재현 치수는 위 논리 px를 사용한다. 원본 문구·표시 수치·상태 불일치도 출처 근거로 이미지에는 그대로 남아 있다.
+
+#### AB — 즉시이체 완료
+
+![즉시이체 완료 — 요약·계좌별 결과·보조 액션](assets/design-rules/transfer-completion-results.png)
+
+#### AC — 중요 사항과 필수 이해 확인
+
+![중요 사항 설명과 필수 확인 질문](assets/design-rules/important-information-confirmation.png)
+
+#### AD — 적합성·적정성 질문
+
+![적합성·적정성 질문과 수신·동의](assets/design-rules/suitability-questionnaire.png)
+
+### 53.3. 재현 검수
+
+1. AB의 BODY 하단 padding 80, 5개 Container·요약 5항목·boxData 1개 펼침/2개 접힘, 실제 GRID 너비·49px 행을 확인한다.
+2. AB의 표 체크 상태, 6개 보조 버튼, 192 × 56 단일 주요 버튼, 13행·436px 안내를 확인한다.
+3. AC의 이름과 실제 오른쪽 단계 표시 차이, 3개 Info의 본문/목록 구분, 구간별 파란 강조, 428px 확인 박스의 네/네/아니요를 확인한다.
+4. AD의 149/237/279px 카드·gap 12, 단일/복수 선택, 이메일 500px·전화 400px, phone의 실제 입력 상태와 제목 래퍼 넘침을 확인한다.
+5. 세 원본 BODY의 누락 폰트는 모두 0이었다. 실제 생성에서도 필수 서체·문장 줄바꿈·잘림·겹침·계층·상태를 한 번 검수한다.
+6. 예시 집계·응답·법률/상품 문구를 승인된 기획과 대조하고 지정 Footer 인스턴스를 확인한다. 통과한 검수는 반복하지 않는다.
