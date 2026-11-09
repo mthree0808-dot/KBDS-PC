@@ -14,6 +14,7 @@
 - 모든 치수는 Figma 논리 px이며, 좌표는 화면 프레임 좌상단을 (0, 0)으로 한다.
 - 아래 수치는 두 화면에서 확인한 관리 화면 기준이다. 다른 해상도의 반응형 동작, 최소·최대 너비, 업무 로직, 미표시 상태는 아직 정의하지 않았다.
 - 새로운 지시가 있으면 해당 규칙을 이 파일에서 갱신한다. 기존 KBDS 컴포넌트·토큰·스타일을 우선 재사용한다.
+- 수치 변수 바인딩, GNB Fill, LNB 2열 구조와 고객정보조회 화면 수정은 61장을 우선 적용한다.
 - 박스의 역할 분류·제작 방식·스타일은 60장을 우선 적용한다. 1~59장의 원본 카드 호칭·프레임 구조·실측 외형은 자동으로 제작 기준이 되지 않는다. 전용 선택 패턴·Infobox와 명시적으로 승인된 간격 예외는 해당 범위에서만 적용한다.
 - 학습 화면의 시각적 규격·컴포넌트·UI 조합을 정립하되, `## BODY` 내부의 원본 레이어 이름·정리 상태는 복제하지 않는다. 생성 시 12장의 명명·실제 Auto Layout 그룹핑 규칙을 우선 적용한다.
 
@@ -53,7 +54,7 @@ Screen — 1440, Vertical, gap 0
 
 ## 3. 간격·모서리·선 토큰
 
-아래는 실제 바인딩에서 확인한 KBDS 이름과 값이다. 같은 의미의 토큰은 이름과 키를 재사용하고, 화면 재현을 위해 필요한 실측값도 유지한다.
+아래는 실제 바인딩에서 확인한 KBDS 이름과 값이다. 같은 의미의 토큰은 이름과 키를 재사용하고, 화면 재현을 위해 필요한 실측값도 유지한다. 수치는 61장에 따라 실제 변수로 연결한다. 실측값을 숫자로만 입력한 상태를 완료로 간주하지 않는다.
 
 | 토큰 | 값 |
 | --- | --- |
@@ -3149,3 +3150,107 @@ Text Box Group
 - 선택·이동 등 실제 동작이 결합된 박스는 Card / Surface 또는 해당 전용 컴포넌트 규칙을 적용한다.
 - 지정된 Infobox 패턴을 Text Box로 일괄 대체하지 않는다.
 - 최신 디자인 시스템의 컴포넌트·서체·색상·간격 토큰을 사용한다.
+
+## 61. 수치 변수 바인딩·GNB Fill·LNB 2열 구조와 고객정보 화면 수정 기준
+
+사용자가 2026-11-09에 지정한 필수 제작 기준이다. 수치가 기존 실측값과 같더라도 변수가 연결되지 않으면 완료로 판단하지 않는다. 1~59장의 실측 기록은 변수 연결을 생략할 근거가 되지 않는다.
+
+### 61.1. 수치 값은 실제 변수에 연결
+
+- gap(`itemSpacing`, 필요한 `counterAxisSpacing`), 상하좌우 padding, 각 모서리 radius, 실제 테두리 두께 등 수치 속성은 해당 역할의 최신 디자인 시스템 변수에 실제 바인딩한다. 단순히 같은 숫자를 입력하거나 변수 이름을 레이어 이름에 쓰는 방식은 적용으로 간주하지 않는다.
+- 화면의 사용자 정의 래퍼뿐 아니라 사용 중인 인스턴스·Slot·하위 레이아웃도 확인한다. 관련 속성을 누락하지 않고, 이미 연결된 원형의 유효한 변수는 유지한다.
+- 고정 치수는 치수 변수로 관리하고, Fill·Hug가 필요한 곳을 숫자 폭·높이로 고정하지 않는다. 화면 배치 좌표와 콘텐츠에 따라 계산되는 Fill·Hug 결과값은 gap·padding 토큰과 구분한다.
+- 0값도 현재 유효한 변수가 있으면 연결한다. 삭제 예정 토큰을 새로 확산하지 않는다.
+- 공식 대응 토큰이 없는 화면 고유의 고정 치수·원형의 특수 수치는 용도와 실제 값을 명시한 로컬 변수로 구분한다. 공식 KBDS 토큰인 것처럼 기록하거나, 값이 가깝다는 이유로 의미가 다른 토큰을 대신 연결하지 않는다.
+- 이 화면의 공식 대응이 없는 수치는 대상 파일의 `KBDS PC · 화면 배치` 로컬 컬렉션에 구분했다. 예: LNB 열의 고정 너비 `layout/316`, 화면 너비 `layout/1920`, 0 간격 `spacing/0`. 공식 라이브러리 변수가 있으면 공식 변수를 우선한다.
+
+공식 Size 컬렉션: `b2a956c0692942dc214689c3f03b801a2b781d40`.
+
+| 용도 | 변수 | 값 | 원형 키 |
+| --- | --- | --- | --- |
+| 반복 Data Block 사이·DataList Group 내부 | `spacing/lg` | 12 | `f1822d95f1b0043e2ee435fea6d4725d37db3ebb` |
+| Data Block 제목·본문 사이 | `spacing/xl` | 16 | `2b90494af4b83af52e567824fc30afcec9447c32` |
+| Data Block padding | `spacing/2xl` | 20 | `f338af7d20bc6e0583d08efdf7e7e389a325b1d0` |
+| LNB 열·본문 열 사이 | `spacing/5xl` | 32 | `403b2e3136ffc6d8206f6e63e2f62f235a5d3ae8` |
+| BODY 좌우 padding | `spacing/6xl` | 40 | `9f3a6e1ca84e9627129a8315526a0ebd5bc65412` |
+| BODY 상하 padding·본문 주요 섹션 사이 | `spacing/7xl` | 48 | `0828de47528b32f0cd679d06a75e61169b841246` |
+| Data Block radius | `radius/2xl` | 20 | `8f274529260c1a703dfd211c49e01978e90e8d04` |
+| Text Box radius | `radius/lg` | 14 | `fd6386fe7907f327160f3d22b8cdc86a6871afcc` |
+| Data Block 테두리 두께 | `stroke/md` | 1 | `1299efbe639a84b71e23f7bdef96e02c9fb80176` |
+
+### 61.2. GNB / Channel 내부 GNB는 Fill
+
+```text
+## HEADER
+├─ GNB / Channel — 가로 Fill
+│  └─ GNB — 가로 Fill
+└─ Breadcrumbs Area
+```
+
+- 바깥 `GNB / Channel`만 Fill로 설정하고 내부 `GNB`를 고정 폭으로 두지 않는다.
+- 원형 이름과 인스턴스 연결을 유지한다. GNB 내부의 본문 정렬용 Container는 기획의 콘텐츠 폭을 따른다.
+- 이 화면에서는 화면 폭 1920에 따라 내부 GNB도 1920으로 채워져야 한다. 고정 1280 상태로 남지 않도록 실제 `layoutSizingHorizontal = FILL`을 확인한다.
+- 상단 좌우 유틸리티 배치는 고정된 큰 숫자 gap으로 밀어내지 않고 Auto Layout의 공간 분배로 정렬한다.
+
+### 61.3. LNB와 본문의 Container 구조
+
+LNB가 있는 이 고객정보 2열 화면은 다음 구조를 사용한다.
+
+```text
+## BODY — 너비 1440, Horizontal, padding 48 40, gap 32
+├─ Container 1 — 너비 316, 세로 Hug
+│  └─ LNB — 가로 Fill, 실제 라이브러리 인스턴스
+└─ Container 2 — 가로 Fill(1012), 세로 Hug
+   ├─ Title / Page
+   ├─ Data Block Group / Card
+   └─ Button Area
+```
+
+- LNB를 실제 Auto Layout `Container 1`으로 감싼다. LNB 인스턴스 자체의 원형 이름은 `LNB`로 유지한다.
+- `Container 1`의 고정 너비는 316이고, 안쪽 LNB도 Fill로 316을 사용한다.
+- 오른쪽 본문은 `Container 2`로 명명하고 남은 폭을 Fill로 사용한다.
+- 1440 − 좌우 padding 80 − LNB 316 − gap 32 = 본문 1012로 검산한다.
+- 명명 규칙을 이유로 LNB 래퍼를 생략하거나 오른쪽만 `Container`로 남기지 않는다. 다른 화면·다른 Slot의 Container 순번과 합산하지 않는다.
+
+### 61.4. 고객정보조회 화면의 Data Block·Card 분류
+
+대상: [고객정보조회(개인정보열람)](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=5-31). 화면은 기존 Section `2:286` 기준 x=240, y=240을 유지한다.
+
+| 영역 | 적용 역할·제작 방식 |
+| --- | --- |
+| 기본정보 | `Data Block` — 일반 Auto Layout 프레임 |
+| 자택정보 | `Data Block` — 일반 Auto Layout 프레임 |
+| 직장정보 | `Data Block` — 일반 Auto Layout 프레임 |
+| 고객관리 안내수단 | 사용자가 지정한 이 화면의 `Card / Surface` 실제 인스턴스 유지 |
+
+```text
+Data Block Group / Card
+├─ Data Block Group — gap 12
+│  ├─ Data Block
+│  │  ├─ Title / Headline
+│  │  └─ DataList Group
+│  ├─ Data Block
+│  │  ├─ Title / Headline
+│  │  └─ DataList Group
+│  └─ Data Block
+│     ├─ Title / Headline
+│     └─ DataList Group
+└─ Card / Surface — 고객관리 안내수단
+```
+
+- 세 정보 박스는 이름만 바꾸지 않고 실제 Card / Surface 인스턴스를 제거한 뒤 Auto Layout으로 직접 구성한다. Card를 detach해서 Data Block을 만들지 않는다.
+- Data Block은 60장 기준의 padding 20·radius 20·내부 gap 16·아웃라인형을 적용한다.
+- Fill은 `surface/neutral/quaternary-muted`(키 `17f1d5c43fa25e1bdd6bffde1ae45e66dd0649b7`), Border는 `stroke/md` + `border/neutral/secondary-muted`(색상 키 `b7d97fe994ce50583baebda8b3b90b2f51b5ed6a`)를 실제 바인딩한다.
+- DataList는 `layout=split, size=14, hasDivider=false`를 사용한다. 해당 DataList 원형 키는 `a3ddafd7fca06ab9933697275978c96dc71a8d72`다. 내부 Item / Slot도 size 14로 맞추고 라벨은 가로 Hug, 값은 Fill·오른쪽 정렬을 사용해 잘림·좁은 줄바꿈을 방지한다.
+- DataList Group 내부 gap은 12이며, 주소의 명시적 줄바꿈과 마스킹을 유지한다.
+- 단일 Card / Surface를 일반 프레임 `Card`로 다시 감싸지 않는다. 실제 인스턴스를 배치 래퍼의 직접 자식으로 둔다.
+- Data Block과 Card가 섞인 전체를 `Card Group`으로 부르지 않는다. Data Block 반복은 `Data Block Group`, 이 그룹과 단일 Card의 결합은 `Data Block Group / Card`로 명명한다.
+- 바깥 형제 Button Area의 수정 버튼 때문에 기본정보·자택정보·직장정보를 Card로 분류하지 않는다. 고객관리 안내수단의 Card 유지 지시는 이 화면의 적용 기준이며, 다른 모든 수신 상태 정보 박스를 Card로 분류하는 일반 규칙으로 확대하지 않는다.
+
+### 61.5. 완료 전 필수 확인
+
+- 실제 boundVariables를 읽어 gap·padding·radius 등의 미연결 수치 속성이 없는지 확인한다. 입력 숫자가 토큰 값과 같다는 것만으로 통과시키지 않는다.
+- GNB / Channel 내부 GNB의 가로 Fill, Container 1 너비 316과 내부 LNB Fill, Container 2의 이름·Fill을 확인한다.
+- 세 Data Block은 실제 FRAME Auto Layout이고 Card 인스턴스가 남지 않았는지, 고객관리 안내수단은 실제 Card / Surface 인스턴스인지 확인한다.
+- 불필요한 `Card` 프레임 래퍼·혼합 콘텐츠의 잘못된 `Card Group` 이름이 없는지 확인한다.
+- 원본 문구·마스킹·체크 상태, DataList 라벨 줄바꿈, 필수 서체, 지정 Footer 원형 연결을 검수한다.
