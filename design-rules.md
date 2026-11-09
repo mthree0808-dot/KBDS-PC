@@ -342,3 +342,195 @@ Figma Plugin API에서 가져올 때: `await figma.importComponentByKeyAsync(key
 4. KBFG Text와 Pretendard의 용도, 실제 크기·행간·자간을 확인한다. 누락 폰트·텍스트 잘림·겹침을 검사한다.
 5. 간격이 슬롯 내부에 정의된 경우까지 확인한다. 색상만으로 체크박스·버튼의 상태를 추측하지 않는다.
 6. 구조·서체·화면 검수가 통과하면 같은 검수를 불필요하게 반복하지 않는다.
+
+## 12. 레이어 명명 및 그룹핑 규칙
+
+이 절은 사용자 정의 레이어·그룹·Auto Layout 래퍼를 정리할 때 적용한다. 2·7·8장의 트리는 실측 구조를 설명하기 위한 표기이며, 사용자 정의 레이어의 최종 이름은 본 절을 따른다. 디자인 시스템 컴포넌트의 원형 이름과 내부 고유 계층은 유지한다.
+
+### 12.1. 기본 원칙
+
+- 사용자 정의 레이어·그룹 이름은 역할을 알 수 있는 영문으로 작성한다.
+- 디자인 시스템 컴포넌트의 원형 이름과 내부 고유 계층은 유지한다.
+- 관련 항목은 실제 Auto Layout으로 묶는다. 이름만 Group으로 변경하지 않는다.
+
+### 12.2. 화면의 기본 영역
+
+일반 화면은 다음 영역으로 구분한다.
+
+```text
+화면
+├─ ## HEADER
+├─ ## BODY
+└─ ## FOOTER
+```
+
+Popup 컴포넌트 내부 영역명은 `Header`, `Body`, `Footer`를 사용한다.
+
+### 12.3. Container 명명
+
+- 본문 Container가 하나이면 `Container`로 명명한다.
+- 복수이면 위에서부터 `Container 1`, `Container 2`, `Container 3`으로 명명한다.
+- 개별 Slot 안에서도 동일한 기준을 적용한다.
+- 다른 화면이나 다른 Slot의 Container 개수는 합산하지 않는다.
+- 기존 화면 정리 시 Container의 개수·부모·순서·역할 분할을 임의로 변경하지 않는다.
+
+```text
+## BODY
+├─ Container 1
+├─ Container 2
+└─ Container 3
+```
+
+### 12.4. 동일 항목의 반복
+
+같은 종류·역할의 항목이 복수로 반복되면 실제 Auto Layout으로 묶고 `[명칭] Group`으로 명명한다.
+
+```text
+InputField Group
+├─ InputField
+├─ InputField
+└─ InputField
+```
+
+예:
+
+- Text Group
+- TextList Group
+- InputField Group
+- DataList Group
+- Card Group
+- Data Block Group
+- Accordion Group
+- Radio Group
+- Checkbox Group
+
+반복 자식은 원래 이름을 유지한다.
+`InputField 1`, `InputField 2`처럼 순번을 붙이지 않는다.
+페이지 Container의 순번 규칙은 예외다.
+
+### 12.5. 단일 항목의 래퍼
+
+단일 항목을 배치 목적으로 감싸는 경우 Group을 붙이지 않고 해당 명칭을 사용한다.
+
+```text
+InputField
+└─ InputField
+```
+
+바깥은 Auto Layout 래퍼, 안쪽은 실제 컴포넌트다.
+
+### 12.6. 서로 다른 두 요소의 결합
+
+실제 구성 요소의 대표 명칭을 `/`로 연결한다.
+
+| 자식 구성 | 부모 이름 |
+| --- | --- |
+| Title / Page + InputField | Title / InputField |
+| Title / Section + InputField Group | Title / InputField Group |
+| Title / Section + List Group | Title / List Group |
+| Title / Element + Text | Title / Text |
+| InputField Group + Button Area | InputField Group / Button Area |
+| Card Group + Button Area | Card Group / Button Area |
+| Text + TextList Group | Text / TextList Group |
+
+- `Title / Page`, `Title / Section` 등의 세부 유형은 조합명에서 대표 명칭인 `Title`로 정리한다.
+- `Group`, `Button Area`처럼 실제 역할을 나타내는 명칭은 보존한다.
+
+### 12.7. 여러 종류의 콘텐츠 결합
+
+서로 다른 세 덩이 이상을 묶으면 `[첫 요소의 대표 명칭] / Contents`로 명명한다.
+
+```text
+Title / Contents
+├─ Title / Page
+├─ InputField Group
+└─ Accordion
+```
+
+제목과 복합 본문이 결합된 경우에도 `Title / Contents`를 사용한다.
+
+```text
+Title / Contents
+├─ Title / Section
+└─ Text / TextList Group
+```
+
+복수의 제목·콘텐츠 조합을 아우르는 상위 래퍼도 `Title / Contents`로 명명한다.
+
+```text
+Title / Contents
+├─ Title / Accordion Group
+└─ Title / Accordion Group
+```
+
+상위와 하위를 모두 `Title / Accordion Group`으로 중첩 명명하지 않는다.
+
+### 12.8. Text와 TextList 구분
+
+단일 일반 본문:
+
+```text
+Text
+└─ Content
+```
+
+복수 일반 본문:
+
+```text
+Text Group
+├─ Text
+│  └─ Content
+└─ Text
+   └─ Content
+```
+
+복수 TextList:
+
+```text
+TextList Group
+├─ TextList / Unordered
+└─ TextList / Unordered
+```
+
+Text와 복수 TextList의 혼합:
+
+```text
+Title / Contents
+├─ Title / Element
+└─ Text / TextList Group
+   ├─ Text
+   │  └─ Content
+   └─ TextList Group
+      ├─ TextList / Unordered
+      └─ TextList / Unordered
+```
+
+- 일반 Text만 반복되는 그룹을 TextList Group으로 명명하지 않는다.
+- Text와 TextList가 섞인 본문 전체를 TextList Group으로 명명하지 않는다.
+- 자식 구성이 혼합 본문으로 바뀌면 상위의 기존 `Title / TextList Group`도 `Title / Contents`로 변경한다.
+
+### 12.9. 버튼 영역
+
+본문의 독립 버튼 영역은 `Button Area`로 명명한다.
+
+```text
+InputField Group / Button Area
+├─ InputField Group
+│  ├─ InputField
+│  └─ InputField
+└─ Button Area
+   └─ BoxButton
+```
+
+### 12.10. Tab·Segment·Chip
+
+- Tab과 후속 콘텐츠를 반드시 하나의 그룹으로 묶는 의무는 없다.
+- 기존 Tab 그룹은 필요에 따라 유지할 수 있다.
+- Segment·Chip은 후속 콘텐츠와 실제 Auto Layout으로 묶고 구성에 맞게 명명한다.
+- 이를 이유로 기존 Container를 임의로 병합하거나 분할하지 않는다.
+
+### 12.11. 구조 변경 후 이름 재판정
+
+- 자식 추가·삭제·교체·그룹핑 후 해당 래퍼와 영향을 받는 부모 이름을 다시 확인한다.
+- 이름은 과거 구성이 아닌 현재의 실제 자식 구성을 반영해야 한다.
+- 반복 그룹인지, 두 요소의 결합인지, 복합 Contents인지 순서대로 판정한다.
