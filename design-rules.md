@@ -2,7 +2,7 @@
 
 ## 1. 적용 범위와 기준
 
-이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
+이 문서는 PC 화면을 만들 때 참조하는 재현 가능한 규칙이다. 초기 관리형 A·B에 더해 입력·동의·집중형·완료·에러 패턴 C~G는 14~20장, 팝업 패턴 H~J는 21~24장, 한도계좌 해제 패턴 K·L은 25~27장, 1920 약관·목록 패턴 M~O는 28~31장, 파일 업로드 P·Q와 로그아웃 추가 참조는 32~35장, 가입 단계 안내 R·S는 36~39장에 기록한다. 원본 Figma 화면이 삭제되어도 아래 치수, 구조, 스타일, 컴포넌트 키와 보존 이미지로 두 패턴을 다시 구성할 수 있도록 작성했다.
 
 - 확인일: 2026-11-09 (Asia/Seoul).
 - 원본 파일: PC 디자인라이브러리 v0.96, `ftIWLlgj5Ldgt1uyQu9Gb8`.
@@ -1525,3 +1525,163 @@ N·O의 프레임 이름은 “계좌개설 안내”이지만 실제 내용은 
 3. P/Q의 entered 상태, placeholder/파일명 색상, 내부 삭제 버튼 유무·38 × 28 크기, 실제 원형 연결을 확인한다.
 4. 새 로그아웃 참조의 타이머 22/28과 안내 #8D8D8D를 이전 20/28·#6E6E6E와 구분한다.
 5. 실제 업무 안내·버튼 라벨·동작을 기획과 대조하고 누락 폰트·텍스트 잘림·겹침·중복 패딩을 확인한다. 통과한 검수는 반복하지 않는다.
+
+## 36. 패턴 R·S — 가입 단계 안내
+
+### 36.1. 출처와 적용 범위
+
+- 파일: 사고신고 `yojs1BhPrWxLmDDrpg1ihD`, 페이지 `05.기타(기획 v0.6)`.
+- [R — 가입단계 안내 / 스타일 오버라이드](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-25135): 1920 × 1721.
+- [S — 가입단계 안내](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5090-25320): 1920 × 1709.
+- 둘 다 가입 절차를 미리 설명하는 5단계 안내 화면이다. 서로 다른 진행 상태를 나타내는 전후 화면으로 해석하지 않는다.
+- R의 오버라이드를 모든 ProgressStep의 기본값으로 확대하지 않는다. 실제 기획에서 선택한 기본형·오버라이드형을 명확히 적용한다.
+- 단계명, 준비물 내용, 상품 목록, 주의사항 및 “버튼명”은 원본 예시다. 실제 화면의 업무 내용·버튼 목적·이동 경로는 기획을 따른다.
+
+### 36.2. 공통 셸과 실제 배치
+
+원본은 흰색 Vertical 화면이며 HEADER → BODY → FOOTER의 gap은 0이다. 이번 두 화면의 Header는 **Breadcrumbs → GNB** 순서다. 기존 다른 참조의 GNB → Breadcrumbs 순서를 덮어쓰는 공통 규칙으로 확정하지 않는다. Header에도 “기업용헤더 X”가 표시되어 있으므로 실제 화면의 승인된 기업용 셸을 확인한다.
+
+- HEADER: 1920 × 159. Breadcrumbs Area는 y=0, 높이 49, 배경 #FAFAFA다. 내부 Breadcrumbs는 x=240, 너비 1440, padding 16 40이다.
+- GNB / Channel: (240,49), 1440 × 110.
+- BODY: x=240, y=159, 너비 1440, padding 48 40, Vertical gap 48. 유효 콘텐츠는 x=280, 너비 1360이다.
+- 페이지 제목 “가입 단계 안내”: (280,207), 1360 × 36, KBFG Text Bold 26/36, #1C1C1C.
+- FOOTER: 너비 1920, 높이 352. 신규 생성에서는 13장의 지정 Footer 인스턴스를 사용한다.
+
+| 영역 | R: y / 높이 | S: y / 높이 |
+| --- | --- | --- |
+| BODY | 159 / 1210 | 159 / 1198 |
+| Container 1 — 페이지 제목 | 207 / 36 | 207 / 36 |
+| Container 2 — 단계·준비물 안내 | 291 / 422 | 291 / 410 |
+| Container 3 — 상품 안내 Accordion | 761 / 280 | 749 / 280 |
+| Container 4 — 주의사항 Accordion | 1089 / 128 | 1077 / 128 |
+| Container 5 — 하단 Button Area | 1265 / 56 | 1253 / 56 |
+| FOOTER | 1369 / 352 | 1357 / 352 |
+
+실제 본문 Container는 5개다. 이를 임의로 합치거나 분할하지 않는다. 사용자 정의 래퍼는 12장의 명명 기준으로 정리하고, 디자인 시스템 인스턴스의 고유 내부 이름은 유지한다.
+
+```text
+Screen
+├─ ## HEADER
+│  ├─ Breadcrumbs Area
+│  └─ GNB / Channel
+├─ ## BODY
+│  ├─ Container 1
+│  │  └─ Title / Page
+│  ├─ Container 2
+│  │  └─ ProgressStep / Infobox
+│  │     ├─ ProgressStep
+│  │     └─ Infobox
+│  ├─ Container 3
+│  │  └─ Accordion — 상품 안내
+│  ├─ Container 4
+│  │  └─ Accordion — 주의사항
+│  └─ Container 5
+│     └─ Button Area
+│        └─ ButtonGroup
+└─ ## FOOTER — 지정 컴포넌트 인스턴스
+```
+
+이 트리는 역할을 정리한 제작 명명 예다. `ProgressStep / Infobox`와 `Button Area`는 사용자 정의 래퍼이며, 원본의 일반 프레임을 라이브러리 컴포넌트로 오인하지 않는다.
+
+## 37. ProgressStep·준비물의 치수와 스타일 차이
+
+### 37.1. Container 2와 단계 영역
+
+Container 2는 너비 1360, Vertical gap 32, 위·아래 padding 12, 좌우 0, radius 24다. 프레임 속성의 fill은 #FAFAFA이며, 실제 표시에는 내부 자식의 배경도 반영된다.
+
+| 항목 | R — 스타일 오버라이드 | S — 기본형 |
+| --- | --- | --- |
+| 단계 바깥 래퍼 | (280,303), 1360 × 190 | (280,303), 1360 × 178 |
+| 래퍼 padding: 위/오른쪽/아래/왼쪽 | 32 / 32 / 32 / 32 | **32 / 0 / 32 / 32** |
+| 실제 ProgressStep 인스턴스 | (312,335), 1296 × 126 | (312,335), 1328 × 114 |
+| 5개 항목 각각의 너비 | 259.2 | 265.6 |
+| 원형 variant 이름 | align=center | align=left |
+| 실제 내부 Item 정렬 | **5개 모두 align=left** | 5개 모두 align=left |
+| 번호 서체 | Pretendard SemiBold 15/20, #FFFFFF | Pretendard Regular 15/20, #1C1C1C |
+| 번호 원형 표시 | 파란색 원형 | 옅은 회색 원형 |
+| 단계 제목 | KBFG Text Bold **18/25**, #444444 | KBFG Text Bold **14/20**, #444444 |
+| 단계 설명 | KBFG Text Medium **14/20**, #6E6E6E | KBFG Text Light **12/17**, #6E6E6E |
+| 보조 링크 “버튼명” | KBFG Text Medium 12/17, #444444 | 동일 |
+
+- ProgressStep은 가로 5등분, 항목 사이 gap 0이다. 각 Item은 Vertical gap 16이며 번호 원형은 32 × 32다. 첫 4개는 position=start, 마지막은 position=end다.
+- R 원형의 `align=center`라는 이름만 보고 내부 텍스트를 모두 중앙 정렬하지 않는다. 내부의 실제 `Item / Infomation`은 왼쪽 정렬이다. 라이브러리 원형의 `Infomation` 표기는 임의 수정하지 않는다.
+- R의 단계명은 “사업자 정보 확인 → 정보입력 → 본인인증 → 상품가입 → 가입완료”다. S의 “스텝명 입력”, 설명 “프로세스 내용 필요 시 사용”, 링크 “버튼명”은 자리표시자다.
+- R의 번호가 모두 파란색이라는 정적 표현만으로 모든 단계가 완료되었거나 활성화되었다고 정의하지 않는다. 절차 개요 ProgressStep과 현재 단계 표시·검증 동작은 실제 기획에 따라 구분한다.
+- R과 S의 단계 영역 높이 차이 12가 Container 2, 이후 Container 및 Footer y좌표에 그대로 반영된다. 동일한 y좌표를 강제로 적용하지 않는다.
+
+### 37.2. 준비물 안내
+
+- 준비물 박스: R은 (280,525), S는 (280,513), 모두 1360 × 176. padding 32, radius 12, fill #FAFAFA다.
+- 내부 `Text / List`: 1296 × 112, 제목과 목록 gap 12. Title / Group “준비물”은 KBFG Text Bold 16/24, #1C1C1C다.
+- 목록은 3행, 각 높이 20, 행간 gap 8로 총 76이다. 아이콘은 `status-circleCheck` 16 × 16, 행 위에서 2px 위치, 아이콘과 본문 간격 4다. 본문은 행 왼쪽에서 20px 뒤에 시작한다.
+- 원본의 각 `TextList / Unordered` 행은 **이 이름을 가진 FRAME**이며 컴포넌트 인스턴스가 아니다. 생성 시 이름만으로 인스턴스 여부를 판단하지 않는다. 적절한 KBDS 컴포넌트를 재사용할 때도 실제 원형 연결과 아이콘·문장 배치를 확인한다.
+- 원본의 준비물 목록은 “종합통장자동대출의 만기도래 및 이자내역 안내”, “CD/ATM 및 금융 VAN사 자동화기기를 통한 거래”, “제휴기관(증권사등) 자동화기기를 통한거래”다. 준비물 제목과 업무상 맞지 않는 예시이므로 실제 필요 서류·준비물로 확정하지 않는다.
+- 높이 검산: 준비물은 padding 64 + 제목 24 + gap 12 + 목록 76 = 176. Container 2는 R: 24 + 190 + 32 + 176 = 422, S: 24 + 178 + 32 + 176 = 410이다.
+
+## 38. 펼쳐진 상품·주의사항과 하단 버튼
+
+### 38.1. 상품 안내 Accordion
+
+- 두 화면 모두 `variant=standard, type=basic, size=large, expanded=true`, 1360 × 280이다.
+- Title Area: 높이 68, 위·아래 padding 20, 가로 gap 12. “상품 안내”는 KBFG Text Bold 16/24, #444444다. 펼침 아이콘은 오른쪽 28 × 28이다.
+- Expand Area: 내부 y=68, 높이 212, 위 padding 8, 아래 padding 20. 실제 Slot-contents는 내부 y=76, 높이 184, gap 8이다.
+- 표는 라벨 열 180 + 값 열 1180 = 1360이다. 라벨은 “가입 대상 / 서비스 이용 시간 / 가입 가능한 상품”, KBFG Text Medium 14/20 #444444다. 일반 값은 Light 14/20 #1C1C1C이며, 상품 목록은 14px TextList를 사용한다.
+- 예시 값 “개인사업자(공동사업자 제외)”, “24시간 365일 언제나 가능”과 상품 3개는 화면 샘플이다. 가입 자격·이용 시간·상품 정책으로 일반화하지 않는다.
+- 펼침 상태와 슬롯 내용을 보존하며, 접힘 동작·초기 상태의 선택 정책은 실제 기획을 따른다.
+
+### 38.2. 주의사항 Accordion
+
+- 두 화면 모두 `variant=standard, type=basic, size=medium, expanded=true`, 1360 × 128이다.
+- Header: 높이 56, 위·아래 padding 16, 가로 gap 8. 왼쪽 info 아이콘 24 × 24, 오른쪽 펼침 아이콘 24 × 24다.
+- 제목 “주의사항”은 **R: KBFG Text Bold 14/20**, **S: Bold 16/24**로 다르며 색상은 모두 #444444다. 같은 원형·높이라도 실제 적용된 서체 오버라이드를 확인한다.
+- Expand Area는 내부 y=56, 높이 72, 위 padding 8, 아래 padding 16이다. Slot-contents는 내부 y=64, 높이 48이며 20px 불릿 2행 + gap 8로 구성된다.
+- 원본의 동일 주의문 2행을 실제 기획의 필수 중복 문장으로 확정하지 않는다.
+
+### 38.3. Button Area와 Footer
+
+- Container 5는 1360 × 56이며, large primary 버튼 하나를 가로 중앙에 배치한다. 버튼은 154 × 56, x=883, R y=1265 / S y=1253이다.
+- 실제 ButtonGroup 원형은 `count=multi`지만 보이는 자식은 1개다. variant 이름만 보고 두 번째 버튼을 추가하지 않는다.
+- “버튼명”은 자리표시자이며 실제 액션 라벨·활성화 조건·다음 화면은 업무 기획을 적용한다.
+- BODY 높이는 padding 96 + 제목 36 + 안내 R 422/S 410 + 상품 280 + 주의 128 + 버튼 56 + 영역 간격 48 × 4 = R 1210 / S 1198이다.
+- Footer는 BODY 다음에 gap 0으로 이어진다. 기존 학습 화면의 Footer가 일반 프레임이어도 새 화면에서는 13장의 지정 컴포넌트를 인스턴스로 넣는다.
+
+## 39. 가입 단계 안내의 원형 키·이미지·검수
+
+### 39.1. 관측한 main component key
+
+사고신고 파일에서 확인한 키다. 지정 디자인 시스템에서 재사용할 때는 같은 이름뿐 아니라 실제 원형·변형·슬롯·토큰을 대조하고 연결을 유지한다.
+
+| 컴포넌트 / 변형 | main component key |
+| --- | --- |
+| Title / Page | `366007b354df25708d9dce4a7788c2b44e30dba3` |
+| ProgressStep — R, align=center | `5bc9c95cc0b4906f44ebdf25875a18daff8930c3` |
+| ProgressStep — S, align=left | `56b1705e117b8613a4403f34bbf9fd0be5683476` |
+| Item / Infomation — start / left / number | `5f02d9a1f43d6ef479cc5c6f36b3414e1b5f9a20` |
+| Item / Infomation — end / left / number | `c62727408533955d60d88e88526f3ec8f752161c` |
+| Item / ProgressStep — number | `72a7e48dd96459e737a0f31ba87bb3fa4e69d49e` |
+| Title / Group — left | `99d19cfa876f2805be637934f717ffd2763720ca` |
+| Accordion — standard/basic/large/expanded | `189002d3c4cd6147e4912221bc87a9af60a61a22` |
+| Accordion — standard/basic/medium/expanded | `d14342b496bd3aa5d2e707cf26a183daf5d401ce` |
+| TextList — 불릿 14px | `5e484496e22e7e84c91c23bddfe11d1b4a13f35b` |
+| ButtonGroup — large, count=multi | `f6fbbaad278bc5dc3e0568efdc16711894a01e47` |
+| BoxButton — primary large | `d206f834d8d80e5bd6ab306b8033f3c0e5214bc5` |
+
+### 39.2. 원본 삭제 대비 이미지
+
+전달 시점의 두 화면을 0.5배 PNG(너비 960px)로 저장소에 보존했다. 수치 재현은 위 논리 px를 사용하고, 이미지는 전체 배치·색·서체 차이를 확인하는 근거로 사용한다.
+
+#### R — 스타일 오버라이드
+
+![가입 단계 안내 — 스타일 오버라이드](assets/design-rules/joining-steps-style-override.png)
+
+#### S — 기본형
+
+![가입 단계 안내 — 기본형](assets/design-rules/joining-steps-standard.png)
+
+### 39.3. 재현 검수
+
+1. 1920px 셸, 이번 출처의 Breadcrumbs → GNB 순서, BODY 1440/유효 너비 1360 및 Container 5개를 확인한다.
+2. 5단계의 동일 분할, 번호 32 × 32, 실제 자식의 왼쪽 정렬 및 R/S의 제목·설명·번호 서체를 확인한다.
+3. R/S의 단계 래퍼 좌우 padding 차이, 12px 높이 차이와 이후 영역·Footer 위치를 확인한다.
+4. 준비물 176, 상품 Accordion 280, 주의 Accordion 128, 중앙 버튼 154 × 56 및 지정 Footer 인스턴스 연결을 확인한다.
+5. 이번 원본 두 화면의 누락 폰트 표시는 0이며 확인한 텍스트 자간은 0px이다. 생성 화면에서도 필수 서체, 잘림·겹침, 실제 업무 문구와 인스턴스 연결을 한 번 검수한다.
