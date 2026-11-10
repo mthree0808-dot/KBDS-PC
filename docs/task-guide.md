@@ -11,6 +11,7 @@
 - GNB / Channel 내부 GNB도 가로 Fill. Footer는 지정 원형 `bb4b7042c4ccc5742c5d51c3f5460ffec409ab63`의 실제 인스턴스.
 - 0은 변수 없이 0. BODY 너비 1440도 변수 없음. 나머지 적용 대상 수치는 간격·패딩·radius·테두리·타이포그래피·고정 치수의 실제 변수/스타일을 확인한다.
 - Clip content를 임의로 켜지 않는다. 새 프레임의 기본값도 false로 명시한다.
+- Table의 텍스트는 Slot 안에 실제 Item / Slot(label/data)을 사용한다. 숫자 표시(전화번호의 기호·마스킹 포함)는 Pretendard, 영문·국문 포함 문자열은 KBFG Text이며 family 변수를 연결한다. 자세한 구조·서체 검수는 65장.
 - 고객정보조회는 제목+2열 Table 4개, 라벨180+값832, 제목→표20·섹션48. 현재 조회형에 예전 Card/Data Block 구성을 다시 적용하지 않는다.
 - 박스가 필요한 별도 유형은 60장으로 Card / Surface·Data Block·Text Box 역할을 판정한다. 다른 유형에 조회 화면의 Table 구성을 일괄 확대하지 않는다.
 - 기획의 문구·순서·강조·마스킹·입력·선택·비활성 상태를 보존한다. 이어지는 기획 프레임은 한 화면으로 합치고 기획용 표시는 제외한다.
@@ -28,7 +29,7 @@
 | 작업 | 로컬 명령 | 원문 |
 | --- | --- | --- |
 | 기본 시작 | `node scripts/read-rules.mjs common` | 이 파일 |
-| 고객정보조회·Table | `node scripts/read-rules.mjs table` | 63장 |
+| 고객정보조회·Table | `node scripts/read-rules.mjs table` | 63·65장 |
 | 박스 역할 판정 | `node scripts/read-rules.mjs boxes` | 60장 |
 | 레이어 정리 | `node scripts/read-rules.mjs naming` | 12장 |
 | 2열 화면 골격 | `node scripts/read-rules.mjs layout` | 61.2·61.3 |
