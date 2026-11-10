@@ -1,0 +1,17 @@
+{
+  "source": "design-rules.md",
+  "common": "docs/task-guide.md",
+  "runtime": "templates/kbds-pc-runtime.js",
+  "topics": {
+    "common": [],
+    "table": ["63"],
+    "customer-view": ["63"],
+    "customer-edit": ["62.3", "62.5"],
+    "boxes": ["60"],
+    "naming": ["12"],
+    "layout": ["61.2", "61.3"],
+    "variables": ["61.1", "61.7", "61.8"],
+    "footer": ["13"],
+    "workflow": ["62"]
+  }
+}
