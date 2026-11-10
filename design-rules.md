@@ -3521,7 +3521,7 @@ Table
 - 이전 label/data·size=14 세트 `0c3444ad08ece79bacffe88bd2e3efaa80918b12` 및 label14 `ad37787aee0ed1991f08e3956a33a9e485bfa838`, data14 `aaafef15f29f8c1e78e78d475d21d9f40538d34c`를 Table에 쓰지 않는다. 이 원형들은 이번 Table 기준과 다른 원형이다.
 - 원형의 실제 인스턴스와 내부 타이틀·내용 이름을 유지한다. 일반 TEXT를 Slot에 직접 넣거나 detach·이름 변경으로 원형을 흉내 내지 않는다.
 - 이 Table 전용 원형의 공개 속성은 variant와 onlyNumber다. 다른 세트의 hasSuffix·hasTooltipButton·size 설정을 적용하지 않는다.
-- 기준의 Slot·Item / Slot·내부 텍스트는 기본 가로 Hug·세로 Hug이며 왼쪽 정렬이다. 가로 Auto Layout인 Table / Header·Cell의 primaryAxisAlignItems를 MIN으로 설정한다. Slot을 Hug로 바꿔도 기본 가운데 배치가 남지 않도록 실제 셀 왼쪽 padding16 위치를 확인한다. 셀보다 긴 문장만 셀 가용 폭으로 Fill·줄바꿈 처리하고 높이는 Hug로 둔다. 주소의 명시적 줄바꿈을 보존한다.
+- 기준의 Slot·Item / Slot·내부 텍스트는 기본 가로 Hug·세로 Hug이며 왼쪽 정렬이다. 가로 Auto Layout인 Table / Header·Cell의 primaryAxisAlignItems를 MIN으로 설정한다. Header는 counterAxisAlignItems=CENTER(Align left), Cell의 세로 크기는 항상 FILL로 설정한다(65.5). Slot을 Hug로 바꿔도 기본 가운데 배치가 남지 않도록 실제 셀 왼쪽 padding16 위치를 확인한다. 셀보다 긴 문장만 셀 가용 폭으로 Fill·줄바꿈 처리하고 높이는 Hug로 둔다. 주소의 명시적 줄바꿈을 보존한다.
 - 표 너비1012·헤더180·본문832, padding 상하12·좌우16, 일반/주소/체크박스 행 높이45/65/49와 제목·섹션 간격은 63장 그대로 유지한다.
 - 셀 안 실제 DataList·CheckBox 등 전용 콘텐츠를 원본 기획이 요구하면 유지한다. 원본의 예시 DataList를 모든 조회 텍스트에 추가하지 않는다. 현재 고객정보조회는 title12개·content11개와 전화 수신여부 CheckBox Group이다.
 
@@ -3556,6 +3556,19 @@ Table
 - **0 자간 예외:** 사용자 수정본처럼 연결된 정식 텍스트 스타일이 상속하는 letterSpacing=0 변수는 유지한다. 이를 제거하기 위해 setRangeBoundVariable·fontName·letterSpacing 등을 덮어써 스타일 연결을 해제하지 않는다. 기존 '0은 변수 없이 적용'은 프레임 gap·padding·radius 등 직접 수치에는 그대로 적용하며, 정식 TextStyle의 상속된 0 자간에는 적용하지 않는다. 이는 이번 사용자 수정본을 반영한 최신 우선 규칙이다.
 - 완료 판정은 실제 연결 스타일과 필수 바인딩을 모두 검증하고 문자·마스킹·선택 상태·색·표시 서체 및 화면 렌더링까지 확인한다. fontStyle 변수의 존재는 원형이 요구하는 경우에만 검사한다. 이 기준 원형에는 fontStyle alias가 없으므로 없다는 이유만으로 새 변수를 임의 적용하지 않는다.
 - 이번 고객정보조회 5:31은 전체92개 TEXT의 스타일 연결을 복원했고, 숫자 데이터3개가 위 숫자 원형·스타일을 사용하는 것을 확인했다.
+
+### 65.5. 모든 Table Header의 Align left와 Cell 높이 Fill
+
+2026-11-10 사용자 최신 지시. 고객정보수정 `30:1871`의 Table4개·Header12개·Cell12개에 적용했다. 이후 화면 제작·수정의 모든 Table / Header·Table / Cell에도 아래 기준을 기본 적용한다. 기존 절의 상단 정렬·Cell Hug/Fixed·콘텐츠만으로 산출한 Cell 높이보다 이 기준이 우선한다.
+
+- **Table / Header의 alignment는 Align left(왼쪽·세로 중앙)**다. 가로 Auto Layout에서 `primaryAxisAlignItems="MIN"`, `counterAxisAlignItems="CENTER"`를 설정한다. MIN/MIN(왼쪽 위)이나 CENTER/CENTER(가운데)로 두지 않는다. 내부 Slot 및 Table 전용 Item / Slot 원형·너비·텍스트 스타일은 유지한다.
+- **Table / Cell의 세로 크기는 항상 Fill**이다. 실제 인스턴스에 `layoutSizingVertical="FILL"`을 설정하고 재조회 값이 FILL인지 확인한다. Hug 또는 Fixed 상태에서 높이 숫자만 Header에 맞추는 방법으로 대체하지 않는다.
+- 이 화면은 GRID Auto Layout Table이다. Cell은 자신이 속한 행의 높이를 채운다. 행·Table의 콘텐츠 기반 높이 계산은 유지하고, 모든 행을 임의의 같은 고정 높이로 바꾸지 않는다.
+- Header의 가로 왼쪽 정렬과 세로 중앙 정렬은 서로 다른 설정이다. Slot 가로 Hug 또는 텍스트 alignLeft만으로 Header 전체 정렬 검수를 대신하지 않는다.
+- 실제 Cell 전체의 높이와 내부 InputField/FooterArea의 Hug 높이는 구분한다. 자택주소 Cell은 행 높이193을 Fill하고, 내부 상세주소 InputField는65·입력 묶음은161을 유지한다. 부서명 Cell은 행 높이101을 Fill하고, 내부 InputField는65를 유지한다. 67장의 초기 Cell186/90 실측은 Fill 적용 전 콘텐츠 높이 기록이며 최종 외곽 높이 기준으로 사용하지 않는다.
+- 이번 화면의 행 높이(위→아래): 기본정보65·65, 자택정보193·65, 직장정보161·65·101·65, 고객관리 안내수단49·49·49·65. Header/Cell 높이가 모든 행에서 일치함을 확인했다. 이 값은 현재 콘텐츠의 검산값이며 공통 고정 높이 토큰으로 만들지 않는다.
+- 원형·Slot 계층·문구·입력 및 선택/비활성 상태·정식 TextStyle·서체·변수 바인딩은 보존한다. 셀 너비832·Header180, Table1012와 기존 padding·선·색을 유지한다.
+- 완료 검사: Header12개 MIN/CENTER, Cell12개 FILL, 12개 행의 좌우 높이 일치, 표 내부47개 TEXT의 실제 TextStyle·서체·필수 변수 누락0 및 최종 렌더링을 확인했다. 이후에는 해당 화면의 모든 대상 수를 기준으로 누락 없이 검사한다.
 
 ## 66. 조회·도구 출력·재작업을 줄이는 실행 기준
 
