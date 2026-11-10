@@ -48,7 +48,7 @@ test('remote ranges reproduce the exact selected source sections', () => {
   const lines = source.split('\n');
   const result = JSON.parse(run(['ranges', 'table-slots']));
   assert.equal(result.source, 'design-rules.md');
-  assert.deepEqual(result.ranges.map(r => r.id), ['65.1', '65.3', '65.4']);
+  assert.deepEqual(result.ranges.map(r => r.id), ['65.1', '65.3', '65.4', '65.5']);
   const fromRanges = result.ranges.map(r => lines.slice(r.start_line - 1, r.end_line).join('\n').trim()).join('\n\n');
   assert.equal(fromRanges, run(['table-slots']));
   assert.throws(() => run(['ranges', '999']), /Unknown section/);
