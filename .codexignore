@@ -1,0 +1,25 @@
+# Git & Dependencies
+.git/
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Assets & Static files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
+*.mp4
+public/
+assets/
+
+# Test & Docs
+tests/
+__tests__/
+*.test.*
+*.spec.*
+*.log
