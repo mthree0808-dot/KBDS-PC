@@ -15,7 +15,7 @@
 - 아래 수치는 두 화면에서 확인한 관리 화면 기준이다. 다른 해상도의 반응형 동작, 최소·최대 너비, 업무 로직, 미표시 상태는 아직 정의하지 않았다.
 - 새로운 지시가 있으면 해당 규칙을 이 파일에서 갱신한다. 기존 KBDS 컴포넌트·토큰·스타일을 우선 재사용한다.
 - 화면 제작은 62장의 재사용 템플릿·공통 스크립트·3분 목표 절차를 먼저 적용한다. 같은 유형의 컴포넌트 조사와 제작 코드를 매번 처음부터 반복하지 않는다.
-- 수치 변수 바인딩, GNB Fill, LNB 2열 구조와 고객정보조회 화면 수정은 61장을 우선 적용한다.
+- 수치 변수 바인딩, GNB Fill, LNB 2열 구조는 61장을 적용한다. 고객정보조회 데이터 영역의 최신 구성은 63장의 Table 기준을 우선 적용한다.
 - 박스의 역할 분류·제작 방식·스타일은 60장을 우선 적용한다. 1~59장의 원본 카드 호칭·프레임 구조·실측 외형은 자동으로 제작 기준이 되지 않는다. 전용 선택 패턴·Infobox와 명시적으로 승인된 간격 예외는 해당 범위에서만 적용한다.
 - 학습 화면의 시각적 규격·컴포넌트·UI 조합을 정립하되, `## BODY` 내부의 원본 레이어 이름·정리 상태는 복제하지 않는다. 생성 시 12장의 명명·실제 Auto Layout 그룹핑 규칙을 우선 적용한다.
 
@@ -3217,6 +3217,8 @@ LNB가 있는 이 고객정보 2열 화면은 다음 구조를 사용한다.
 
 ### 61.4. 고객정보조회 화면의 Data Block·Card 분류
 
+**2026-11-10 변경:** 현재 고객정보조회 화면은 63장의 Table 기준을 적용한다. 아래 Data Block·Card 구성은 변경 전 기록이며 이 화면을 새로 만들 때 재적용하지 않는다.
+
 대상: [고객정보조회(개인정보열람)](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=5-31). 화면은 기존 Section `2:286` 기준 x=240, y=240을 유지한다.
 
 | 영역 | 적용 역할·제작 방식 |
@@ -3315,7 +3317,7 @@ Data Block Group / Card
 
 | 용도 | 검증 화면 | 재사용 범위 |
 | --- | --- | --- |
-| 조회형 | [화면ID_고객정보조회(개인정보열람)](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=5-31) | HEADER·GNB Fill·Breadcrumbs·LNB 316·Container 2·Data Block·지정 Footer |
+| 조회형 | [화면ID_고객정보조회(개인정보열람)](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=5-31) | HEADER·GNB Fill·Breadcrumbs·LNB 316·Container 2·조회 Table·지정 Footer |
 | 입력형 | [화면ID_고객정보수정](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=30-1871) | InputField 조합·Card / Surface·Radio/Checkbox Group·펼친 안내 Accordion·취소/수정 버튼 |
 | 확인·인증형 | [화면ID_고객정보수정확인](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=30-3002) | 단일 Data Block의 복수 정보 섹션·라디오 선택형 인증 Card·인증 안내·이전/확인 버튼 |
 
@@ -3405,3 +3407,54 @@ Data Block Group / Card
 4. 완성 화면을 한 번 렌더링해 문구·입력값·선택 상태·잘림·겹침·기본 더미 표시를 대조한다.
 5. 실제 시각 오류를 고쳤을 때만 수정 후 화면을 다시 확인한다. 가장 최근에 통과한 화면을 최종 검수로 사용하며 변경이 없으면 반복하지 않는다.
 6. 검수를 통과한 뒤 화면 링크와 결과를 간단히 전달한다.
+
+## 63. 고객정보조회 — Card/Data Block 대신 Table 적용
+
+2026-11-10 사용자 지시에 따라 [고객정보조회 화면](https://www.figma.com/design/2MavuzZhNpHpqer5fk3ML4?node-id=5-31)을 직접 수정했다. 항목명·값으로 이루어진 일반 상세 조회 영역은 Table로 표현한다. 박스가 필요하다고 먼저 가정해 Card / Surface 또는 Data Block으로 감싸지 않는다. 박스 자체가 필요한 별도 승인 패턴은 60장의 역할 구분을 따른다.
+
+### 63.1. 기준 화면과 적용 범위
+
+- [정보확인](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5119-4111): 너비 1012, 라벨 180 + 값 832의 2열 Table을 주 기준으로 사용한다.
+- [자동이체등록-계좌정보 추가입력](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5119-3598): 입력·선택 UI가 셀 안에 들어가는 구조와 콘텐츠에 따른 행 높이를 참고한다. 이 화면의 1360 너비·160 라벨 열을 현재 조회 화면에 일괄 적용하지 않는다.
+- 기본정보·자택정보·직장정보·고객관리 안내수단을 모두 제목 + Table로 구성한다. 고객관리 안내수단도 이전의 Card 예외를 적용하지 않는다.
+- 현재 조회 화면의 Table은 4개이고 행 수는 각각 2·2·4·4다. Card / Surface와 Data Block은 데이터 영역에 남기지 않는다.
+
+### 63.2. 실제 레이어와 치수
+
+```text
+Container 2
+├─ Title / Page
+├─ Title / Contents — Vertical, gap 48
+│  ├─ Title / Table
+│  │  ├─ Title / Headline
+│  │  └─ Table
+│  ├─ Title / Table
+│  ├─ Title / Table
+│  └─ Title / Table
+└─ Button Area
+```
+
+- 제목과 Table 사이 gap은 20(`spacing/2xl`), 섹션 사이는 48(`spacing/7xl`)이다.
+- Table은 실제 GRID Auto Layout이며 2열, 너비 1012, 라벨 열 FIXED 180·값 열 FLEX 1(현재 832)로 구성한다.
+- 행은 HUG, 행·열 gap은 직접값 0이다. 표의 padding·radius도 0이고 Clip content는 false다.
+- 실제 `Table / Header`와 `Table / Cell` 인스턴스를 사용하고 원형 이름과 Slot 구조를 유지한다. 값 셀은 마지막 열용 `variant=last, onlyNumber=false`를 사용한다.
+- 셀 padding은 상하 12(`spacing/lg`)·좌우 16(`spacing/xl`)이다. 값은 왼쪽 정렬한다.
+- 라벨 배경은 원형의 회색 배경을 유지하고, 값 배경은 흰색이다. 표 상단은 1px `stroke/md` + `border/neutral/secondary`, 셀 구분선은 해당 원형의 토큰을 유지한다.
+- 일반 행은 45, 두 줄 주소 행은 65, 24px 체크박스가 있는 행은 49다. 값 셀 높이에 맞춰 라벨 셀도 같은 높이로 늘려 회색 배경과 경계가 끊기지 않게 한다.
+- 라벨 고정 폭 180과 고정 행 높이에 변수 연결이 필요하면 기존 화면 배치 컬렉션의 대응 치수 변수를 사용한다. 0과 BODY 1440은 61.8장의 직접값 예외를 유지한다.
+
+### 63.3. 원형 키·내용·상태
+
+| 역할 | 원형 키 |
+| --- | --- |
+| Table / Header — default, onlyNumber=false | `ba105a8f29acb712e5c5aa6a3cb2015de330f392` |
+| Table / Cell — last, onlyNumber=false | `1b5a0ae0fefd157325271672a78224db2575f047` |
+| 셀 본문 Body/md14Medium | `f5f81baf6718bb904b4793a0ecf70ff694044489` |
+| 상단 선 border/neutral/secondary | `f2f4f171af291559772456eff22bca9e60d64f41` |
+
+- 라벨·값은 KBFG Text Medium 14/20을 적용하고 실제 타이포그래피 변수 연결을 유지한다. 0 자간은 직접값이다.
+- 휴대폰번호·전화번호의 마스킹, 이메일, 주소의 명시적 줄바꿈, 직장명·부서명과 수신 상태는 현재 화면 내용을 보존한다.
+- 전화 수신여부 값 셀에는 실제 CheckBox 인스턴스를 가로 Auto Layout으로 배치하고 gap 24를 사용한다. 자택·직장 checked/disabled, 휴대폰 unchecked/disabled 상태를 유지한다.
+- 조회 값에 기획에 없는 chevron·상세 이동 버튼을 추가하지 않는다. Table / Cell의 기본 Slot 내용을 정리하고 실제 조회 내용만 넣는다.
+- 화면 ID·이름·기존 위치(x=240, y=240), HEADER·LNB·수정 버튼·지정 Footer는 기존 화면을 재사용한다.
+- 조회형 재사용 템플릿 `5:31`은 이제 이 Table 구성이 기준이다. 입력 화면과 확인·인증 화면을 이 지시만으로 일괄 변경하지 않는다.
