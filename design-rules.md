@@ -3572,3 +3572,62 @@ Table
 - 화면 변경 후 한 번 렌더링한다. 시각 오류를 실제 수정한 경우에만 수정 후 다시 확인한다. 변경 없는 추가 최종 캡처를 하지 않는다.
 - 공통 함수의 로컬 테스트는 코드 회귀 검증이며 실제 Figma 실행·서체·시각 검수를 대신하지 않는다. 코드·색인이 바뀐 경우 관련 로컬 검사를 수행하고 일반 화면 작업에서는 같은 코드 검사를 반복하지 않는다.
 - 답변은 결과·필수 확인·남은 제한만 짧게 전한다. 계정 사용량 명세 없이 절감률·토큰 상한·모든 작업자의 강제 적용을 보장하지 않는다.
+
+## 67. 고객정보수정 — 알려드립니다·InputField 하단 초기화 버튼
+
+2026-11-10 사용자 수정 지시를 반영했다. 적용 화면은 고객정보수정 `30:1871`(파일 `2MavuzZhNpHpqer5fk3ML4`)이다. 참조 `79:5121`과 `79:2505`는 구조·스타일의 근거이며 아래 내용으로 삭제 후에도 재현한다. 참조의 CMS 계좌 문구를 고객정보수정 화면에 복사하지 않는다. 이 절은 해당 안내·단일 필드 하단 초기화 패턴의 이전 기록보다 우선한다.
+
+### 67.1. 알려드립니다 Accordion
+
+- Accordion 키 `d14342b496bd3aa5d2e707cf26a183daf5d401ce`, variant=standard, type=basic, size=medium, expanded=true. 너비 Fill(이 화면1012), 높이 Hug(현재213). hasPrefix=true, hasDivider=true, hasContentDetail/hasContentEnd/hasNum/hasTooltip=false. 제목은 “알려드립니다”.
+- Title Area: 가로 Auto Layout, 높이56, padding 상하16·좌우0, gap8. MainText는 KBFG Text Bold 14/20, 실제 TextStyle 키 `fd29c6c3e60f91d214e519fc9a48bdb7bca2741a` 유지.
+- Prefix는 Item / Prefix(icon), 키 `0d60ea8de4828d55c1acca394fe43e6f1b8e836d` → IconContainer(size=24), 키 `0e7e37a41288aa4a8b3d714c968640ed93076152` → line-info-circle, 키 `7cdca60c085dfdabf7fc5a6971916b2d70c10455`. solid-info-circle 또는 “ICON” placeholder로 대체하지 않는다. Prefix의 icon swap만으로 끝내지 말고 내부 IconContainer의 icon 속성까지 line-info-circle로 설정한다.
+- 오른쪽 IconButton24는 위쪽 chevron(expanded), 하단 Divider / Horizontal 키 `b154a5e09047df6dcbf02775b74e664260c48b01`, secondary/1px를 유지한다.
+- Expand Area는 padding 상8·하16·좌우0, gap0, 높이 Hug(현재156). Slot-contents는 세로 Auto Layout, 가로 Fill·세로 Hug, padding0, gap8(`spacing/md`, 키 `2277b8d1df86cdf8204cdac92209643941df242f`), 현재 높이132.
+- 불필요한 바깥 TextList Group(gap2)을 없애고 최상위 불릿과 필요한 하위 목록 그룹을 Slot-contents에 직접 배치한다. 원래 정보 위계는 보존한다. 하위 대시 목록은 세로 Auto Layout, 왼쪽 padding12(`spacing/lg`, 키 `f1822d95f1b0043e2ee435fea6d4725d37db3ebb`), gap8이다.
+- 각 항목은 실제 TextList / Unordered 인스턴스, 키 `5e484496e22e7e84c91c23bddfe11d1b4a13f35b`, variant=bullet, size=14, depth=1. 가로 Fill·높이 Hug, 텍스트 영역은 가용 폭으로 줄바꿈한다. 항목 내부 gap4(`spacing/xs`, 키 `61f197a81b6706762c24e5fd56b51d0f60bf9d98`), 왼쪽 padding12를 유지한다. 하위 항목의 마커는 원본대로 대시 “-”를 보존한다.
+- 본문·마커는 KBFG Text Light14/20, TextStyle 키 `9425756dd9ccef22a21ae16afc4879e5258e1bf5`. 본문색은 원형 변수 `3cb02c7ce9b6723738c37f4fcd9d978bb0214c08`을 유지한다. 실제 textStyleId와 fontFamily/fontSize/fontWeight/lineHeight/Fill 바인딩, 정식 스타일의 상속0 자간을 보존한다.
+
+고객정보수정의 문구·순서·위계:
+
+1. • 고객관리 안내수단은 당행이 필수 고지사항 등을 안내하는 수단입니다.
+   - 영업점 이전, 통합, 폐쇄 등의 안내, 대출 원리금 납입 미납, 은행상품 만기 안내
+   - 계약조건 변경 안내(금리변경, 부가서비스, 혜택변경 등), 민원 및 기타 계약의 유지관리에 관한 안내
+2. • 혜택정보 안내(마케팅) 수신동의는 [고객정보관리 > 본인정보 이용·제공 조회 > (은행) 혜택정보 안내 수신동의]에서 변경하실 수 있습니다.
+3. • 개별 상품(수신, 여신, 외환 등)에서 별도로 안내를 신청할 경우 위의 안내수단을 전부 거절하셔도 안내가 가능할 수 있습니다.
+
+### 67.2. InputField FooterArea의 초기화 TextButton
+
+수정 대상은 자택주소 Table / Cell `65:2551`의 단일 “초기화”다. 직장정보의 “전체 초기화”처럼 여러 필드에 걸친 액션을 이 패턴만으로 단일 InputField FooterArea로 옮기지 않는다.
+
+```text
+Table / Cell — last, onlyNumber=false
+└─ Slot-Content
+   └─ InputField / Contents — Vertical, gap8
+      └─ InputField / Contents — Vertical, gap8
+         ├─ InputField — 우편번호, 400×40
+         ├─ InputField — 주소, 400×40
+         └─ InputField — 상세주소, 400×65, hasFooter=true
+            ├─ Item / Input — 400×40
+            └─ FooterArea — Slot, 400×17, Fill/Hug
+               └─ Button Area — Vertical, Fill/Hug, gap0, padding0
+                  └─ TextButton — 우측 정렬, Hug/Hug, 50×17
+```
+
+- 별도의 형제 Button Area(기존400×24)를 제거하고 상세주소 InputField의 hasFooter=true 및 FooterArea 슬롯을 사용한다. 입력과 FooterArea 사이 gap8은 InputField 원형의 `spacing/md`를 상속한다.
+- Footer 활성화 시 자동 생성되는 “레이블” Item / Footer 예시를 제거하여 버튼만 남긴다. 예시 라벨과 버튼을 함께 두어 Footer가44·InputField가92로 늘어난 상태는 실패다.
+- 상세주소 InputField 원형 키 `968fbf5fac3c58c4eda41005d26ac6a9b886add5`. entered=true, disabled=true 등 기존 입력값·상태는 유지한다.
+- TextButton은 키 `b72cde93e118cd29189668244a81e51c1e06da93`, variant=secondary, size=xsmall, hover/disabled/pressed=false, loading=false, underline=false, hasPrefix=true, hasSuffix=false.
+- 앞 아이콘은 line-refresh16×16, 키 `262d12c53407cb5c4ea1e4cc57f19b87334d7b90`. 아이콘→라벨 gap2(`spacing/2xs`, 키 `1efdb0abff61482e5e09332d5119346b53ac463f`).
+- “초기화” 라벨은 KBFG Text Medium12/17, 정식 Body/sm∙12∙Medium 스타일 키 `8ab464b691ced29baba9a313a25b651557b4ceb1`. 색상 변수 `22fbb673287595abaa186c46ee85a8c90dc4dbfd`를 유지한다. 기존 primary/medium16/24 버튼을 사용하지 않는다.
+- Button Area는 너비400으로 입력의 오른쪽 끝에 정렬한다. Vertical Auto Layout의 counterAxisAlignItems=MAX를 사용한다. 자식 TextButton을 Fill로 늘리지 않는다.
+- 검산: 입력3개40+40+65 + gap8×2 =161. Table / Cell은832×186, Slot-Content 가용 폭800, 상하padding12·좌우16과 원형1px 경계를 포함한다. 화면 전체 높이는 Hug로 재계산하며186을 고정하지 않는다. 라벨 열도 같은 행 높이로 늘어난다.
+- 실제 Table / Cell 원형 키 `1b5a0ae0fefd157325271672a78224db2575f047`, Slot과 내부 원형 연결은 유지한다. detach·일반 TEXT 복제로 흉내 내지 않는다.
+
+### 67.3. 이번 수정의 완료 기준
+
+- 기존 고객정보수정 문구, 입력값·비활성 상태, 대시 하위 목록을 보존한다.
+- 알려드립니다는 outline info 아이콘, Slot 직접 구성, 목록 gap8, 기존 Divider와 확대 상태를 확인한다.
+- 초기화는 상세주소 FooterArea 안의 secondary/xsmall/refresh16/12·17 텍스트 버튼인지 확인한다. 불필요한 외부 버튼 래퍼와 기본 Footer 예시 라벨은 없어야 한다.
+- 변경 영역15개 TEXT의 실제 TextStyle·서체·필수 변수 누락0, 구조와 최종 렌더링을 확인했다. Accordion1012×213, 자택주소 Cell832×186, 상세주소 InputField400×65였다. 최종 화면은1920×2538이며 높이는 콘텐츠에 따라 변한다.
+- 참조 화면은 사용자 요청 없이 삭제하지 않는다. 재현 기준은 이 절의 키·속성·문구·구조이며 삭제될 수 있는 노드 링크에만 의존하지 않는다.
