@@ -30,11 +30,12 @@
 | 작업 | 유형/명령 | 원문 |
 | --- | --- | --- |
 | Table 전체·고객정보조회 | `table` | 63·65 |
-| Table Slot만 변경 | `table-slots` | 65.1·65.3 |
+| Table Slot만 변경 | `table-slots` | 65.1·65.3·65.4·65.5 |
 | 서체·텍스트 스타일 | `typography` | 65.2·65.4 |
-| 고객정보수정 안내·초기화 | `customer-edit` / `notice` / `input-reset` | 67 |
+| 고객정보수정 전체 | `customer-edit` | 62.3·62.5·65.5·67 |
+| 알려드립니다 / 초기화·전체 초기화 | `notice` / `input-reset` | 67.1·67.3 / 67.2·67.3 |
 | 박스 / 명명 | `boxes` / `naming` | 60 / 12 |
-| 2열 골격 / 변수 예외 | `layout` / `variables` | 61 |
+| 2열 골격 / 변수 예외 | `layout` / `variables` | 61·65.5 / 61·65.4 |
 | Footer / 제작·복구 | `footer` / `workflow` | 13 / 62 |
 | 조회·출력 절약 | `efficiency` | 66 |
 | 특정 절 / 줄 범위 | `section 65.2` / `ranges typography` | 지정 범위 |
