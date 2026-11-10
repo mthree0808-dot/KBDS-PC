@@ -34,6 +34,26 @@ test('common instructions remain bounded and default to the short guide', () => 
   assert.ok(Buffer.byteLength(fs.readFileSync(new URL('../AGENTS.md', import.meta.url))) < 5000);
 });
 
+test('explicit topics omit common instructions unless requested', () => {
+  const minimal = run(['typography']);
+  assert.match(minimal, /^### 65\.2\./);
+  assert.doesNotMatch(minimal, /^# 작업 시작/m);
+  assert.equal(run(['typography', '--with-common']), run([]).trim() + '\n\n' + minimal);
+  assert.equal(run(['typography', '--no-common']), minimal);
+  assert.ok(Buffer.byteLength(minimal) < Buffer.byteLength(run(['table'])) / 2);
+});
+
+test('remote ranges reproduce the exact selected source sections', () => {
+  const source = fs.readFileSync(new URL('../design-rules.md', import.meta.url), 'utf8');
+  const lines = source.split('\n');
+  const result = JSON.parse(run(['ranges', 'table-slots']));
+  assert.equal(result.source, 'design-rules.md');
+  assert.deepEqual(result.ranges.map(r => r.id), ['65.1', '65.3']);
+  const fromRanges = result.ranges.map(r => lines.slice(r.start_line - 1, r.end_line).join('\n').trim()).join('\n\n');
+  assert.equal(fromRanges, run(['table-slots']));
+  assert.throws(() => run(['ranges', '999']), /Unknown section/);
+});
+
 test('asset lookup returns only requested entries and fails on unknown names', () => {
   const entries = JSON.parse(run(['assets', 'tableHeader', 'tableCell']));
   assert.deepEqual(Object.keys(entries), ['tableHeader', 'tableCell']);

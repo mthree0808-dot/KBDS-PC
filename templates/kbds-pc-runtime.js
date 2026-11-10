@@ -10,6 +10,8 @@ const KBDS_PC = {
   components: {
     tableHeader: { key: "ba105a8f29acb712e5c5aa6a3cb2015de330f392" },
     tableCell: { key: "1b5a0ae0fefd157325271672a78224db2575f047" },
+    itemSlotLabel14: { key: "ad37787aee0ed1991f08e3956a33a9e485bfa838" },
+    itemSlotData14: { key: "aaafef15f29f8c1e78e78d475d21d9f40538d34c" },
     card: { key: "5c0de8b23aeaceaf9eb3def0d2845b6a97447773" },
     footer: { key: "bb4b7042c4ccc5742c5d51c3f5460ffec409ab63" },
     info: { key: "5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892" },
@@ -29,6 +31,8 @@ const KBDS_PC = {
     accordion: { key: "d14342b496bd3aa5d2e707cf26a183daf5d401ce" }
   },
   tokens: {
+    fontBase: "add9bb3ae034f71f42290d2312acfa17bc5c5e86",
+    fontNumeric: "4ee4b4adb360913d3e18e569a75b5f42642a1d29",
     gap2: "1efdb0abff61482e5e09332d5119346b53ac463f",
     gap8: "2277b8d1df86cdf8204cdac92209643941df242f",
     gap12: "f1822d95f1b0043e2ee435fea6d4725d37db3ebb",
@@ -42,8 +46,15 @@ const KBDS_PC = {
   }
 };
 
+function classifyTextFont(value) {
+  const text = String(value);
+  return /\d/.test(text) && /^[\d\s()[\].,:+\-/*#]+$/.test(text) ? "Pretendard" : "KBFG Text";
+}
+
 async function prepareKbdsPc(figma, options = {}) {
   const components = new Map(), tokens = new Map(), sets = new Map();
+  const loadedFonts = new Map();
+  let availableFonts;
   const createdNodeIds = new Set(), mutatedNodeIds = new Set();
   const names = [...new Set(options.assets || [])];
   const tokenNames = [...new Set(options.tokens || [])];
@@ -65,11 +76,41 @@ async function prepareKbdsPc(figma, options = {}) {
     if (!key) throw new Error("Unknown KBDS token: " + name);
     tokens.set(name, await figma.variables.importVariableByKeyAsync(key));
   }));
+  async function loadFont(font) {
+    const key = JSON.stringify(font);
+    if (!loadedFonts.has(key)) loadedFonts.set(key, figma.loadFontAsync(font).catch(e => { loadedFonts.delete(key); throw e; }));
+    await loadedFonts.get(key);
+  }
   async function loadFonts(root) {
     const texts = root.type === "TEXT" ? [root] : root.findAllWithCriteria({ types: ["TEXT"] });
     const fonts = new Map();
     for (const t of texts) for (const s of t.getStyledTextSegments(["fontName"])) fonts.set(JSON.stringify(s.fontName), s.fontName);
-    await Promise.all([...fonts.values()].map(f => figma.loadFontAsync(f)));
+    await Promise.all([...fonts.values()].map(loadFont));
+  }
+  async function applyText(text, value) {
+    if (text.type !== "TEXT" || typeof value !== "string" || !value.length) throw new Error("applyText needs a nonempty TEXT value");
+    const family = classifyTextFont(value);
+    const variable = tokens.get(family === "Pretendard" ? "fontNumeric" : "fontBase");
+    if (!variable || variable.resolveForConsumer(text).value !== family) throw new Error("Prepare the matching font-family token before applying text");
+    await loadFonts(text);
+    if (typeof text.fontName !== "object" || !text.fontName.style) throw new Error("Mixed font styles require an explicit range edit");
+    const target = { family, style: text.fontName.style };
+    if (text.fontName.family !== family) {
+      availableFonts ??= await figma.listAvailableFontsAsync();
+      if (!availableFonts.some(f => f.fontName.family === target.family && f.fontName.style === target.style)) throw new Error("Verified target font style unavailable: " + JSON.stringify(target));
+    }
+    await loadFont(target);
+    // fontName may clear family/weight aliases. Resolve them before editing and restore afterward.
+    const weightAlias = [text.boundVariables?.fontWeight].flat().find(v => v?.id);
+    const weight = weightAlias ? await figma.variables.getVariableByIdAsync(weightAlias.id) : null;
+    text.characters = value;
+    if (text.fontName.family !== family) text.fontName = target;
+    if (weight) text.setBoundVariable("fontWeight", weight);
+    text.setBoundVariable("fontFamily", variable);
+    if (text.letterSpacing && text.letterSpacing.value === 0) literalZero(text, "letterSpacing");
+    if (text.fontName.family !== family || !text.boundVariables?.fontFamily) throw new Error("Font-family application failed: " + text.id);
+    mutatedNodeIds.add(text.id);
+    return text;
   }
   function flag(instance, name, value) {
     const props = instance.componentProperties;
@@ -150,7 +191,7 @@ async function prepareKbdsPc(figma, options = {}) {
     if (!name || !name.trim()) throw new Error("Screen name required");
     return (id || "화면ID") + "_" + name;
   }
-  async function audit(root) {
+  async function audit(root, { requireFooter = true } = {}) {
     await loadFonts(root);
     const issues = [], nodes = [root, ...root.findAll(() => true)];
     const fields = ["itemSpacing", "counterAxisSpacing", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "topLeftRadius", "topRightRadius", "bottomLeftRadius", "bottomRightRadius"];
@@ -173,13 +214,17 @@ async function prepareKbdsPc(figma, options = {}) {
         if (visible && /^(ICON|MainText|타이틀입니다|텍스트영역)$/.test(n.characters)) issue(n, "characters", "default placeholder remains");
       }
     }
-    const footerArea = root.children.find(n => n.name === "## FOOTER");
-    const footer = footerArea?.children.find(n => n.type === "INSTANCE");
-    if (!footer || footer.mainComponent.key !== KBDS_PC.components.footer.key) issue(root, "Footer", "required instance missing");
-    return { id: root.id, name: root.name, width: root.width, height: root.height, issues };
+    if (requireFooter) {
+      const footerArea = root.children.find(n => n.name === "## FOOTER");
+      const footer = footerArea?.children.find(n => n.type === "INSTANCE");
+      if (!footer || footer.mainComponent.key !== KBDS_PC.components.footer.key) issue(root, "Footer", "required instance missing");
+    }
+    const issueCounts = {};
+    for (const item of issues) issueCounts[item.problem] = (issueCounts[item.problem] || 0) + 1;
+    return { id: root.id, name: root.name, width: root.width, height: root.height, issueCount: issues.length, issueCounts, issues: issues.slice(0, 20), omittedIssueCount: Math.max(0, issues.length - 20) };
   }
   function evidence() { return { createdNodeIds: [...createdNodeIds], mutatedNodeIds: [...mutatedNodeIds] }; }
-  return { components, tokens, loadFonts, flag, numeric, literalZero, frame, instance, fillTextList, radioAffixInBody, screenName, audit, evidence };
+  return { components, tokens, loadFonts, applyText, flag, numeric, literalZero, frame, instance, fillTextList, radioAffixInBody, screenName, audit, evidence };
 }
 
-if (typeof module !== "undefined") module.exports = { KBDS_PC, prepareKbdsPc };
+if (typeof module !== "undefined") module.exports = { KBDS_PC, prepareKbdsPc, classifyTextFont };

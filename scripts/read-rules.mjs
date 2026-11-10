@@ -42,8 +42,8 @@ export function sections(markdown, ids) {
 }
 
 export function run(argv) {
-  const noCommon = argv.includes('--no-common');
-  const [command = 'common', ...args] = argv.filter(a => a !== '--no-common');
+  const withCommon = argv.includes('--with-common') && !argv.includes('--no-common');
+  const [command = 'common', ...args] = argv.filter(a => !['--no-common', '--with-common'].includes(a));
   if (command === 'assets' || command === 'tokens') {
     if (!args.length) throw new Error('Specify needed asset/token names; full catalogs are not printed');
     const require = createRequire(import.meta.url);
@@ -58,10 +58,21 @@ export function run(argv) {
     const hs = headings(read(index.source)).headings.filter(h => h.level === 2);
     return 'Topics: ' + Object.keys(index.topics).join(', ') + '\n\n' + hs.map(h => h.id + '. ' + h.title).join('\n');
   }
+  if (command === 'ranges') {
+    if (!args.length) throw new Error('Specify a topic or section number');
+    const ids = [...new Set(args.flatMap(arg => index.topics[arg] ?? [arg]))];
+    const parsed = headings(read(index.source));
+    return JSON.stringify({ source: index.source, ranges: ids.map(id => {
+      const h = parsed.headings.find(n => n.id === id);
+      if (!h) throw new Error('Unknown section: ' + id);
+      const end = parsed.headings.find(n => n.line > h.line && n.level <= h.level)?.line ?? parsed.lines.length;
+      return { id, start_line: h.line + 1, end_line: end };
+    }) });
+  }
   const ids = command === 'section' ? args : index.topics[command];
   if (!ids || (command === 'section' && !ids.length)) throw new Error('Choose a topic or section number; use list');
   const selected = ids.length ? sections(read(index.source), ids) : '';
-  return [noCommon ? '' : read(index.common).trim(), selected].filter(Boolean).join('\n\n');
+  return [command === 'common' || withCommon ? read(index.common).trim() : '', selected].filter(Boolean).join('\n\n');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
