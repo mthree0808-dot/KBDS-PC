@@ -3585,20 +3585,21 @@ Table
 - 오른쪽 IconButton24는 위쪽 chevron(expanded), 하단 Divider / Horizontal 키 `b154a5e09047df6dcbf02775b74e664260c48b01`, secondary/1px를 유지한다.
 - Expand Area는 padding 상8·하16·좌우0, gap0, 높이 Hug(현재156). Slot-contents는 세로 Auto Layout, 가로 Fill·세로 Hug, padding0, gap8(`spacing/md`, 키 `2277b8d1df86cdf8204cdac92209643941df242f`), 현재 높이132.
 - 불필요한 바깥 TextList Group(gap2)을 없애고 최상위 불릿과 필요한 하위 목록 그룹을 Slot-contents에 직접 배치한다. 원래 정보 위계는 보존한다. 하위 대시 목록은 세로 Auto Layout, 왼쪽 padding12(`spacing/lg`, 키 `f1822d95f1b0043e2ee435fea6d4725d37db3ebb`), gap8이다.
+- **마커 문자까지 참조와 일치시킨다.** 최상위 Bullet은 작은 점 `∙`(U+2219)이며 `•`(U+2022)와 다르다. 현재3개 최상위 항목은 모두 `∙`, 하위2개 항목은 기존 위계의 대시 `-`를 유지한다. Bullet 텍스트는 KBFG Text Light14/20, 가로 Hug 기준8px이다. 기존10px 너비의 큰 점 `•` 오버라이드를 남기지 않는다. 컴포넌트 키·variant·TextStyle 일치만으로 마커 적용을 통과시키지 않고 실제 characters와 렌더링을 함께 확인한다.
 - 각 항목은 실제 TextList / Unordered 인스턴스, 키 `5e484496e22e7e84c91c23bddfe11d1b4a13f35b`, variant=bullet, size=14, depth=1. 가로 Fill·높이 Hug, 텍스트 영역은 가용 폭으로 줄바꿈한다. 항목 내부 gap4(`spacing/xs`, 키 `61f197a81b6706762c24e5fd56b51d0f60bf9d98`), 왼쪽 padding12를 유지한다. 하위 항목의 마커는 원본대로 대시 “-”를 보존한다.
 - 본문·마커는 KBFG Text Light14/20, TextStyle 키 `9425756dd9ccef22a21ae16afc4879e5258e1bf5`. 본문색은 원형 변수 `3cb02c7ce9b6723738c37f4fcd9d978bb0214c08`을 유지한다. 실제 textStyleId와 fontFamily/fontSize/fontWeight/lineHeight/Fill 바인딩, 정식 스타일의 상속0 자간을 보존한다.
 
 고객정보수정의 문구·순서·위계:
 
-1. • 고객관리 안내수단은 당행이 필수 고지사항 등을 안내하는 수단입니다.
+1. ∙ 고객관리 안내수단은 당행이 필수 고지사항 등을 안내하는 수단입니다.
    - 영업점 이전, 통합, 폐쇄 등의 안내, 대출 원리금 납입 미납, 은행상품 만기 안내
    - 계약조건 변경 안내(금리변경, 부가서비스, 혜택변경 등), 민원 및 기타 계약의 유지관리에 관한 안내
-2. • 혜택정보 안내(마케팅) 수신동의는 [고객정보관리 > 본인정보 이용·제공 조회 > (은행) 혜택정보 안내 수신동의]에서 변경하실 수 있습니다.
-3. • 개별 상품(수신, 여신, 외환 등)에서 별도로 안내를 신청할 경우 위의 안내수단을 전부 거절하셔도 안내가 가능할 수 있습니다.
+2. ∙ 혜택정보 안내(마케팅) 수신동의는 [고객정보관리 > 본인정보 이용·제공 조회 > (은행) 혜택정보 안내 수신동의]에서 변경하실 수 있습니다.
+3. ∙ 개별 상품(수신, 여신, 외환 등)에서 별도로 안내를 신청할 경우 위의 안내수단을 전부 거절하셔도 안내가 가능할 수 있습니다.
 
 ### 67.2. InputField FooterArea의 초기화 TextButton
 
-수정 대상은 자택주소 Table / Cell `65:2551`의 단일 “초기화”다. 직장정보의 “전체 초기화”처럼 여러 필드에 걸친 액션을 이 패턴만으로 단일 InputField FooterArea로 옮기지 않는다.
+적용 대상은 자택주소 Table / Cell `65:2551`의 “초기화”와 직장정보 부서명 Table / Cell `65:2669`의 “전체 초기화”다. 2026-11-10 사용자 후속 지시에 따라 전체 초기화도 해당 부서명 InputField의 FooterArea에 배치한다. 라벨이 ‘전체 초기화’여도 액션 범위를 축소하거나 문구를 ‘초기화’로 바꾸지 않는다.
 
 ```text
 Table / Cell — last, onlyNumber=false
@@ -3624,10 +3625,17 @@ Table / Cell — last, onlyNumber=false
 - 검산: 입력3개40+40+65 + gap8×2 =161. Table / Cell은832×186, Slot-Content 가용 폭800, 상하padding12·좌우16과 원형1px 경계를 포함한다. 화면 전체 높이는 Hug로 재계산하며186을 고정하지 않는다. 라벨 열도 같은 행 높이로 늘어난다.
 - 실제 Table / Cell 원형 키 `1b5a0ae0fefd157325271672a78224db2575f047`, Slot과 내부 원형 연결은 유지한다. detach·일반 TEXT 복제로 흉내 내지 않는다.
 
+부서명 전체 초기화의 추가 재현값:
+
+- Table / Cell `65:2669`의 미입력 InputField 키는 `6a180f941f7bc12168489ec44f9203d0f3a4e7cc`. hasFooter=true, disabled=false, entered=false 및 ‘내용 입력’ placeholder를 유지한다.
+- 해당 InputField는400×65, 입력40 + gap8 + Footer17이다. FooterArea에는 위와 같은 Button Area·secondary/xsmall TextButton·refresh16을 사용하고 라벨은 **전체 초기화**다. 버튼은75×17이며 입력 오른쪽 끝400에 맞춘다.
+- 기존의 빈 Content TEXT + 너비800 Button Area + 중첩616/400 Button Area는 제거한다. InputField의 FooterArea를 사용하는 실제 Auto Layout으로 정리하고 바깥 래퍼는 InputField / Contents, gap8(`spacing/md`)로 둔다.
+- 부서명 Cell은832×90으로 Hug 재계산된다. 표의 라벨 열 높이·경계와 기존 입력 상태를 유지한다. 버튼 외형은 secondary/xsmall12/17이며 기능·범위는 ‘전체 초기화’로 유지한다.
+
 ### 67.3. 이번 수정의 완료 기준
 
 - 기존 고객정보수정 문구, 입력값·비활성 상태, 대시 하위 목록을 보존한다.
 - 알려드립니다는 outline info 아이콘, Slot 직접 구성, 목록 gap8, 기존 Divider와 확대 상태를 확인한다.
-- 초기화는 상세주소 FooterArea 안의 secondary/xsmall/refresh16/12·17 텍스트 버튼인지 확인한다. 불필요한 외부 버튼 래퍼와 기본 Footer 예시 라벨은 없어야 한다.
-- 변경 영역15개 TEXT의 실제 TextStyle·서체·필수 변수 누락0, 구조와 최종 렌더링을 확인했다. Accordion1012×213, 자택주소 Cell832×186, 상세주소 InputField400×65였다. 최종 화면은1920×2538이며 높이는 콘텐츠에 따라 변한다.
+- 자택주소 ‘초기화’는 상세주소 FooterArea, 부서명 ‘전체 초기화’는 부서명 InputField FooterArea 안의 secondary/xsmall/refresh16/12·17 텍스트 버튼인지 확인한다. 불필요한 외부 버튼 래퍼와 기본 Footer 예시 라벨은 없어야 한다.
+- 최초 자택주소·안내 수정15개 TEXT에 이어, 후속 알려드립니다·부서명 수정13개 TEXT의 실제 TextStyle·서체·필수 변수 누락0, 구조와 최종 렌더링을 확인했다. 최상위 점3개는 `∙`이고 하위2개는 `-`이며, 부서명 ‘전체 초기화’ Cell832×90·InputField400×65를 확인했다. Accordion1012×213, 자택주소 Cell832×186, 상세주소 InputField400×65였다. 최종 화면은1920×2538이며 높이는 콘텐츠에 따라 변한다.
 - 참조 화면은 사용자 요청 없이 삭제하지 않는다. 재현 기준은 이 절의 키·속성·문구·구조이며 삭제될 수 있는 노드 링크에만 의존하지 않는다.
