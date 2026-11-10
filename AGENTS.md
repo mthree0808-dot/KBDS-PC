@@ -1,5 +1,6 @@
 # KBDS-PC 공통 작업 지침
 
+- 사용자가 design-rules.md 링크만 전달해도 시작 지침과 필요한 규칙을 스스로 선택한다. 별도의 정형 시작 문구나 개인 설정 변경을 사용자에게 요구하지 않는다.
 - 사용자 최신 지시가 우선이다. 디자인 규칙의 원문은 `design-rules.md`다. 충돌 시 원문의 최신 적용 규칙을 확인하고, 다른 규칙 전체를 다시 읽지 않는다.
 - 작업 시작에는 `docs/task-guide.md`만 읽고 해당 유형의 규칙을 추가한다. 원문 전체·스크립트 전체·과거 보고서를 매번 컨텍스트에 넣지 않는다.
 - 로컬에서 `node scripts/read-rules.mjs <topic>`으로 필요한 규칙만 출력한다. 유형 목록은 `node scripts/read-rules.mjs list`, 자산 키는 `node scripts/read-rules.mjs assets tableHeader tableCell`로 확인한다. 명령은 로컬 파일만 읽고 Figma를 수정하지 않는다.
