@@ -10,8 +10,9 @@ const KBDS_PC = {
   components: {
     tableHeader: { key: "ba105a8f29acb712e5c5aa6a3cb2015de330f392" },
     tableCell: { key: "1b5a0ae0fefd157325271672a78224db2575f047" },
-    itemSlotLabel14: { key: "ad37787aee0ed1991f08e3956a33a9e485bfa838" },
-    itemSlotData14: { key: "aaafef15f29f8c1e78e78d475d21d9f40538d34c" },
+    tableItemTitle: { key: "23300554f76d678797b5bf90b60ba0932d0c64f8" },
+    tableItemContent: { key: "90613469e713ec832541afff534a91aa3ad2a1d4" },
+    tableItemNumberContent: { key: "1bbdaf1a6a84ca85cd1533529900f4374a68f080" },
     card: { key: "5c0de8b23aeaceaf9eb3def0d2845b6a97447773" },
     footer: { key: "bb4b7042c4ccc5742c5d51c3f5460ffec409ab63" },
     info: { key: "5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892" },
