@@ -3453,10 +3453,12 @@ Container 2
 | --- | --- |
 | Table / Header — default, onlyNumber=false | `ba105a8f29acb712e5c5aa6a3cb2015de330f392` |
 | Table / Cell — last, onlyNumber=false | `1b5a0ae0fefd157325271672a78224db2575f047` |
-| 셀 본문 Body/md14Medium | `f5f81baf6718bb904b4793a0ecf70ff694044489` |
+| Item / Slot — label, size=14 | `ad37787aee0ed1991f08e3956a33a9e485bfa838` |
+| Item / Slot — data, size=14 | `aaafef15f29f8c1e78e78d475d21d9f40538d34c` |
+| 셀 데이터 Body/md14Medium | `f5f81baf6718bb904b4793a0ecf70ff694044489` |
 | 상단 선 border/neutral/secondary | `f2f4f171af291559772456eff22bca9e60d64f41` |
 
-- 라벨·값은 KBFG Text Medium 14/20을 적용하고 실제 타이포그래피 변수 연결을 유지한다. 0 자간은 직접값이다.
+- 라벨·문자 데이터는 실제 `Item / Slot`의 14px 원형 타이포그래피를 유지한다. label은 KBFG Text Light 14/20, data는 KBFG Text Medium 14/20이다. 숫자 표시 데이터는 Pretendard Medium 14/20으로 분기하고 `font-family/numeric` 변수를 연결한다. 0 자간은 직접값이다.
 - 휴대폰번호·전화번호의 마스킹, 이메일, 주소의 명시적 줄바꿈, 직장명·부서명과 수신 상태는 현재 화면 내용을 보존한다.
 - 전화 수신여부 값 셀에는 실제 CheckBox 인스턴스를 가로 Auto Layout으로 배치하고 gap 24를 사용한다. 자택·직장 checked/disabled, 휴대폰 unchecked/disabled 상태를 유지한다.
 - 조회 값에 기획에 없는 chevron·상세 이동 버튼을 추가하지 않는다. Table / Cell의 기본 Slot 내용을 정리하고 실제 조회 내용만 넣는다.
@@ -3490,3 +3492,43 @@ Container 2
 - 별도 요청 없는 `reports/` 생성·과거 보고서 전독·자산 전수 수집을 기본 작업에 넣지 않는다.
 - 공통 스크립트와 검증된 템플릿을 재사용하고, 62장의 필수 구조·서체·시각 검수는 유지한다.
 - 이 설정은 선택 조회와 공통 실행 지침을 제공한다. 완성형 화면 컴파일러, 서비스 사용량 상한, 모든 작업자의 개인 설정을 원격으로 강제하는 기능은 아니다. 절감 효과는 실제 작업으로 확인한다.
+
+## 65. Table Slot 구성과 문자·숫자 서체 규칙
+
+2026-11-10 사용자 지시. 화면 링크가 삭제되어도 다음 구조와 분류를 기준으로 제작한다. 이전의 Slot에 일반 TEXT를 직접 배치하는 방식과 모든 셀을 KBFG로 통일하는 해석을 대체한다.
+
+### 65.1. 실제 Item / Slot 인스턴스 사용
+
+```text
+Table
+├─ Table / Header
+│  └─ Slot
+│     └─ Item / Slot — variant=label, size=14
+│        └─ Label
+└─ Table / Cell
+   └─ Slot-Content
+      └─ Item / Slot — variant=data, size=14
+         └─ Data
+```
+
+- 라벨·조회 텍스트는 원형의 Slot 안에 실제 `Item / Slot` 인스턴스를 넣고 그 내부 Label·Data에 적용한다. 일반 TEXT를 Slot의 직접 자식으로 만들거나 프레임 이름만 Item / Slot으로 바꾸지 않는다. detach하지 않는다.
+- Item / Slot의 세트 키는 `0c3444ad08ece79bacffe88bd2e3efaa80918b12`이다. label14·data14의 개별 키는 63.3장을 따른다.
+- 기획에 없는 suffix·tooltip은 공개 BOOLEAN 속성 `hasSuffix`·`hasTooltipButton`을 false로 설정한다. 원형 내부 요소를 삭제해 흉내 내지 않는다.
+- 인스턴스는 가로 Fill·세로 Hug, 내부 Label·Data는 왼쪽 정렬과 가로 Fill·세로 Hug로 설정한다. 주소 줄바꿈을 보존하며 행 높이는 실제 값 셀에 맞춘다.
+- 전화 수신여부의 실제 CheckBox Group 등 입력·선택 컨트롤은 해당 셀의 Slot 안에 유지한다. 컨트롤을 조회 텍스트로 바꾸지 않는다.
+- 현재 고객정보조회는 라벨12개·텍스트 데이터11개, 합계23개의 실제 Item / Slot과 전화 수신여부 CheckBox Group으로 구성한다.
+
+### 65.2. 콘텐츠에 따른 서체 분기 — 공통 적용
+
+- 숫자만 표시하는 텍스트는 `Pretendard`, 영문 또는 국문 문자가 포함된 텍스트는 `KBFG Text`를 사용한다. 숫자와 영문·국문이 섞인 하나의 문자열은 KBFG Text로 처리한다.
+- 전화번호처럼 숫자의 표시를 위한 공백·괄호·하이픈·마스킹 기호만 포함하는 숫자 데이터도 Pretendard로 처리한다. 문자나 단위가 붙은 값은 KBFG Text로 처리한다. 기호만 있는 문자열을 임의로 숫자 데이터로 판정하지 않는다.
+- 예: `010) 00** - 00**`, `02) 00** - 00**`는 Pretendard, `kookmin@naver.com`, `SMS 수신여부`, 우편번호와 한글 주소가 함께 있는 값은 KBFG Text다.
+- 크기·행간·굵기·색은 해당 역할의 디자인 시스템 원형·스타일을 유지한다. 현재 Table14 데이터는 Medium 14/20을 유지하며 서체 family만 분기한다. label은 원형의 Light 14/20을 유지한다.
+- KBFG는 `font-family/base`(`add9bb3ae034f71f42290d2312acfa17bc5c5e86`), Pretendard는 `font-family/numeric`(`4ee4b4adb360913d3e18e569a75b5f42642a1d29`)에 연결한다. fontName을 직접 설정한 뒤 family 변수를 연결하고 실제 서체와 바인딩을 읽어 확인한다. family 변수 연결 뒤 fontName을 덮어써 바인딩을 해제하지 않는다.
+- 텍스트 변경 전 현재·목표 서체를 로드한다. 크기·행간·굵기의 기존 변수 연결과 0값 직접 적용 예외를 유지한다. Clip content는 임의로 켜지 않는다.
+
+### 65.3. 완료 검수
+
+- Table Slot의 직접 자식에 일반 TEXT가 남지 않았는지, Item / Slot의 실제 원형·variant·내용을 확인한다.
+- 실제 표시 서체와 family 변수 연결을 함께 확인한다. 변수 이름만 맞고 표시 서체가 다른 상태를 통과시키지 않는다.
+- 마스킹·줄바꿈·수신 상태와 CheckBox의 선택·비활성 상태를 보존하고 한 번 렌더링하여 잘림·겹침·행 높이를 확인한다.
