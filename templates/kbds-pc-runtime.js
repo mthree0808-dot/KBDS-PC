@@ -31,6 +31,14 @@ const KBDS_PC = {
     checkedRadio: { key: "66bb5a3ada46e42acc6d0d1f719ab2cf69a14640" },
     accordion: { key: "d14342b496bd3aa5d2e707cf26a183daf5d401ce" }
   },
+  textStyles: {
+    page26Bold: "d15c6618112f25fafd120d9f66e7ccf3031da65d",
+    title20Bold: "6bc0e73b9a53e3e789e9a4cb084fdb79305628fc",
+    body14Medium: "f5f81baf6718bb904b4793a0ecf70ff694044489",
+    body14Light: "9425756dd9ccef22a21ae16afc4879e5258e1bf5",
+    numeric14Light: "6222681f115880fd5a105b9ed09adb4d4e9a716b",
+    footer10Light: "c0cf79b6e127b8199d557a4f561a0aa5e7217502"
+  },
   tokens: {
     fontBase: "add9bb3ae034f71f42290d2312acfa17bc5c5e86",
     fontNumeric: "4ee4b4adb360913d3e18e569a75b5f42642a1d29",
@@ -55,7 +63,6 @@ function classifyTextFont(value) {
 async function prepareKbdsPc(figma, options = {}) {
   const components = new Map(), tokens = new Map(), sets = new Map();
   const loadedFonts = new Map();
-  let availableFonts;
   const createdNodeIds = new Set(), mutatedNodeIds = new Set();
   const names = [...new Set(options.assets || [])];
   const tokenNames = [...new Set(options.tokens || [])];
@@ -88,28 +95,21 @@ async function prepareKbdsPc(figma, options = {}) {
     for (const t of texts) for (const s of t.getStyledTextSegments(["fontName"])) fonts.set(JSON.stringify(s.fontName), s.fontName);
     await Promise.all([...fonts.values()].map(loadFont));
   }
-  async function applyText(text, value) {
+  async function applyText(text, value, { styleKey } = {}) {
     if (text.type !== "TEXT" || typeof value !== "string" || !value.length) throw new Error("applyText needs a nonempty TEXT value");
     const family = classifyTextFont(value);
-    const variable = tokens.get(family === "Pretendard" ? "fontNumeric" : "fontBase");
-    if (!variable || variable.resolveForConsumer(text).value !== family) throw new Error("Prepare the matching font-family token before applying text");
     await loadFonts(text);
-    if (typeof text.fontName !== "object" || !text.fontName.style) throw new Error("Mixed font styles require an explicit range edit");
-    const target = { family, style: text.fontName.style };
-    if (text.fontName.family !== family) {
-      availableFonts ??= await figma.listAvailableFontsAsync();
-      if (!availableFonts.some(f => f.fontName.family === target.family && f.fontName.style === target.style)) throw new Error("Verified target font style unavailable: " + JSON.stringify(target));
-    }
-    await loadFont(target);
-    // fontName may clear family/weight aliases. Resolve them before editing and restore afterward.
-    const weightAlias = [text.boundVariables?.fontWeight].flat().find(v => v?.id);
-    const weight = weightAlias ? await figma.variables.getVariableByIdAsync(weightAlias.id) : null;
+    const key = styleKey && (KBDS_PC.textStyles[styleKey] || styleKey);
+    const style = key ? await figma.importStyleByKeyAsync(key)
+      : typeof text.textStyleId === "string" && text.textStyleId ? await figma.getStyleByIdAsync(text.textStyleId) : null;
+    if (!style || style.type !== "TEXT") throw new Error("Linked KBDS text style required; provide its verified styleKey");
+    if (style.fontName.family !== family) throw new Error("Use the matching native numeric variant or an explicit verified text style");
+    await loadFont(style.fontName);
+    const fills = text.fills;
+    await text.setTextStyleIdAsync(style.id);
     text.characters = value;
-    if (text.fontName.family !== family) text.fontName = target;
-    if (weight) text.setBoundVariable("fontWeight", weight);
-    text.setBoundVariable("fontFamily", variable);
-    if (text.letterSpacing && text.letterSpacing.value === 0) literalZero(text, "letterSpacing");
-    if (text.fontName.family !== family || !text.boundVariables?.fontFamily) throw new Error("Font-family application failed: " + text.id);
+    text.fills = fills;
+    if (text.textStyleId !== style.id || text.fontName.family !== family) throw new Error("Text style application failed: " + text.id);
     mutatedNodeIds.add(text.id);
     return text;
   }
@@ -121,6 +121,7 @@ async function prepareKbdsPc(figma, options = {}) {
     mutatedNodeIds.add(instance.id);
   }
   function literalZero(node, field) {
+    if (field === "letterSpacing" && node.type === "TEXT" && node.textStyleId) throw new Error("Preserve inherited zero spacing from the linked text style");
     const letterUnit = field === "letterSpacing" ? node.letterSpacing.unit : null;
     node.setBoundVariable(field, null);
     if (field === "letterSpacing") {
@@ -206,10 +207,12 @@ async function prepareKbdsPc(figma, options = {}) {
       }
       if (n.name === "## BODY" && (n.width !== 1440 || n.boundVariables?.width)) issue(n, "width", "BODY must be literal 1440");
       if (n.type === "TEXT") {
+        if (typeof n.textStyleId !== "string" || !n.textStyleId) issue(n, "textStyleId", "linked KBDS text style missing");
+        if (n.getStyledTextSegments(["textStyleId"]).some(s => !s.textStyleId)) issue(n, "textStyleId", "unstyled text range");
         if (n.hasMissingFont) issue(n, "fontName", "font unavailable after loading");
         if (n.getStyledTextSegments(["fontName"]).some(s => !/KBFG|Pretendard/.test(s.fontName.family))) issue(n, "fontName", "unexpected font family");
         for (const p of ["fontSize", "lineHeight", "fontWeight"]) if (!n.boundVariables?.[p]) issue(n, p, "missing typography alias");
-        if (n.letterSpacing.value === 0 && n.boundVariables?.letterSpacing) issue(n, "letterSpacing", "zero must be literal");
+        if (n.letterSpacing.value === 0 && n.boundVariables?.letterSpacing && !n.textStyleId) issue(n, "letterSpacing", "unlinked zero must be literal");
         let visible = true;
         for (let p = n; p && p !== root; p = p.parent) if (p.visible === false) visible = false;
         if (visible && /^(ICON|MainText|타이틀입니다|텍스트영역)$/.test(n.characters)) issue(n, "characters", "default placeholder remains");

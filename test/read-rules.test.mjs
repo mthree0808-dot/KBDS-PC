@@ -25,7 +25,7 @@ test('Table route selects current Table rules without old Card section', () => {
   assert.match(text, /^## 63\./);
   assert.doesNotMatch(text, /^## 60\./m);
   assert.doesNotMatch(text, /^# 작업 시작/m);
-  assert.ok(Buffer.byteLength(text) < 16000);
+  assert.ok(Buffer.byteLength(text) < 24000);
 });
 
 test('common instructions remain bounded and default to the short guide', () => {
@@ -40,7 +40,7 @@ test('explicit topics omit common instructions unless requested', () => {
   assert.doesNotMatch(minimal, /^# 작업 시작/m);
   assert.equal(run(['typography', '--with-common']), run([]).trim() + '\n\n' + minimal);
   assert.equal(run(['typography', '--no-common']), minimal);
-  assert.ok(Buffer.byteLength(minimal) < Buffer.byteLength(run(['table'])) / 2);
+  assert.ok(Buffer.byteLength(minimal) < Buffer.byteLength(run(['table'])));
 });
 
 test('remote ranges reproduce the exact selected source sections', () => {
@@ -48,7 +48,7 @@ test('remote ranges reproduce the exact selected source sections', () => {
   const lines = source.split('\n');
   const result = JSON.parse(run(['ranges', 'table-slots']));
   assert.equal(result.source, 'design-rules.md');
-  assert.deepEqual(result.ranges.map(r => r.id), ['65.1', '65.3']);
+  assert.deepEqual(result.ranges.map(r => r.id), ['65.1', '65.3', '65.4']);
   const fromRanges = result.ranges.map(r => lines.slice(r.start_line - 1, r.end_line).join('\n').trim()).join('\n\n');
   assert.equal(fromRanges, run(['table-slots']));
   assert.throws(() => run(['ranges', '999']), /Unknown section/);

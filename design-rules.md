@@ -3460,7 +3460,7 @@ Container 2
 | 본문 Body/md14Light | `9425756dd9ccef22a21ae16afc4879e5258e1bf5` |
 | 상단 선 border/neutral/secondary | `f2f4f171af291559772456eff22bca9e60d64f41` |
 
-- Table 전용 `Item / Slot` 세트(`f39bf922a37e7c023ca2112c1091fe0b8e9c1f20`)를 사용한다. 헤더 title은 KBFG Text Medium 14/20, 문자 본문 content는 KBFG Text Light 14/20, 숫자 본문 content·onlyNumber=true는 Pretendard Light 14/20이다. 65장의 최신 원형 기준을 우선한다. 0 자간은 직접값이다.
+- Table 전용 `Item / Slot` 세트(`f39bf922a37e7c023ca2112c1091fe0b8e9c1f20`)를 사용한다. 헤더 title은 KBFG Text Medium 14/20, 문자 본문 content는 KBFG Text Light 14/20, 숫자 본문 content·onlyNumber=true는 Pretendard Light 14/20이다. 65장의 최신 원형 기준을 우선한다. 정식 TextStyle의 상속0 자간은 65.4장의 예외를 따른다.
 - 휴대폰번호·전화번호의 마스킹, 이메일, 주소의 명시적 줄바꿈, 직장명·부서명과 수신 상태는 현재 화면 내용을 보존한다.
 - 전화 수신여부 값 셀에는 실제 CheckBox 인스턴스를 가로 Auto Layout으로 배치하고 gap 24를 사용한다. 자택·직장 checked/disabled, 휴대폰 unchecked/disabled 상태를 유지한다.
 - 조회 값에 기획에 없는 chevron·상세 이동 버튼을 추가하지 않는다. Table / Cell의 기본 Slot 내용을 정리하고 실제 조회 내용만 넣는다.
@@ -3536,13 +3536,26 @@ Table
 - 헤더 색은 원형의 `9000b0ee4338f598e669fe90634db14f05f37613`, 본문 색은 `3cb02c7ce9b6723738c37f4fcd9d978bb0214c08`를 유지한다. Medium/Light weight 키는 각각 `c65733d01e4f01da3b44c2a3e18adf140ec11285` / `439ad1c8571cbce2171b03bc4b2d4db37cde99f0`다.
 - 화면 전체 TEXT의 fontFamily·fontSize·fontWeight·lineHeight 및 텍스트 Fill 변수 연결을 확인한다. 스타일 이름이나 실제 표시 서체가 맞아도 빠진 바인딩을 놓치지 않는다. 역할이 맞는 기존 변수·스타일을 복원한다.
 - 현재 고객정보조회에서는 페이지 제목1개·섹션 제목4개의 빠진 fontFamily를 font-family/base로 복원했다. 크기26/36·20/28 및 Bold 변수는 유지했다.
-- 현재·목표 서체를 먼저 로드한다. 수동 서체 변경이 꼭 필요한 다른 패턴은 이름 설정 후 family·weight 바인딩을 복원한다. 0 자간은 변수 없이 0이며 0 간격·패딩·라운드와 BODY1440 직접값 예외도 유지한다.
+- 현재·목표 서체를 먼저 로드한다. 문자 변경은 실제 원형의 연결된 텍스트 스타일을 보존하고 숫자형은 지정 variant를 사용한다. 스타일을 해제한 뒤 개별 family·weight 변수만 복원하는 방식으로 대체하지 않는다. 텍스트 스타일의 0 자간 처리와 검수는 65.4장을 우선한다.
 
 ### 65.3. 완료 검수
 
 - 실제 Table 전용 세트·variant·onlyNumber·내부 이름을 확인한다. 다른 이름만 같은 Item / Slot과 Slot 직접 TEXT가 남지 않게 한다.
-- 화면 전체 텍스트의 family·size·weight·lineHeight·Fill 바인딩과 실제 표시 서체를 확인한다. 0 자간 변수는 연결하지 않는다.
+- 화면 전체 텍스트의 실제 textStyleId·문자 범위별 스타일, family·size·weight·lineHeight·Fill 바인딩과 표시 서체를 함께 확인한다. 스타일이 해제된 상태는 개별 변수가 있어도 실패다. 0 자간은 65.4장의 스타일 보존 예외를 따른다.
 - 마스킹·주소 줄바꿈·수신 상태·체크박스 선택/비활성 상태를 보존한다. 행 높이 일치·클리핑 여부와 실제 렌더링을 한 번 확인한다.
+
+### 65.4. 텍스트 스타일 연결 보존 — 사용자 수정본 기준
+
+- 비교 기준: 작업본 `49:4813`, 사용자 수정본 `49:4857`, 숫자 셀 `49:4861`(파일 `2MavuzZhNpHpqer5fk3ML4`). 사용자 수정본은 개별 변수뿐 아니라 실제 디자인 시스템 텍스트 스타일이 연결돼 있다.
+- 기존 구현은 0 자간 변수를 수동 해제·재설정하면서 textStyleId가 비워졌다. family·size·weight·lineHeight 변수가 남아 있다는 검사만으로는 이 결함을 찾을 수 없다. 앞으로 두 조건을 별도로 검사한다.
+- 원형의 TextStyle을 실제로 연결한다. 일반 텍스트는 setTextStyleIdAsync로 해당 역할의 라이브러리 스타일을 적용한다. 필요하면 기존 상태·역할에 맞는 텍스트 색상 바인딩은 보존한다. 서체·크기만 비슷한 수동 텍스트를 합격시키지 않는다.
+- 제목·Table뿐 아니라 HEADER·GNB·LNB·breadcrumb·버튼·CheckBox·Footer를 포함한 화면 전체 TEXT 및 문자 범위를 검사한다. 원형에 맞는 스타일 키와 실제 textStyleId, 범위별 textStyleId가 모두 유효해야 한다.
+- Table 숫자 데이터는 사용자 숫자 셀 내부의 실제 Item / Slot `variant=content, onlyNumber=true`, 키 `1bbdaf1a6a84ca85cd1533529900f4374a68f080`을 사용한다. 그 내부 텍스트 스타일은 `Body/Numeric/2️⃣ md∙14∙Light`, 키 `6222681f115880fd5a105b9ed09adb4d4e9a716b`, Pretendard Light 14/20이다. 문자형 원형의 fontName만 바꿔 대신하지 않는다.
+- Table title은 `Body/md∙14∙Medium` 키 `f5f81baf6718bb904b4793a0ecf70ff694044489`, 문자 content는 `Body/md∙14∙Light` 키 `9425756dd9ccef22a21ae16afc4879e5258e1bf5`를 유지한다. 섹션 제목은 `Title/2xl∙20∙Bold` 키 `6bc0e73b9a53e3e789e9a4cb084fdb79305628fc`다.
+- 페이지 제목26/36은 `Display/5xl∙26∙Bold` 키 `d15c6618112f25fafd120d9f66e7ccf3031da65d`다. Footer10px 안내는 `Body/xs∙10∙Light` 키 `c0cf79b6e127b8199d557a4f561a0aa5e7217502`의 원형 행간15를 따른다.
+- **0 자간 예외:** 사용자 수정본처럼 연결된 정식 텍스트 스타일이 상속하는 letterSpacing=0 변수는 유지한다. 이를 제거하기 위해 setRangeBoundVariable·fontName·letterSpacing 등을 덮어써 스타일 연결을 해제하지 않는다. 기존 '0은 변수 없이 적용'은 프레임 gap·padding·radius 등 직접 수치에는 그대로 적용하며, 정식 TextStyle의 상속된 0 자간에는 적용하지 않는다. 이는 이번 사용자 수정본을 반영한 최신 우선 규칙이다.
+- 완료 판정은 실제 연결 스타일과 필수 바인딩을 모두 검증하고 문자·마스킹·선택 상태·색·표시 서체 및 화면 렌더링까지 확인한다. fontStyle 변수의 존재는 원형이 요구하는 경우에만 검사한다. 이 기준 원형에는 fontStyle alias가 없으므로 없다는 이유만으로 새 변수를 임의 적용하지 않는다.
+- 이번 고객정보조회 5:31은 전체92개 TEXT의 스타일 연결을 복원했고, 숫자 데이터3개가 위 숫자 원형·스타일을 사용하는 것을 확인했다.
 
 ## 66. 조회·도구 출력·재작업을 줄이는 실행 기준
 
@@ -3552,7 +3565,7 @@ Table
 - 연결 도구 결과와 파일 전체는 실행 환경에 보관한다. 모델에는 현재 결정에 필요한 필드만 전달한다. 전체 MD를 업데이트할 때도 전송용 원문을 도구 출력에 그대로 넣지 않는다.
 - ranges 명령은 현재 로컬 원문의 줄 범위만 출력한다. 원격 조회에 쓸 때 원문 버전이 같은지 확인한다. 다른 버전의 줄 범위를 그대로 쓰지 않는다.
 - 독립 조회·import를 묶고 검증 자산 키를 재사용한다. 원형은 같은 호출에서 import·사용한다. 임시 원형 노드 ID를 다음 호출로 넘기지 않는다.
-- runtime에 Table 전용 title·content·숫자 content 키와 fontBase·fontNumeric 키를 등록한다. Table은 onlyNumber 원형을 우선하고, applyText는 숫자 표시 분류·현재/목표 서체 로드 후 문자를 적용하고 family·weight 변수를 복원한다. 혼합 스타일·사용 불가 서체를 임의 대체하지 않는다.
+- runtime에 Table 전용 title·content·숫자 content 키와 정식 텍스트 스타일 키를 등록한다. Table은 onlyNumber 원형을 우선하고, applyText는 현재/목표 서체 로드 후 올바른 연결 스타일과 문자를 적용한다. 개별 family·weight 변수 복원만으로 TextStyle 연결을 대신하지 않는다. 혼합 스타일·사용 불가 서체를 임의 대체하지 않는다.
 - 성공한 서체 로드는 같은 제작 호출 안에서 재사용한다. 호출 경계를 넘어 런타임 핸들이 유지된다고 가정하지 않는다.
 - 부분 수정은 변경 영역과 영향을 받는 부모·배치를 검수한다. 변경과 무관한 셸은 반복 수집하지 않는다. 수치·변수·원형·문구·상태·서체 검수와 실제 화면 렌더링은 유지한다.
 - 검수 출력은 오류 총수·유형별 건수·필요한 예시를 기본으로 한다. runtime audit은 최대20개 예시와 생략 건수를 함께 반환한다. 생략된 오류는 범위를 좁혀 추가 확인하며 오류 총수가 0일 때만 통과로 판정한다. 변경·생성 ID는 도구 계약에 따라 전부 반환한다.

@@ -4,17 +4,51 @@
   "runtime": "templates/kbds-pc-runtime.js",
   "topics": {
     "common": [],
-    "table": ["63", "65"],
-    "customer-view": ["63", "65"],
-    "table-slots": ["65.1", "65.3"],
-    "typography": ["65.2"],
-    "efficiency": ["66"],
-    "customer-edit": ["62.3", "62.5"],
-    "boxes": ["60"],
-    "naming": ["12"],
-    "layout": ["61.2", "61.3"],
-    "variables": ["61.1", "61.7", "61.8"],
-    "footer": ["13"],
-    "workflow": ["62"]
+    "table": [
+      "63",
+      "65"
+    ],
+    "customer-view": [
+      "63",
+      "65"
+    ],
+    "table-slots": [
+      "65.1",
+      "65.3",
+      "65.4"
+    ],
+    "typography": [
+      "65.2",
+      "65.4"
+    ],
+    "efficiency": [
+      "66"
+    ],
+    "customer-edit": [
+      "62.3",
+      "62.5"
+    ],
+    "boxes": [
+      "60"
+    ],
+    "naming": [
+      "12"
+    ],
+    "layout": [
+      "61.2",
+      "61.3"
+    ],
+    "variables": [
+      "61.1",
+      "61.7",
+      "61.8",
+      "65.4"
+    ],
+    "footer": [
+      "13"
+    ],
+    "workflow": [
+      "62"
+    ]
   }
 }
