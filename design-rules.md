@@ -3588,7 +3588,19 @@ Table
 
 ## 67. 고객정보수정 — 알려드립니다·InputField 하단 초기화 버튼
 
-2026-11-10 사용자 수정 지시를 반영했다. 적용 화면은 고객정보수정 `30:1871`(파일 `2MavuzZhNpHpqer5fk3ML4`)이다. 참조 `79:5121`과 `79:2505`는 구조·스타일의 근거이며 아래 내용으로 삭제 후에도 재현한다. 참조의 CMS 계좌 문구를 고객정보수정 화면에 복사하지 않는다. 이 절은 해당 안내·단일 필드 하단 초기화 패턴의 이전 기록보다 우선한다.
+2026-11-10 사용자 수정 지시를 반영했다. 적용 화면은 고객정보수정 `30:1871`(파일 `2MavuzZhNpHpqer5fk3ML4`)이다. 참조 `79:5121`과 `79:2505`는 구조·스타일의 근거이며 아래 내용으로 삭제 후에도 재현한다. 참조의 CMS 계좌 문구를 고객정보수정 화면에 복사하지 않는다. 이 절은 해당 안내·하단 초기화 패턴의 이전 기록보다 우선하며, Table 정렬·Cell 높이는 65.5장의 최신 공통 기준을 함께 적용한다.
+
+현재까지 확정한 기준은 다음과 같다. 아래 요약과 각 절의 키·문구·구조를 함께 사용하며 참조 화면이 삭제되어도 재현할 수 있어야 한다.
+
+| 항목 | 최종 적용 기준 | 상세 |
+| --- | --- | --- |
+| 디자인시스템 | [PC 디자인라이브러리 v0.96](https://www.figma.com/design/ftIWLlgj5Ldgt1uyQu9Gb8?node-id=0-1), 파일 `ftIWLlgj5Ldgt1uyQu9Gb8`의 실제 컴포넌트·토큰·TextStyle 우선 재사용 | 1·65 |
+| Table / Header | 모든 Header를 Align left: 가로 MIN·세로 CENTER | 65.5 |
+| Table / Cell | 모든 Cell의 실제 layoutSizingVertical=FILL, 해당 행 높이 채움. 내부 InputField의 Hug와 구분 | 65.5 |
+| 알려드립니다 | outline info24, 실제 TextList / Unordered, 최상위 `∙`(U+2219)3개·하위 `-`2개, 목록 gap8 | 67.1 |
+| 초기화·전체 초기화 | 해당 InputField FooterArea 안에 우측 정렬, secondary/xsmall, refresh16, KBFG Text Medium12/17. 각 원래 라벨·입력 상태 보존 | 67.2 |
+| 제작·검수 | 원형·Auto Layout·스타일·변수 보존, 문구·서체·구조·최종 렌더 검수. 단일 화면3분 목표·초과 시 원인과 남은 작업 안내 | 62·65.4·66 |
+
 
 ### 67.1. 알려드립니다 Accordion
 
@@ -3635,7 +3647,7 @@ Table / Cell — last, onlyNumber=false
 - 앞 아이콘은 line-refresh16×16, 키 `262d12c53407cb5c4ea1e4cc57f19b87334d7b90`. 아이콘→라벨 gap2(`spacing/2xs`, 키 `1efdb0abff61482e5e09332d5119346b53ac463f`).
 - “초기화” 라벨은 KBFG Text Medium12/17, 정식 Body/sm∙12∙Medium 스타일 키 `8ab464b691ced29baba9a313a25b651557b4ceb1`. 색상 변수 `22fbb673287595abaa186c46ee85a8c90dc4dbfd`를 유지한다. 기존 primary/medium16/24 버튼을 사용하지 않는다.
 - Button Area는 너비400으로 입력의 오른쪽 끝에 정렬한다. Vertical Auto Layout의 counterAxisAlignItems=MAX를 사용한다. 자식 TextButton을 Fill로 늘리지 않는다.
-- 검산: 입력3개40+40+65 + gap8×2 =161. Table / Cell은832×186, Slot-Content 가용 폭800, 상하padding12·좌우16과 원형1px 경계를 포함한다. 화면 전체 높이는 Hug로 재계산하며186을 고정하지 않는다. 라벨 열도 같은 행 높이로 늘어난다.
+- 검산: 입력3개40+40+65 + gap8×2 =161. 최종 Table / Cell은 가로832·높이Fill이며 현재 행 높이193을 채운다(65.5). Slot-Content 가용 폭800, 상하padding12·좌우16과 원형1px 경계는 유지한다. 이전186은 Fill 적용 전 콘텐츠 기반 Cell 높이 기록이며 최종값으로 고정하지 않는다. 실제 row 높이를 따라 Header와 Cell의 경계가 일치해야 한다.
 - 실제 Table / Cell 원형 키 `1b5a0ae0fefd157325271672a78224db2575f047`, Slot과 내부 원형 연결은 유지한다. detach·일반 TEXT 복제로 흉내 내지 않는다.
 
 부서명 전체 초기화의 추가 재현값:
@@ -3643,12 +3655,13 @@ Table / Cell — last, onlyNumber=false
 - Table / Cell `65:2669`의 미입력 InputField 키는 `6a180f941f7bc12168489ec44f9203d0f3a4e7cc`. hasFooter=true, disabled=false, entered=false 및 ‘내용 입력’ placeholder를 유지한다.
 - 해당 InputField는400×65, 입력40 + gap8 + Footer17이다. FooterArea에는 위와 같은 Button Area·secondary/xsmall TextButton·refresh16을 사용하고 라벨은 **전체 초기화**다. 버튼은75×17이며 입력 오른쪽 끝400에 맞춘다.
 - 기존의 빈 Content TEXT + 너비800 Button Area + 중첩616/400 Button Area는 제거한다. InputField의 FooterArea를 사용하는 실제 Auto Layout으로 정리하고 바깥 래퍼는 InputField / Contents, gap8(`spacing/md`)로 둔다.
-- 부서명 Cell은832×90으로 Hug 재계산된다. 표의 라벨 열 높이·경계와 기존 입력 상태를 유지한다. 버튼 외형은 secondary/xsmall12/17이며 기능·범위는 ‘전체 초기화’로 유지한다.
+- 부서명 Cell은 가로832·높이Fill이며 현재 행 높이101을 채운다(65.5). 이전90은 Fill 적용 전 콘텐츠 기반 높이 기록이다. 내부 InputField400×65의 Hug와 Cell의 Fill을 구분한다. 표의 라벨 열 높이·경계와 기존 입력 상태를 유지한다. 버튼 외형은 secondary/xsmall12/17이며 기능·범위는 ‘전체 초기화’로 유지한다.
 
 ### 67.3. 이번 수정의 완료 기준
 
 - 기존 고객정보수정 문구, 입력값·비활성 상태, 대시 하위 목록을 보존한다.
 - 알려드립니다는 outline info 아이콘, Slot 직접 구성, 목록 gap8, 기존 Divider와 확대 상태를 확인한다.
 - 자택주소 ‘초기화’는 상세주소 FooterArea, 부서명 ‘전체 초기화’는 부서명 InputField FooterArea 안의 secondary/xsmall/refresh16/12·17 텍스트 버튼인지 확인한다. 불필요한 외부 버튼 래퍼와 기본 Footer 예시 라벨은 없어야 한다.
-- 최초 자택주소·안내 수정15개 TEXT에 이어, 후속 알려드립니다·부서명 수정13개 TEXT의 실제 TextStyle·서체·필수 변수 누락0, 구조와 최종 렌더링을 확인했다. 최상위 점3개는 `∙`이고 하위2개는 `-`이며, 부서명 ‘전체 초기화’ Cell832×90·InputField400×65를 확인했다. Accordion1012×213, 자택주소 Cell832×186, 상세주소 InputField400×65였다. 최종 화면은1920×2538이며 높이는 콘텐츠에 따라 변한다.
+- 안내·초기화의 변경 영역은 최초15개·후속13개 TEXT의 실제 TextStyle·서체·필수 변수 누락0을 확인했다. 이후 Table 최종 수정에서 Header12개 Align left(MIN/CENTER), Cell12개 높이FILL, 전체12개 행의 좌우 높이 일치와 표 내부47개 TEXT의 스타일·서체·필수 변수 누락0 및 최종 렌더링을 확인했다.
+- 최종 검산값: 최상위 점3개 `∙`·하위2개 `-`, Accordion1012×213, 자택주소 Cell832×193(Fill), 부서명 Cell832×101(Fill), 두 초기화가 포함된 InputField 각각400×65. 전체 화면1920×2538이며 콘텐츠와 행 크기가 바뀌면 재계산한다. 예전 Cell186/90을 최종 행 높이로 재사용하지 않는다.
 - 참조 화면은 사용자 요청 없이 삭제하지 않는다. 재현 기준은 이 절의 키·속성·문구·구조이며 삭제될 수 있는 노드 링크에만 의존하지 않는다.
