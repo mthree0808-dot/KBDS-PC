@@ -31,6 +31,7 @@
 | Table 전체·고객정보조회 | `table` | 63·65 |
 | Table Slot만 변경 | `table-slots` | 65.1·65.3 |
 | 서체·텍스트 스타일 | `typography` | 65.2·65.4 |
+| 고객정보수정 안내·초기화 | `customer-edit` / `notice` / `input-reset` | 67 |
 | 박스 / 명명 | `boxes` / `naming` | 60 / 12 |
 | 2열 골격 / 변수 예외 | `layout` / `variables` | 61 |
 | Footer / 제작·복구 | `footer` / `workflow` | 13 / 62 |
