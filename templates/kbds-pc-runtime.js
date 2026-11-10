@@ -8,6 +8,8 @@ const KBDS_PC = {
     view: "5:31", edit: "30:1871", confirmation: "30:3002"
   },
   components: {
+    tableHeader: { key: "ba105a8f29acb712e5c5aa6a3cb2015de330f392" },
+    tableCell: { key: "1b5a0ae0fefd157325271672a78224db2575f047" },
     card: { key: "5c0de8b23aeaceaf9eb3def0d2845b6a97447773" },
     footer: { key: "bb4b7042c4ccc5742c5d51c3f5460ffec409ab63" },
     info: { key: "5fb7ce75dbc07c0aeca6e8cd5bfb876c0d0f7892" },
