@@ -13,6 +13,7 @@
 - 모든 Table / Header는 Align left(가로 MIN·세로 CENTER), 모든 Table / Cell의 높이는 항상 Fill(layoutSizingVertical=FILL). 행 높이를 채우며 내부 입력·텍스트의 Hug는 유지한다(65.5).
 - Table 텍스트는 Slot 안 Table 전용 Item / Slot(title/content, onlyNumber). 숫자 표시(전화번호 기호·마스킹 포함)는 Pretendard, 영문·국문 포함 문자열은 KBFG Text. 헤더 Medium·본문 Light 14/20과 실제 textStyleId·범위별 스타일·개별 변수까지 확인한다.
 - 고객정보조회: 제목+2열 Table 4개, 라벨180+값832, 제목→표20·섹션48. 예전 Card/Data Block 구성은 적용하지 않는다. 별도 박스 유형은 60장 역할 판정.
+- LNB·중앙 본문·세로 단계의 3열은 17.3 최신 기준: BODY의 직접 자식 Right316(패딩20) → stepIndicatorVertical inner276 Fill·gap20. 이전 Container316 → 중첩 Container276(패딩20) → inner236 구조를 재사용하지 않는다.
 - 기획 문구·순서·강조·마스킹·선택·비활성 상태 보존. 이어지는 기획은 한 화면으로 합치고 기획용 표시는 제외한다.
 
 ## 실행
@@ -36,6 +37,7 @@
 | 고객정보수정 전체 | `customer-edit` | 62.3·62.5·65.5·67 |
 | 알려드립니다 / 초기화·전체 초기화 | `notice` / `input-reset` | 67.1·67.3 / 67.2·67.3 |
 | 박스 / 명명 | `boxes` / `naming` | 60 / 12 |
+| LNB + 중앙 Container + 세로 단계 | 17.3 최신 구조 직접 조회 | Right316 → padding20 → inner276, 단계 간gap20·실제 StepIndicator 원형 |
 | 2열 골격 / 변수 예외 | `layout` / `variables` | 61·65.5 / 61·65.4 |
 | Footer / 제작·복구 | `footer` / `workflow` | 13 / 62 |
 | 조회·출력 절약 | `efficiency` | 66 |
