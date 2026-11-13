@@ -759,7 +759,7 @@ C·D·F·G의 추출 본문에서는 누락 폰트가 없었다. 사고신고 �
 | 제목·표 섹션 3 | 388 | 753 | 664 | 184 |
 | 세로 단계 카드 | 1084 | 205 | 316 | 402 |
 
-- 본문 상위 Container의 관측 이름은 좌측 `Container 1`, 중앙 `Container 4`, 우측 `Container 3`이다. 기존 정리 시 3열의 부모·개수·순서를 보존하고, 명명은 12장에 따라 현재 실제 범위에서 판정한다. 번호를 맞추기 위해 영역을 합치거나 나누지 않는다.
+- 아래 관측 이름은 이전 기록이다. 최신 LNB 3열 단계 영역의 구조·명명·폭은 17.3장을 우선한다. 본문 상위 Container의 이전 관측 이름은 좌측 `Container 1`, 중앙 `Container 4`, 우측 `Container 3`이다. 기존 정리 시 3열의 부모·개수·순서를 보존하고, 명명은 12장에 따라 현재 실제 범위에서 판정한다. 번호를 맞추기 위해 영역을 합치거나 나누지 않는다.
 - 중앙 제목과 세 표 섹션 사이, 각 표 섹션 사이는 48이다.
 - 각 섹션 제목 28 + gap 20 + 표 높이 91/181/136으로 구성한다.
 - 표는 180 라벨 + 484 값의 2열, 행 높이 45다. 각각 2·4·3행이고 상단선 1을 포함한다. 값과 라벨은 왼쪽 정렬한다.
@@ -779,14 +779,78 @@ C·D·F·G의 추출 본문에서는 누락 폰트가 없었다. 사고신고 �
 - 완료 검수에서 참고 틀이 남아 있지 않은지와 실제 LNB가 가려짐 없이 보이는지를 함께 확인한다.
 - 보존 이미지는 학습 원본을 기록하므로 참고 틀이 포함되어 있다. 이 이미지의 보라색 면을 생성 결과에 재현하지 않는다. 현재 요청은 규칙 학습이며 원본 참조 화면 자체는 수정하지 않았다.
 
-### 17.3. 세로 단계 카드
+### 17.3. LNB·중앙 본문·세로 단계의 최신 구조 — 2026-11-13 기준
 
-- 카드 316 × 402, 안쪽 패딩 20, radius 20, 흰 배경이다.
-- 그림자 실측: x=0, y=4, blur=6, spread=0, rgba(12,17,29,0.10).
-- 내부 단계 스택은 276 × 362, 단계 사이 gap 20이다.
-- 완료 1·2단계 각 32, 현재 3단계 154, 미시작 4·5단계 각 32다. 32+32+154+32+32 + 20×4 = 362이다.
-- 현재 단계는 “고객정보 확인”이며 depth=2 하위 단계 2개가 포함된다. 상위 번호·진행 라인·하위 라벨은 실제 StepIndicator 인스턴스의 내부 계층으로 유지한다.
-- 현재 단계 확장 높이를 모든 단계에 적용하지 않는다. 고정/sticky·스크롤 추종 동작은 정적 화면에서 확인되지 않았다.
+최신 사용자 기준은 [Right와 stepIndicatorVertical inner 구조](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5301-4520)다. 이전 참조 [Container 3 구조](https://www.figma.com/design/yojs1BhPrWxLmDDrpg1ihD?node-id=5300-1634)보다 이 절을 우선한다. 원본 화면은 수정하지 않고 구조·속성·렌더링을 확인했다.
+
+적용 범위는 **LNB + 중앙 본문 Container + 오른쪽 세로 단계**를 함께 배치하는 3열 화면이다. LNB가 없는 1012/316의 2열 화면이나 왼쪽 단계 요약형의 배치까지 일괄 변경하지 않는다.
+
+```text
+## BODY — Horizontal / 1440 Fixed / padding 48 40 / gap 32
+├─ LNB 영역 — 316 Fixed / 높이 Hug
+├─ 중앙 본문 Container — 664 Fill / 높이 Hug
+└─ Right — 316 Fixed / 높이 Hug
+   └─ stepIndicatorVertical inner — 276 Fill / 높이 Hug
+      ├─ StepIndicator / Vertical — 완료 단계
+      ├─ StepIndicator / Vertical — 완료 단계
+      ├─ StepIndicator / Vertical — 현재 단계 + Slot-Step의 하위 단계
+      ├─ StepIndicator / Vertical — 미시작 단계
+      └─ StepIndicator / Vertical — 미시작 단계
+```
+
+#### 부모·폭·간격
+
+- 유효 너비 검산: 316 + 32 + 664 + 32 + 316 = 1360. BODY 너비1440은 변수 없는 직접값이며, 좌우padding40과 상하padding48·열 간gap32는 기존 공통 토큰을 유지한다.
+- 최신 참조의 BODY 직접 자식 이름은 `Container 5`(LNB), `Container 4`(중앙), `Right`(단계)다. 중앙 Container 번호는 실제 화면의 12장 명명 규칙으로 판정하며, 참조의 숫자4·5를 모든 화면에 고정하지 않는다. 오른쪽 구조는 `Right > stepIndicatorVertical inner`를 기준으로 한다.
+- BODY 안 위치는 LNB x=40, 중앙 x=388, Right x=1084이며 모두 y=48이다. 화면 전체 y좌표는 HEADER 높이에 따라 달라진다.
+- `Right`는 실제 일반 Auto Layout FRAME이며 BODY의 직접 자식이다. Horizontal, 가로316 Fixed·세로Hug, primary/counter 모두 MIN, padding 상하좌우20, itemSpacing20이다.
+- `stepIndicatorVertical inner`는 Right의 직접 자식인 일반 Auto Layout FRAME이다. Vertical, 가로Fill·세로Hug, primary/counter 모두 MIN, padding0, 단계 사이gap20이다. Right의 안쪽 x=20·y=20, 가용 너비는 **316 − 20×2 = 276**이다.
+- 이전 `Container 3 > Container(276, padding20) > inner(236)` 중첩과 외부 우측 정렬용40px 여백을 재현하지 않는다. 기존처럼 inner236 안에 폭276의 단계가 넘치지 않아야 한다.
+- 최신 참조의 각 StepIndicator 인스턴스는 가로276 Fixed·세로Hug이며, 내부 `StepIndicatorVertical` 프레임은 가로Fill·세로Hug다. inner 너비와 인스턴스 실제 너비가276으로 일치하는지 확인한다.
+- 단계 수와 문구·확장 유무는 실제 기획으로 결정한다. 참조의 inner 높이362·Right 높이402는 아래 단계 조합의 결과이며 모든 업무에 높이를 고정하지 않는다.
+
+#### 실제 컴포넌트와 상태
+
+- `Right`와 `stepIndicatorVertical inner`를 Card / Surface 인스턴스로 바꾸거나 StepIndicator를 detach하지 않는다. 번호·체크·진행 라인·chevron을 수동 도형으로 대신하지 않는다.
+- 상위 원형 `StepIndicator / Vertical` 키: `6d64a53e165cf7f9d92e29637bba2a700ef84253`. 공개 `verticalStep`은 하위 단계가 있는 현재 단계에서 true, 나머지 단일 단계에서 false다. 하위 항목은 실제 `Slot-Step` 안에 둔다.
+- 실제 하위 원형은 `Item / Vertical`이다. `depth`와 `state`를 실제 업무 상태에 맞춰 적용한다. 완료 체크·번호·현재색은 이 원형의 상태 표현을 유지한다.
+
+| 참조 항목 | depth / state | 원형 key |
+| --- | --- | --- |
+| 상위 완료 | 1 / completed | `a987f53a4b28ffad5c754c7007263c2464f91c25` |
+| 상위 현재 | 1 / inProgress | `2232dc849bc42a252539f67b545d887f61a3b523` |
+| 상위 미시작 | 1 / notStarted | `50fca46a7172d923a82d0dba23c767a5313e7501` |
+| 하위 완료 | 2 / completed | `a45c78a3d618cfadbef50a7a27e509f0af3f3169` |
+| 하위 현재 | 2 / inProgress | `372b1d67bb72ac32649528121eab56461e3819e3` |
+
+- 참조 순서는 사업자 정보 확인(completed), 가입범위 선택(completed), 고객정보 확인(inProgress), 뱅킹가입정보 입력(notStarted), 가입완료(notStarted)이다.
+- 현재 상위 단계 안에는 depth2 하위2개(completed / inProgress)가 있다. `Step` 및 `국민 000000-00-000000`은 참조의 예시 문구이므로 생성 화면에서는 해당 기획의 실제 단계명·요약으로 교체한다.
+- 참조 Item / Vertical의 `hasEdit=true`, `hasSubtxt=true`, `hover=false`를 확인했다. 표시 여부는 state·depth 및 업무 기획과 함께 판단하며 기획에 없는 수정 동작을 새로 추가하지 않는다.
+- 완료1·2단계 각32, 현재3단계154, 미시작4·5단계 각32다. **32+32+154+32+32 + 20×4 = 362**, Right 높이는 **20+362+20 = 402**다.
+- 원형 내부 StepIndicatorVertical의 gap4를 외부 단계 간gap20과 혼동하지 않는다. 현재 단계의 제목행32 + 내부gap4 + 하위 목록118 =154, 하위 항목은 각59다. 번호24×24·상위행 패딩·하위라인·Slot과 기타 내부 간격은 원형 계층을 유지한다.
+
+#### 외형과 실제 토큰
+
+| 적용 | 값 / 토큰 | key |
+| --- | --- | --- |
+| Right padding·gap, inner 단계 간gap | 20 / spacing/2xl | `f338af7d20bc6e0583d08efdf7e7e389a325b1d0` |
+| Right 네 모서리 | 20 / radius/2xl | `8f274529260c1a703dfd211c49e01978e90e8d04` |
+| 원형 내부 gap | 4 / spacing/xs | `61f197a81b6706762c24e5fd56b51d0f60bf9d98` |
+| Right 등록 Fill 색상 | surface/neutral/quaternary-muted | `17f1d5c43fa25e1bdd6bffde1ae45e66dd0649b7` |
+| 그림자 색상 | opacity/gray/950/gray950-a10 | `b8b88591f30e58600e5954cecd88bb6be47806a8` |
+| 그림자 정식 효과 스타일 | Shadow 2 | `c23a7e54401721798477ca6b26b4a6b471b2147f` |
+
+- 최신 Right의 등록된 흰색 Fill은 **visible=false**이고 `strokes=[]`다. 이를 흰색 채움·테두리가 보이는 Card로 임의 변경하지 않는다. strokeWeight1과 각 변의 `stroke/md` 연결은 남아 있지만 실제 외곽선이 표시된다는 뜻은 아니다.
+- Shadow 2의 실측은 x0·y4·blur6·spread0·rgba(12,17,29,0.10)이다. 정식 effectStyle 연결을 유지한다.
+- Right와 inner의 0패딩 등 프레임0값은 직접값을 사용하고 Clip content를 임의로 켜지 않는다. 고정/sticky·스크롤 추종은 정적 참조에서 확인되지 않았으므로 구조 규칙에 동작으로 추가하지 않는다.
+
+#### 완료 검수
+
+1. BODY 직접 자식이 LNB 영역·중앙 본문·Right의 3열인지, 유효 너비1360과 gap32가 맞는지 확인한다.
+2. Right316·padding20·inner276 및 단계 실제 폭276이 일치하고 236px inner·40px 정렬용 중첩이 남지 않았는지 확인한다.
+3. inner gap20, 실제 StepIndicator 인스턴스·Slot-Step·Item / Vertical의 depth/state·verticalStep을 확인한다.
+4. 실제 업무 문구와 선택 단계, 하위 항목 수, 완료·현재·미시작 상태를 대조한다. 참조 높이402를 무조건 고정하지 않는다.
+5. 수치·정식 텍스트/효과 스타일·변수 연결, Fill 표시 여부·strokes·잘림/겹침을 확인한다.
 
 ## 18. 패턴 F — 완료 Feedback·결과 요약형
 
